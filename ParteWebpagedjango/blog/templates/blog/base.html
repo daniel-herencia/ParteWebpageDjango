@@ -1,3 +1,6 @@
+
+<!-- GENERAL TEMPLATE CLASS -->
+
 {% load static %}
 
 <!DOCTYPE html>
@@ -8,13 +11,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
+    <!-- Bootstrap CSS (Cascading Style Sheets) -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    
+    <!-- MAIN CSS FILE (colors, fonts and layouts) -->
     <link rel="stylesheet" type="text/css" href="{% static 'blog/main.css' %}">
 
-
+    <!-- Add tab title -->   
     {% if title %}
         <title>Django Blog - {{ title }}</title>
     {% else %}
@@ -22,7 +25,7 @@
     {% endif %}
 </head>
 <body>
-
+    <!-- Upper part of the webpage (tab selection) -->
     <header class="site-header">
         <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
             <div class="container">
@@ -45,7 +48,7 @@
         </nav>
     </header>
 
-
+    <!-- Sidebar of the webpage -->
     <main role="main" class="container">
         <div class="row">
             <div class="col-md-8">

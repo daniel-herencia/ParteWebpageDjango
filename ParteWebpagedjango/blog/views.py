@@ -3,7 +3,7 @@ from django.http import HttpResponse
 
 # Create your views here.
 
-#Posts of the blog (Dictionaries)
+#Create dictionaries with the posts of the blog
 posts = [
     {
         'author': 'CoreyMS',
@@ -24,13 +24,7 @@ def home(request):
     context = {
         'posts': posts
     }
-    return render(request, 'blog/home.html', context)    #To return a template rendered
+    return render(request, 'blog/home.html', context)    #render(request, html template, variables) => To return a template rendered
 
 def about(request):
     return render(request, 'blog/about.html', {'title': 'About'})   #title => tab title 
-
-
-
-#def prueba2(request):
-#   return HttpResponse('<h1>PAGINA PARA PROBAR</h1>')
-    
