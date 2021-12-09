@@ -27,6 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['partebarcelona.pythonanywhere.com','localhost']
 
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR /'staticfiles'
+
 
 # Application definition
 
