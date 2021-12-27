@@ -20,8 +20,8 @@ def register(request):
 def profile(request):
     if request.method == 'POST':
         u_form = UserUpdateForm(request.POST, instance=request.user)
-        p_form = ProfileUpdateForm(request.POST, 
-                                   request.FILES, 
+        p_form = ProfileUpdateForm(request.POST,
+                                   request.FILES,
                                    instance=request.user.profile)
         if u_form.is_valid() and p_form.is_valid():
             u_form.save()
@@ -37,13 +37,12 @@ def profile(request):
         'u_form': u_form,
         'p_form': p_form
     }
+
     return render(request, 'users/profile.html', context)
 
 #Kinds of message: 
-"""
-messages.debug
-messages.info
-messages.success
-messages.warning
-messages.error
-"""
+#messages.debug
+#messages.info
+#messages.success
+#messages.warning
+#messages.error
