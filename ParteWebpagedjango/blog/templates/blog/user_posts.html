@@ -1,8 +1,6 @@
-
-<!-- TEMPLATE FOR THE HOME PAGE -->
-
 {% extends "blog/base.html" %}
 {% block content %}
+    <h1 class="mb-3">Posts by {{ view.kwargs.username }} ({{ page_obj.paginator.count }})</h1>
     {% for post in posts %}
         <article class="media content-section">
           <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
@@ -39,14 +37,3 @@
 
     {% endif %}
 {% endblock content %}
-
-
- 
-<!--    <h1>=>header-->  
-<!--    <p> => parrafo--> 
-<!--    {{ => acceder a una variable--> 
-<!--    {% => código python--> 
-<!--    if title => tab title--> 
-<!--    extends => inherit from class base--> 
-
-
