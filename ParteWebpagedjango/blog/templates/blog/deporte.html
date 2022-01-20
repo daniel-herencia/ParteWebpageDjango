@@ -1,0 +1,47 @@
+
+<!-- TEMPLATE FOR THE Deprote PAGE -->
+
+{% extends "blog/base.html" %}
+{% block content %}
+    <h1>Deporte</h1>
+        <h3>¿Haces deporte?</h3>
+        <hr/>
+        <!-- <form method="POST"> -->
+        <form action="/deporte/" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" name='name' placeholder="Enter Your Name">
+            </div>
+            <button type="submit" class="btn btn-success">Submit</button>
+        </hr>
+        <!--
+            <select name="respuesta" id="respuesta">
+                <option selected disabled="true">-- Select option --</option>
+                <option>Sí, hago deporte</option>
+                <option>No hago deporte</option>
+            </select>-->
+            <!-- <button type="submit" form="my-form" class="btn btn-primary">Save changes</button>-->
+           <!--  <input type="submit" value="Insert"/>
+            <hr/>
+            {% if messages %}
+                {% for x in messages%}
+                    <h3>{{x}}</h3>
+                {% endfor %}
+            {% else %}
+                <h3>No message have arrieved</h3>
+            {% endif %}-->
+        </form>
+        <h3>¿Haces deporte?</h3>
+        <div class="input-group">
+            <select class="custom-select" id="inputGroupSelect04">
+              <option selected>-- Selecciona una opción --</option>
+              <option value="1">Sí, hago deporte</option>
+              <option value="2">No hago deporte</option>
+            </select>
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="button">Guardar</button>
+            </div>
+          </div>
+
+{% endblock content %}

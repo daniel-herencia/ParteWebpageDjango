@@ -17,9 +17,9 @@
 
     <!-- Add tab title -->   
     {% if title %}
-        <title>Django Blog - {{ title }}</title>
+        <title>Piso Barcelona - {{ title }}</title>
     {% else %}
-        <title>Django Blog</title>
+        <title>Piso Barcelona</title>
     {% endif %}
 </head>
 <body>
@@ -34,13 +34,22 @@
             <div class="collapse navbar-collapse" id="navbarToggle">
               <div class="navbar-nav mr-auto">
                 <a class="nav-item nav-link" href="{% url 'blog-home' %}">Home</a>
-                <a class="nav-item nav-link" href="{% url 'blog-about' %}">About</a>
+                {% if user.is_authenticated %}
+                  <a class="nav-item nav-link" href="{% url 'blog-parte' %}">Parte</a>
+                  <a class="nav-item nav-link" href="{% url 'blog-deporte' %}">Deporte</a>
+                  <a class="nav-item nav-link" href="{% url 'blog-contact' %}">Contact</a>
+                {% else %}
+                  <a class="nav-item nav-link" href="{% url 'login' %}">Parte</a>
+                  <a class="nav-item nav-link" href="{% url 'login' %}">Deporte</a>
+                  <a class="nav-item nav-link" href="{% url 'login' %}">Contact</a>
+                {% endif %}
               </div>
                 <!-- Navbar Right Side -->
                 <!-- If link has not been created: href = "#"-->
                 <div class="navbar-nav">
                     {% if user.is_authenticated %}
                       <a class="nav-item nav-link" href="{% url 'post-create' %}">New Post</a>
+                      <a class="nav-item nav-link" href="{% url 'depor-create' %}">Apuntarse Deporte</a>
                       <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
                       <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
                     {% else %}

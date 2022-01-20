@@ -1,0 +1,48 @@
+
+<!-- TEMPLATE FOR THE Deprote PAGE -->
+
+{% extends "blog/base.html" %}
+{% block content %}
+    <h1>Deporte</h1>
+
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          ¿Haces Deporte?
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="#">Sí, hago deporte</a>
+          <a class="dropdown-item" href="#">No hago deporte</a>
+        </div>
+    </div>
+    <br>
+    <form>
+        <p><b>¿Haces Deporte?</b> 
+            <select name="hagodeporte" class="myselect">
+                <option value="SiDeporte">Sí, hago deporte</option>
+                <option value="NoDeporte" selected>No hago deporte</option>
+            </select>
+        </p> 
+    </form>
+    <div id="SiDeporte" class="countryOption"><img src="" /><br />Text about the UK</div>
+    <div id="NoDeporte" class="countryOption"><img src="" /><br />Text about the USA</div>
+
+    <form>
+        <label>Select Country:</label>
+        <select class="country">
+            <option disabled selected>Please select a country</option>
+            <option value="us">United States</option>
+            <option value="india">India</option>
+            <option value="uk">United Kingdom</option>
+        </select>
+    </form>
+    <div id="uk" class="countryOption"><img src="" /><br />Text about the UK</div>
+   
+    <script>
+
+      </script>
+
+{% endblock content %}
+
+
+
+
