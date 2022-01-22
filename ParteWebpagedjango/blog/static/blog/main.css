@@ -3,7 +3,9 @@
    /* CSS is designed to enable the separation of presentation and content, including layout, colors, and fonts */
 
 body {
-    background: #fafafa;
+    background: #ffffff;
+    background: url(/media/background/fondo1.png) no-repeat center center fixed;
+    background-size: cover;
     color: #333333;
     margin-top: 5rem;
   }
@@ -17,8 +19,19 @@ body {
   }
   
   .bg-steel {
-    background-color: #5f698a;
+    background-color: #4f5e8f;
+    opacity: 0.8;
   }
+
+  /*.header-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgb(0, 0, 0);
+    opacity: 0;
+  }*/
   
   .site-header .navbar-nav .nav-link {
     color: #cbd5db;
