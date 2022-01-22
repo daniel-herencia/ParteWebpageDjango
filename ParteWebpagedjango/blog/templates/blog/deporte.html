@@ -5,35 +5,37 @@
 
 <div class="container my-3">
     <h1>Deporte</h1>
-    <h4>¿Haces deporte?</h4>
-    <form method="post" action="{% url 'blog-deporte' %}">{% csrf_token %}
-        <div class="input-group">
-            {% if dxt == 'S' %}
-                <select class="custom-select" id="inputGroupSelect04" name='respuesta'>
-                    <option selected value="S">Sí, hago deporte</option>
-                    <option value="N">No hago deporte</option>
-                </select>
-            {% elif dxt == 'N'%}
-                <select class="custom-select" id="inputGroupSelect04" name='respuesta'>
-                    <option value="S">Sí, hago deporte</option>
-                    <option selected value="N">No hago deporte</option>
-                </select>
-            {% else %}
-                <select class="custom-select" id="inputGroupSelect04" name='respuesta'>
-                    <option selected>-- Selecciona una opción --</option>
-                    <option value="S">Sí, hago deporte</option>
-                    <option value="N">No hago deporte</option>
-                </select>
-            {% endif %}
-        </div>
-        <br>
-        <div class="form-group">
-            <label for="name">Observaciones:</label>
-            <input type="text" class="form-control" id="name" name='observaciones' placeholder="Escribe aquí si tienes algo importante a tener en cuenta">
-        </div>
-        <hr/>
-        <button type="submit" class="btn btn-success">Submit</button>
-    </form>
+    <div class="content-section">
+            <h4>¿Haces deporte?</h4>
+        <form method="post" action="{% url 'blog-deporte' %}">{% csrf_token %}
+            <div class="input-group">
+                {% if dxt == 'S' %}
+                    <select class="custom-select" id="inputGroupSelect04" name='respuesta'>
+                        <option selected value="S">Sí, hago deporte</option>
+                        <option value="N">No hago deporte</option>
+                    </select>
+                {% elif dxt == 'N'%}
+                    <select class="custom-select" id="inputGroupSelect04" name='respuesta'>
+                        <option value="S">Sí, hago deporte</option>
+                        <option selected value="N">No hago deporte</option>
+                    </select>
+                {% else %}
+                    <select class="custom-select" id="inputGroupSelect04" name='respuesta'>
+                        <option selected>-- Selecciona una opción --</option>
+                        <option value="S">Sí, hago deporte</option>
+                        <option value="N">No hago deporte</option>
+                    </select>
+                {% endif %}
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="name">Observaciones:</label>
+                <input type="text" class="form-control" id="name" name='observaciones' placeholder="Escribe aquí si tienes algo importante a tener en cuenta">
+            </div>
+            <hr/>
+            <button type="submit" class="btn btn-success">Submit</button>
+        </form>
+    </div>
 </div>
 
 {% endblock %}

@@ -73,7 +73,7 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
-    success_url = '/'
+    success_url = '/blog/'
 
     def test_func(self):
         post = self.get_object()
@@ -84,6 +84,10 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 def Parte(request):
     return render(request, 'blog/parte.html', {'title': 'Parte'})
+
+def Inicio(request):
+    return render(request, 'blog/inicio.html', {'title': 'Inicio'})
+
 
 #def Deporte(request):
 #    return render(request, 'blog/deporte.html', {'title': 'Deporte'})
