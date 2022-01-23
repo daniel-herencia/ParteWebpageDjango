@@ -190,13 +190,13 @@ body {
 /* Imagenes sección de enlaces*/
 .enlaces-container {
   position: relative;
-  width: 50%;
+  margin-right: 10px;
 }
 
 .enlaces-image {
   display: block;
   width: 100%;
-  height: auto;
+  height: 200px;
 }
 
 .enlaces-overlay {
@@ -209,7 +209,7 @@ body {
   width: 100%;
   opacity: 0;
   transition: .5s ease;
-  background-color: #008CBA;
+  background-color: #777777;
 }
 
 .enlaces-container:hover .enlaces-overlay {
@@ -228,7 +228,18 @@ body {
   text-align: center;
 }
 
+/*Alinear imagenes enlaces.html*/
+.contenedor-imagenes {
+  display: flex;
+}
 
+/*Imagenes mostradas en la página de inicio*/
+.init-img {
+  height: 75px;
+  width: 75px;
+  /*margin-right: 20px;
+  margin-bottom: 16px;*/
+}
 
 /*Extraidos del tutorial del blog*/
 

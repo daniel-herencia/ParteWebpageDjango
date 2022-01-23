@@ -86,7 +86,10 @@ def Parte(request):
     return render(request, 'blog/parte.html', {'title': 'Parte'})
 
 def Inicio(request):
-    return render(request, 'blog/inicio.html', {'title': 'Inicio'})
+    context = {
+        'users': User.objects.all()
+    }
+    return render(request, 'blog/inicio.html', context)
 
 def Enlaces(request):
     return render(request, 'blog/enlaces.html', {'title': 'Enlaces'})
