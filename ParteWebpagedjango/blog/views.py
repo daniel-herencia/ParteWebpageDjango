@@ -88,6 +88,9 @@ def Parte(request):
 def Inicio(request):
     return render(request, 'blog/inicio.html', {'title': 'Inicio'})
 
+def Enlaces(request):
+    return render(request, 'blog/enlaces.html', {'title': 'Enlaces'})
+
 
 #def Deporte(request):
 #    return render(request, 'blog/deporte.html', {'title': 'Deporte'})
