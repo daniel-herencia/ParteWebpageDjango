@@ -51,6 +51,7 @@
                   <a class="menuheader mr-4" href="{% url 'blog-home' %}">Mensajes</a>
                   <a class="menuheader mr-4" href="{% url 'blog-parte' %}">Parte</a>
                   <a class="menuheader mr-4" href="{% url 'blog-deporte' %}">Deporte</a>
+                  <a class="menuheader mr-4" href="{% url 'blog-enlaces' %}">Enlaces</a>
                   <div class="dropdown">
                     <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <img class="rounded-circle article-img" src="{{ user.profile.image.url }}"></button>
                     <div class="dropdown-content">
@@ -63,8 +64,8 @@
                   <!-- <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>-->
                   <!-- <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>-->
                 {% else %}
-                  <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
-                  <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
+                  <a class="login mr-4" href="{% url 'login' %}">Login</a>
+                  <a class="login mr-4" href="{% url 'register' %}">Register</a>
                 {% endif %}
               </div>
             </div>
@@ -89,7 +90,7 @@
           <div class="col-md-4">
             <div class="content-section">
               <h3>Novedades</h3>
-              <p class='text-muted'>Comming soon
+              <p class='text-muted'>Próximamente:
                 <ul class="list-group">
                   <li class="list-group-item list-group-item-light">Pablocoins</li>
                   <li class="list-group-item list-group-item-light">Anuncios</li>

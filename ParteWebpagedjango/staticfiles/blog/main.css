@@ -83,11 +83,32 @@ body {
     color: #dff7ff;
     /*font-family: 'fuente-titulo';*/
     font-size: 150%;
-    padding: 20px 0px; 
+    padding: 15px 0px; 
     display:inline-block;
   }
 
   .menuheader:hover{
+    color: #ffffff;
+    /*font-family: 'fuente-titulo';*/
+    font-size: 160%;
+    box-shadow: inset 0 -3px 0 0 rgb(255, 255, 255);
+    box-shadow: none;
+    text-decoration:none;
+    padding: 10px 0px; 
+    display:inline-block;
+    }
+
+
+  /*Opciones del la navigation bar (parte, mensajes...)*/
+  .login{
+    color: #dff7ff;
+    /*font-family: 'fuente-titulo';*/
+    font-size: 150%;
+    padding: 10px 0px;
+    display:inline-block;
+  }
+
+  .login:hover{
     color: #ffffff;
     /*font-family: 'fuente-titulo';*/
     font-size: 160%;
@@ -165,6 +186,62 @@ body {
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {background-color: #3e8e41;}
+
+/* Imagenes sección de enlaces*/
+.enlaces-container {
+  position: relative;
+  margin-right: 10px;
+}
+
+.enlaces-image {
+  display: block;
+  width: 100%;
+  height: 200px;
+}
+
+.enlaces-overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: .5s ease;
+  background-color: #777777;
+}
+
+.enlaces-container:hover .enlaces-overlay {
+  opacity: 0.8;
+}
+
+.enlaces-text {
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+/*Alinear imagenes enlaces.html*/
+.contenedor-imagenes {
+  display: flex;
+}
+
+/*Imagenes mostradas en la página de inicio*/
+.init-img {
+  height: 75px;
+  width: 75px;
+  /*margin-right: 20px;
+  margin-bottom: 16px;*/
+}
+
+/*Extraidos del tutorial del blog*/
 
   .content-section {
     background: #ffffff;
