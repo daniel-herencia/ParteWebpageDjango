@@ -3,12 +3,22 @@
    /* CSS is designed to enable the separation of presentation and content, including layout, colors, and fonts */
 
 body {
-    background: #fafafa;
+    background: #F1F1F1;
+    background: url(/media/background/back.png) no-repeat center center fixed;
+    background-size: cover;
     color: #333333;
     margin-top: 5rem;
+    padding: 50px; /*Margen superior*/
   }
   
-  h1, h2, h3, h4, h5, h6 {
+  /*<h1> del html*/
+  h1 {
+    font-weight: bold;
+    color: rgb(66, 66, 66);
+    font-family: 'fuente-titulo';
+  }
+
+  h2, h3, h4, h5, h6 {
     color: #444444;
   }
   
@@ -16,22 +26,146 @@ body {
     margin: 0;
   }
   
+  /*Navigation bar*/
   .bg-steel {
-    background-color: #5f788a;
+    background-color: #9CB4B3;
+    opacity: 1;
+    height: 100px;
+  }
+
+  /*.header-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgb(0, 0, 0);
+    opacity: 0;
+  }*/
+
+  /*Botón de usuario en la navigation bar*/
+  .btn-secondary{
+    background-color: #9CB4B3;
+    box-shadow: none;
+    border: none;
+    color: white;
+    padding: 5px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  /*Cuando pasas el ratón por encima del botón de usuario en la navigation bar*/
+  .btn-secondary:hover{
+    background-color: #97c9c6;
+    box-shadow: none;
+  }
+
+  /*Cuando clickas el botón (de momento no funciona)*/
+  .btn-secondary:focus {
+    background-color: #97c9c6;
+    box-shadow: none;
+    outline: none;
   }
   
-  .site-header .navbar-nav .nav-link {
-    color: #cbd5db;
+  .site-header .nav-nav .nav-link {
+    color: #d9f5fc;
+    font-size: 100%;
   }
   
-  .site-header .navbar-nav .nav-link:hover {
+  .site-header .nav-nav .nav-link:hover {
     color: #ffffff;
+    font-size: 110%;
+  }
+
+  /*Opciones del la navigation bar (parte, mensajes...)*/
+  .menuheader{
+    color: #dff7ff;
+    /*font-family: 'fuente-titulo';*/
+    font-size: 150%;
+    padding: 20px 0px; 
+    display:inline-block;
+  }
+
+  .menuheader:hover{
+    color: #ffffff;
+    /*font-family: 'fuente-titulo';*/
+    font-size: 160%;
+    box-shadow: inset 0 -3px 0 0 rgb(255, 255, 255);
+    box-shadow: none;
+    text-decoration:none;
+    padding: 10px 0px; 
+    display:inline-block;
+    }
+
+  /*Título Barcelona en la navigation bar*/
+  .barcelonaheader{
+    color: #ffffff;
+    font-family: 'fuente-titulo';
+    font-size: 230%;
+  }
+
+  .barcelonaheader:hover{
+    color: #ffffff;
+    font-family: 'fuente-titulo';
+    font-size: 240%;
+    box-shadow: inset 0 -3px 0 0 rgb(255, 255, 255);
+    box-shadow: none;
+    text-decoration:none;
+  }
+
+  /*Fuente usada en el título barcelona*/
+  @font-face {
+    font-family: 'fuente-titulo';
+    src:  url("/media/background/OPTIAlternateThree.otf");
   }
   
   .site-header .navbar-nav .nav-link.active {
     font-weight: 500;
   }
-  
+
+/* Dropdown Button */
+.dropbtn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #ddd;}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {display: block;}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {background-color: #3e8e41;}
+
   .content-section {
     background: #ffffff;
     padding: 10px 20px;
@@ -86,3 +220,19 @@ body {
   .account-heading {
     font-size: 2.5rem;
   }
+
+  .myselect {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 100%;
+    max-width: 400px;
+    padding: 6px 12px;
+    border-radius: 4px;
+    border: 1px solid #cbd1d8;
+    font-size: 1rem;
+    line-height: 1.5;
+    background: #fff url(../img/down.svg) no-repeat center right 12px / 18px 18px;
+    transition: all .2s ease-in-out;
+  }
+  
