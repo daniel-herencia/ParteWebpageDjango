@@ -10,19 +10,24 @@ from django.views.generic import (
     UpdateView,
     DeleteView
 )
+import sys
+sys.path.append("..")# Adds higher directory to python modules path.
+#from ..ParteWebpagedjango.settings import EMAIL_HOST_USER
+from ParteWebpagedjango.settings import EMAIL_HOST_USER
 from .models import Deportista, Post
 from django.contrib.auth.decorators import login_required
-
+from django.core.mail import send_mail
+from django.utils.html import strip_tags
 
 
 #Logic of html files
 
+@login_required 
 def home(request):
     context = {
         'posts': Post.objects.all()
     }
     return render(request, 'blog/home.html', context)
-
 
 class PostListView(ListView):
     model = Post
@@ -30,7 +35,6 @@ class PostListView(ListView):
     context_object_name = 'posts'
     ordering = ['-date_posted']
     paginate_by = 4 #Number of post per page
-
 
 class UserPostListView(ListView):
     model = Post
@@ -42,10 +46,8 @@ class UserPostListView(ListView):
         user = get_object_or_404(User, username=self.kwargs.get('username'))
         return Post.objects.filter(author=user).order_by('-date_posted')
 
-
 class PostDetailView(DetailView):
     model = Post
-
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
@@ -54,7 +56,6 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
-
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
@@ -70,7 +71,6 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
             return True
         return False
 
-
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
     success_url = '/blog/'
@@ -81,7 +81,7 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
             return True
         return False
 
-
+@login_required 
 def Parte(request):
     return render(request, 'blog/parte.html', {'title': 'Parte'})
 
@@ -91,8 +91,50 @@ def Inicio(request):
     }
     return render(request, 'blog/inicio.html', context)
 
+@login_required 
 def Enlaces(request):
     return render(request, 'blog/enlaces.html', {'title': 'Enlaces'})
+
+@login_required 
+def Extras(request):
+    #current_user = request.user.username
+    if  request.user.username == 'parteadmin':
+        if request.method=="POST": 
+            usuarios = User.objects.all()
+            for usuario in usuarios:
+                destinatario = usuario.email
+                try:    #Para obtener la respuesta si la hay
+                    answer = Deportista.objects.get(user=usuario.username).dxt
+                except Deportista.DoesNotExist:
+                    answer = 'N'
+
+                if answer == 'S':
+                    answer = 'SI haces deporte.'
+                else:
+                    answer = 'NO haces deporte.'
+                html = """<html>
+                            <body>
+                                    <h4>¡Buenos días!</h4>
+                                    <h4></h4>
+                                    <h4>Esta semana </h4><h3>""" + answer + """</h3><br>
+                                    <h4>¿Quieres enviar otra respuesta? Entra en el siguiente enlace: https://partebarcelona.pythonanywhere.com/deporte/</h4>
+                                    <h4>No contestar a este correo, se ha generado automáticamente.</h4>
+                                    <h4>Atentamente,</h4>
+                                    <h4></h4>
+                                    <h4>ParteProgrammingTeam</h4>
+                            </body>
+                            </html> """
+
+                mensaje = strip_tags(html)
+                send_mail('Correo semanal de Deporte',
+                mensaje,
+                EMAIL_HOST_USER,
+                [destinatario],
+                fail_silently=False)
+        return render(request, 'blog/extras.html', {'title': 'Extras'})
+    else:
+        return render(request, 'blog/parte.html', {'title': 'Parte'})
+
 
 
 #def Deporte(request):

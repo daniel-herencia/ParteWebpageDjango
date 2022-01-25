@@ -58,6 +58,9 @@
                       <a href="{% url 'post-create' %}">Nuevo Mensaje</a>
                       <a href="{% url 'profile' %}">Perfil</a>
                       <a href="{% url 'logout' %}">Salir</a>
+                      {% if user.username == 'parteadmin'%}
+                        <a href="{% url 'blog-extras' %}">Zona Admin</a>
+                      {% endif %}
                     </div>
                   </div>
                   <!-- <a class="nav-item nav-link" href="{% url 'post-create' %}">New Post</a>     dropdown-menu-right-->

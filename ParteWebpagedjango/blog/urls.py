@@ -21,7 +21,8 @@ urlpatterns = [
     path('parte/', views.Parte, name='blog-parte'),
 #    path('deporte/', views.Deporte, name='blog-deporte'),
     path('deporte/', views.deportista, name='blog-deporte'),
-    path('enlaces/',views.Enlaces, name='blog-enlaces')
+    path('enlaces/',views.Enlaces, name='blog-enlaces'),
+    path('extras/',views.Extras, name='blog-extras')
 #    path("contact/", views.contact, name="blog-contact"),
 
 ]
