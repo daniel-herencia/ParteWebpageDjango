@@ -5,4 +5,98 @@
 {% block content %}
     <h1>Parte</h1>
     <h3>Página en proceso, disculpen las molestias</h3>
+    <form method="post" action="{% url 'blog-parte' %}">{% csrf_token %}
+        <div class="input-group">
+            <table>
+                <thead>
+                <tr>
+                    <th>DIA
+                    <th>DESAYUNO
+                    <th>COMIDA
+                    <th>CENA
+                    <th>Media mañana
+                </thead>
+                <tbody>
+               <!-- {% with dias="Lunes" %}
+                {% endwith %}
+                {{ dias|add:"Martes" }}
+                {{ dias }}-->
+                {% for var, dia, etiqueta in variables %}
+                    {% with i=forloop.counter0 %}     
+                <tr>
+                    <td>{{ dia }}
+                    <td><select class="custom-select parte-select" id="inputGroupSelect04" name={{ etiqueta.0 }}>
+                        <option value={{ var.0 }} selected>{{ var.0 }}</option>
+                        <option value="-">-</option>
+                        <option value="Normal">Normal</option>
+                        <option value="Bocadillo-Pequeño">Bocadillo-Pequeño</option>
+                        <option value="Bocadillo">Bocadillo</option>
+                        <option value="Cesta">Cesta</option>
+                        <option value="Fiambrera">Fiambrera</option>
+                    </select>
+                    <td><select class="custom-select parte-select" id="inputGroupSelect04" name={{ etiqueta.1 }}>
+                        <option value={{ var.1 }} selected>{{ var.1 }}</option>
+                        <option value="-">-</option>
+                        <option value="Normal">Normal</option>
+                        <option value="Bocadillo-Pequeño">Bocadillo-Pequeño</option>
+                        <option value="Bocadillo">Bocadillo</option>
+                        <option value="Cesta">Cesta</option>
+                        <option value="Fiambrera">Fiambrera</option>
+                        <option value="Comida-13:00">Comida-13:00</option>
+                        <option value="Comida-13:30">Comida-13:30</option>
+                        <option value="Comida-14:00">Comida-14:00</option>
+                    </select>           
+                    <td><select class="custom-select parte-select" id="inputGroupSelect04" name={{ etiqueta.2 }}>
+                        <option value={{ var.2 }} selected>{{ var.2 }}</option>
+                        <option value="-">-</option>
+                        <option value="Normal">Normal</option>
+                        <option value="Bocadillo-Pequeño">Bocadillo-Pequeño</option>
+                        <option value="Bocadillo">Bocadillo</option>
+                        <option value="Cesta">Cesta</option>
+                        <option value="Fiambrera">Fiambrera</option>
+                    </select>
+                    <td><select class="custom-select parte-select" id="inputGroupSelect04" name={{ etiqueta.3 }}>
+                            <option value={{ var.3 }} selected>{{ var.3 }}</option>
+                            <option value="Si">Si</option>
+                            <option value="-">-</option>
+                        </select>
+                    {% endwith %}
+                {% endfor %}
+                </tbody>
+            </table>
+        <div/>
+        <button type="submit" class="btn btn-success">Guardar</button>
+    </form>
+
+<!--
+        <select class="custom-selectl" style="width: 85px;" name='respuesta1'>
+            <option value={{ vari }} selected>{{ vari }}</option>
+            <option value="op1">op1</option>
+            <option value="op2">op2</option>
+            <option value="op3">op3</option>
+        </select>
+        <select name="area2" class="custom-selectl" style="width: 85px;">
+            <option value="406" selected='selected'>Op1</option>
+            <option value="436" selected=''>Op2</option>
+        </select>
+        <select name="area3" class="custom-selectl" style="width: 85px;">
+            <option value="446" selected=vari[0]>Op1</option>
+            <option value="456" selected=vari[1]>Op2</option>
+        </select>-->
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <p>   </p>
+    <br>
+    <br>
+    <br>
+    <br>
 {% endblock content %}

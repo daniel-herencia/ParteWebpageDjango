@@ -14,7 +14,7 @@ import sys
 sys.path.append("..")# Adds higher directory to python modules path.
 #from ..ParteWebpagedjango.settings import EMAIL_HOST_USER
 from ParteWebpagedjango.settings import EMAIL_HOST_USER
-from .models import Deportista, Post
+from .models import Deportista, Post, Comensal, Dia1
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.utils.html import strip_tags
@@ -81,9 +81,137 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
             return True
         return False
 
+"""
 @login_required 
 def Parte(request):
-    return render(request, 'blog/parte.html', {'title': 'Parte'})
+    vari = [[],[],[],[]]
+    user = None
+    etiquetas = [['respuestaLb','respuestaLl','respuestaLd','respuestaLm']]
+    if request.user.is_authenticated:   #Este if no es necesario
+        user = request.user.username #guarda el nombre de usuario
+    try:    #Para obtener la respuesta anterior si la hay
+        answer = Comensal.objects.get(user=user)    #query para sacar la respuesta anterior
+        vari[0] = [answer.Lb, answer.Ll, answer.Ld, answer.Lm]
+    except Comensal.DoesNotExist:
+        vari[0] = ['-','-','-','-']
+
+    if request.method=="POST":
+        #for i in range(7):
+        i=0
+        vari[0]=[request.POST.get(etiquetas[i][0],''),request.POST.get(etiquetas[i][1],''),request.POST.get(etiquetas[i][2],''),request.POST.get(etiquetas[i][3],'')]
+        #vari.append(request.POST.get('respuestaLl',''))
+        #vari.append(request.POST.get('respuestaLd',''))
+        #vari.append(request.POST.get('respuestaLm',''))
+
+        try:
+            answer = Comensal.objects.get(user=user)    #query para sacar la respuesta anterior
+            answer.Lb=vari[0][0]
+            answer.Ll=vari[0][1]
+            answer.Ld=vari[0][2]
+            answer.Lm=vari[0][3]
+
+
+        except Comensal.DoesNotExist:
+            answer = Comensal(user=user, Lb=vari[0][0], Ll=vari[0][1], Ld=vari[0][2], Lm=vari[0][3])
+        answer.save() #guarda la nueva respuesta en la base de datos
+
+    dias = ["Lunes"]#,"Martes","Miercoles","Jueves","Viernes","Sábado","Domingo"]
+    num = [0]#, 1, 2, 3, 4, 5, 6]
+    return render(request, 'blog/parte.html', {'vari': vari, 'dias': dias, 'num': num, 'etiquetas': etiquetas, 'title': 'Parte'})
+"""
+
+@login_required 
+def Parte(request):
+    vari = [[],[],[],[],[],[],[]]
+    user = None
+    etiquetas = [
+    ['respuestaLb','respuestaLl','respuestaLd','respuestaLm'],
+    ['respuestaMb','respuestaMl','respuestaMd','respuestaMm'],
+    ['respuestaXb','respuestaXl','respuestaXd','respuestaXm'],
+    ['respuestaJb','respuestaJl','respuestaJd','respuestaJm'],
+    ['respuestaVb','respuestaVl','respuestaVd','respuestaVm'],
+    ['respuestaSb','respuestaSl','respuestaSd','respuestaSm'],
+    ['respuestaDb','respuestaDl','respuestaDd','respuestaDm'],
+    ]
+    if request.user.is_authenticated:   #Este if no es necesario
+        user = request.user.username #guarda el nombre de usuario
+    try:    #Para obtener la respuesta anterior si la hay
+        answer = Comensal.objects.get(user=user)    #query para sacar la respuesta anterior
+        vari[0] = [answer.L.b,answer.L.l,answer.L.d,answer.L.m]
+        vari[1] = [answer.M.b,answer.M.l,answer.M.d,answer.M.m]
+        vari[2] = [answer.X.b,answer.X.l,answer.X.d,answer.X.m]
+        vari[3] = [answer.J.b,answer.J.l,answer.J.d,answer.J.m]
+        vari[4] = [answer.V.b,answer.V.l,answer.V.d,answer.V.m]
+        vari[5] = [answer.S.b,answer.S.l,answer.S.d,answer.S.m]
+        vari[6] = [answer.D.b,answer.D.l,answer.D.d,answer.D.m]
+    except Comensal.DoesNotExist:
+        vari[0] = ['-','-','-','-']
+        vari[1] = ['-','-','-','-']
+        vari[2] = ['-','-','-','-']
+        vari[3] = ['-','-','-','-']
+        vari[4] = ['-','-','-','-']
+        vari[5] = ['-','-','-','-']
+        vari[6] = ['-','-','-','-']
+    if request.method=="POST":
+        for i in range(7):
+            vari[i]=[request.POST.get(etiquetas[i][0],''),request.POST.get(etiquetas[i][1],''),request.POST.get(etiquetas[i][2],''),request.POST.get(etiquetas[i][3],'')]
+        #vari.append(request.POST.get('respuestaLl',''))
+        #vari.append(request.POST.get('respuestaLd',''))
+        #vari.append(request.POST.get('respuestaLm',''))
+        
+        L = Dia1(b=vari[0][0],l=vari[0][1],d=vari[0][2],m=vari[0][3])
+        M = Dia1(b=vari[1][0],l=vari[1][1],d=vari[1][2],m=vari[1][3])
+        X = Dia1(b=vari[2][0],l=vari[2][1],d=vari[2][2],m=vari[2][3])
+        J = Dia1(b=vari[3][0],l=vari[3][1],d=vari[3][2],m=vari[3][3])
+        V = Dia1(b=vari[4][0],l=vari[4][1],d=vari[4][2],m=vari[4][3])
+        S = Dia1(b=vari[5][0],l=vari[5][1],d=vari[5][2],m=vari[5][3])
+        D = Dia1(b=vari[6][0],l=vari[6][1],d=vari[6][2],m=vari[6][3])
+        L.save()
+        M.save()
+        X.save()
+        J.save()
+        V.save()
+        S.save()
+        D.save()
+        try:
+            answer = Comensal.objects.get(user=user)    #query para sacar la respuesta anterior
+            answer.L = L
+            answer.M = M
+            answer.X = X
+            answer.J = J
+            answer.V = V
+            answer.S = S
+            answer.D = D
+            
+            """answer.L = Dia1(b=vari[0][0],l=vari[0][1],d=vari[0][2],m=vari[0][3]).save()
+            answer.M = Dia1(b=vari[1][0],l=vari[1][1],d=vari[1][2],m=vari[1][3]).save()
+            answer.X = Dia1(b=vari[2][0],l=vari[2][1],d=vari[2][2],m=vari[2][3]).save()
+            answer.J = Dia1(b=vari[3][0],l=vari[3][1],d=vari[3][2],m=vari[3][3]).save()
+            answer.V = Dia1(b=vari[4][0],l=vari[4][1],d=vari[4][2],m=vari[4][3]).save()
+            answer.S = Dia1(b=vari[5][0],l=vari[5][1],d=vari[5][2],m=vari[5][3]).save()
+            answer.D = Dia1(b=vari[6][0],l=vari[6][1],d=vari[6][2],m=vari[6][3]).save()
+"""
+        except Comensal.DoesNotExist:
+            answer = Comensal(user=user,L=L,M=M,X=X,J=J,V=V,S=S,D=S)
+
+            """answer = Comensal(user=user, 
+                L=Dia1(b=vari[0][0],l=vari[0][1],d=vari[0][2],m=vari[0][3]).save(), 
+                M=Dia1(b=vari[1][0],l=vari[1][1],d=vari[1][2],m=vari[1][3]).save(), 
+                X=Dia1(b=vari[2][0],l=vari[2][1],d=vari[2][2],m=vari[2][3]).save(), 
+                J=Dia1(b=vari[3][0],l=vari[3][1],d=vari[3][2],m=vari[3][3]).save(), 
+                V=Dia1(b=vari[4][0],l=vari[4][1],d=vari[4][2],m=vari[4][3]).save(), 
+                S=Dia1(b=vari[5][0],l=vari[5][1],d=vari[5][2],m=vari[5][3]).save(), 
+                D=Dia1(b=vari[6][0],l=vari[6][1],d=vari[6][2],m=vari[6][3]).save())"""
+        answer.save() #guarda la nueva respuesta en la base de datos
+
+    dias = ["Lunes","Martes","Miercoles","Jueves","Viernes","Sábado","Domingo"]
+#    num = [0, 1, 2, 3, 4, 5, 6]
+#    dias = {'0':"Lunes", '1':"Martes", '2':"Miercoles", '3':"Jueves", '4':"Viernes", '5':"Sábado", '6':"Domingo"}
+    variables = [[],[],[],[],[],[],[]]
+    for i in range(7):
+        variables[i] = [vari[i], dias[i], etiquetas[i]]
+
+    return render(request, 'blog/parte.html', {'variables': variables, 'title': 'Parte'})
 
 def Inicio(request):
     context = {
@@ -162,71 +290,6 @@ def deportista(request):
         except Deportista.DoesNotExist:
             answer = Deportista(user=user, observaciones=observaciones, dxt=dxt)
         answer.save() #guarda la nueva respuesta en la base de datos
-    return render(request, 'blog/deporte.html', {'dxt': dxt})
+    return render(request, 'blog/deporte.html', {'dxt': dxt, 'title': 'Deporte'})
 
-#@login_required 
-#def contact(request):
-#    thank = False
-#    if request.method=="POST":
-#        observaciones = request.POST.get('observaciones', '')
-#        user = None
-#        dxt = request.POST.get('respuesta','')
-#        if request.user.is_authenticated:   #Este if no es necesario
-#           user = request.user.username #guarda el nombre de usuario
-#        #eliminado = Contact(name='',user=user)
-#        #eliminado.delete()
-#
-#        #HABRIA QUE PONER UN LOG O ALGO PARA CONTROLAR QUE NO DEVUELVE MAS DE UN OBJETO LA SIGUIENTE QUERY!!!
-#        anterior= Contact.objects.get(user=user)    #query para sacar la respuesta anterior
-#        #email = request.POST.get('email', '')
-#        #phone = request.POST.get('phone', '')
-#        #desc = request.POST.get('desc', '')
-#        #contact = Contact(name=name, email=email, phone=phone, desc=desc)
-#        anterior.observaciones=observaciones
-#        anterior.dxt=dxt
-#        anterior.save() #guarda la nueva respuesta en la base de datos
-#        #contact = Contact(name=name, user=user)
-#        #contact.save()
-#        thank = True
-#    return render(request, 'blog/contact.html', {'thank': thank})
-
-#contact.html
-#{% extends "blog/base.html" %}
-
-#{% block content %}
-
-#<div class="container my-3">
-#    <h1>Deporte</h1>
-#    <h4>¿Haces deporte?</h4>
-#    <form method="post" action="{% url 'blog-contact' %}">{% csrf_token %}
-#        <div class="input-group">
-#            <select class="custom-select" id="inputGroupSelect04" name='respuesta'>
-#                <option selected>-- Selecciona una opción --</option>
-#                <option value="S">Sí, hago deporte</option>
-#                <option value="N">No hago deporte</option>
-#            </select>
-#        </div>
-#        <br>
-#        <div class="form-group">
-#            <label for="name">Observaciones:</label>
-#            <input type="text" class="form-control" id="name" name='observaciones' placeholder="Escribe aquí si tienes algo importante a tener en cuenta">
-#        </div>
-#        <hr/>
-#        <button type="submit" class="btn btn-success">Submit</button>
-#    </form>
-#</div>
-
-#{% endblock %}
-#{% block js%}
-#<script>
-#{% if thank %}
-#alert('Thanks for contacting us. We will get back to you soon!');
-
-#document.location = "/blog/contact";
-#{% endif %}
-#</script>
-#{% endblock %}
-
-#base.html
-#                  <!--<a class="nav-item nav-link" href="{% url 'blog-contact' %}">Contact</a>-->
-#                  <!--<a class="nav-item nav-link" href="{% url 'login' %}">Contact</a>-->
+    
