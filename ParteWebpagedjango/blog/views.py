@@ -18,6 +18,7 @@ from .models import Deportista, Post, Comensal, Dia1
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.utils.html import strip_tags
+from django_tex.shortcuts import render_to_pdf
 
 
 #Logic of html files
@@ -137,6 +138,7 @@ def Parte(request):
         user = request.user.username #guarda el nombre de usuario
     try:    #Para obtener la respuesta anterior si la hay
         answer = Comensal.objects.get(user=user)    #query para sacar la respuesta anterior
+        ops = answer.opciones
         vari[0] = [answer.L.b,answer.L.l,answer.L.d,answer.L.m]
         vari[1] = [answer.M.b,answer.M.l,answer.M.d,answer.M.m]
         vari[2] = [answer.X.b,answer.X.l,answer.X.d,answer.X.m]
@@ -145,6 +147,7 @@ def Parte(request):
         vari[5] = [answer.S.b,answer.S.l,answer.S.d,answer.S.m]
         vari[6] = [answer.D.b,answer.D.l,answer.D.d,answer.D.m]
     except Comensal.DoesNotExist:
+        ops = 'Normal'
         vari[0] = ['-','-','-','-']
         vari[1] = ['-','-','-','-']
         vari[2] = ['-','-','-','-']
@@ -155,6 +158,7 @@ def Parte(request):
     if request.method=="POST":
         for i in range(7):
             vari[i]=[request.POST.get(etiquetas[i][0],''),request.POST.get(etiquetas[i][1],''),request.POST.get(etiquetas[i][2],''),request.POST.get(etiquetas[i][3],'')]
+        ops = request.POST.get('opciones','')
         #vari.append(request.POST.get('respuestaLl',''))
         #vari.append(request.POST.get('respuestaLd',''))
         #vari.append(request.POST.get('respuestaLm',''))
@@ -175,6 +179,7 @@ def Parte(request):
         D.save()
         try:
             answer = Comensal.objects.get(user=user)    #query para sacar la respuesta anterior
+            answer.opciones = ops
             answer.L = L
             answer.M = M
             answer.X = X
@@ -192,7 +197,7 @@ def Parte(request):
             answer.D = Dia1(b=vari[6][0],l=vari[6][1],d=vari[6][2],m=vari[6][3]).save()
 """
         except Comensal.DoesNotExist:
-            answer = Comensal(user=user,L=L,M=M,X=X,J=J,V=V,S=S,D=S)
+            answer = Comensal(user=user,opciones=ops,L=L,M=M,X=X,J=J,V=V,S=S,D=S)
 
             """answer = Comensal(user=user, 
                 L=Dia1(b=vari[0][0],l=vari[0][1],d=vari[0][2],m=vari[0][3]).save(), 
@@ -211,7 +216,7 @@ def Parte(request):
     for i in range(7):
         variables[i] = [vari[i], dias[i], etiquetas[i]]
 
-    return render(request, 'blog/parte.html', {'variables': variables, 'title': 'Parte'})
+    return render(request, 'blog/parte.html', {'variables': variables, 'title': 'Parte', 'opciones': ops})
 
 def Inicio(request):
     context = {
@@ -292,4 +297,17 @@ def deportista(request):
         answer.save() #guarda la nueva respuesta en la base de datos
     return render(request, 'blog/deporte.html', {'dxt': dxt, 'title': 'Deporte'})
 
-    
+
+@login_required 
+def parte_to_pdf(request):
+    template_name = 'blog/tex/test.tex'
+    context = {'title': 'Parte en PDF'}
+    return render_to_pdf(request, template_name, context, filename='PartePDF.pdf')
+
+
+@login_required 
+def Imprimir(request):
+    if  request.user.username == 'parteadmin':
+        return render(request, 'blog/imprimir.html', {'title': 'Imprimir'})
+    else:
+        return render(request, 'blog/parte.html', {'title': 'Parte'})

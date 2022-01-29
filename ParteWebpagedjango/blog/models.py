@@ -43,6 +43,7 @@ class Dia1(models.Model):
 class Comensal(models.Model):
     msg_id1 = models.AutoField(primary_key=True, default=None)
     user = models.CharField(max_length=100, default="")
+    opciones = models.CharField(max_length=25, default="")
 #    Lb = models.CharField(max_length=100, default="")
 #    Ll = models.CharField(max_length=100, default="")
 #    Ld = models.CharField(max_length=100, default="")

@@ -6,6 +6,14 @@
     <h1>Parte</h1>
     <h3>Página en fase de pruebas</h3>
     <form method="post" action="{% url 'blog-parte' %}">{% csrf_token %}
+        <p>¿Tienes alguna necesidad especial?</p>
+        <select class="custom-select parte-select" id="inputGroupSelect04" name="opciones" style="width: 200px;">
+            <option value={{ opciones }} selected>{{ opciones }}</option>
+            <option value="Normal">Normal</option>
+            <option value="Dieta">Dieta</option>
+            <option value="Enfermo">Enfermo</option>
+            <option value="Blando">Blando</option>
+        </select>
         <table>
             <thead>
             <tr>

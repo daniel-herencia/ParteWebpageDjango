@@ -1,15 +1,47 @@
 
 {% extends "blog/base.html" %}
 {% block content %}
+    <svg viewBox="0 0 960 300">
+        <symbol id="s-text">
+        <text text-anchor="start" x="0%" y="60%">BARCELONA</text>
+        <text text-anchor="start" x="2%" y="60%">BARCELONA</text>      
+        </symbol>
+
+        <g class = "g-ants">
+        <use xlink:href="#s-text" class="text-copy"></use>
+        <use xlink:href="#s-text" class="text-copy"></use>
+        <use xlink:href="#s-text" class="text-copy"></use>
+        <use xlink:href="#s-text" class="text-copy"></use>
+        <use xlink:href="#s-text" class="text-copy"></use>
+        </g>
+    </svg>
     <div class="row">
-        <div class="col-md-8">
-            <h1>BIENVENIDO!!!</h1>
+        <div class="col-md-8">               
+              <h1>BIENVENIDO!!!</h1>
             <p>Bienvenido a la nueva página del piso de Barcelona. Aquí encontraras todo lo que necesitas para tu estancia.
             De momento la página está en fase de pruebas, cualquier error que detectes reportalo a los encargados. También 
             se adminten sugerencias. Para empezar simplemente tienes que crearte un usario y si quieres puedes añadir
             una imagen de perfil. Acuérdate bien de la contraseña, que de momento el enlace para actualizar la contraseña
             no está implementado. La parte de deporte estará operativa a partir del domingo día 23/01/2022.</p>
-            <img      width="700" src="media/background/init1.png">
+            <div id="cf">
+                <img class="bottom" width="700" height="300px" src="media/background/init2.png">
+                <img class="top" width="700" src="media/background/init1.png">
+            </div>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
             <h3>Usuarios:</h3>
             {% for use in users %}
                 <img class="rounded-circle init-img" src="{{ use.profile.image.url }}">
