@@ -192,6 +192,39 @@ body {
 .dropdown:hover .dropbtn {background-color: #3e8e41;}
 
 /* Imagenes sección de enlaces*/
+
+
+@keyframes blurringImage {
+  0% {
+    filter: blur(5px);
+}
+25% {
+  filter: blur(5px);
+}
+75% {
+  filter: blur(0px);
+}
+100% {
+  filter: blur(0px);
+}
+}
+
+@keyframes grayImage {
+  0% {
+    filter: grayscale(80%);
+}
+25% {
+  filter: grayscale(80%);
+}
+75% {
+  filter: grayscale(0%);
+}
+100% {
+  filter: grayscale(0%);
+}
+}
+
+
 .enlaces-container {
   position: relative;
   margin-right: 10px;
@@ -201,6 +234,10 @@ body {
   display: block;
   width: 100%;
   height: 200px;
+  animation-name: grayImage;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: 1;
+  animation-duration: 2s;
 }
 
 .enlaces-overlay {
@@ -420,47 +457,196 @@ tbody tr:hover {
 
 
 
-/*
-table {
-  background: #012B39;
-  border-radius: 0.25em;
-  border-collapse: collapse;
-  margin: 1em;
-  font-family: 'Open Sans', sans-serif;
+/* BOTÓN IMPRIMIR PARTE */
+.fcc-btn {
+  background-color: #198b93;
+  color: white;
 }
-th {
-  border-bottom: 1px solid #364043;
-  color: #E2B842;
-  font-size: 1.1em;
-  font-weight: 900;
-  padding: 0.5em 1em;
-  text-align: center;
-  font-family: 'Open Sans', sans-serif;
+
+/*IMAGEN CON TRANSICIÓN DE INICIO*/
+
+@keyframes cf3FadeOutIn {
+  0% {
+  opacity:0;
 }
-td {
-  color: #fff;
-  padding: 0.65em 1em;
-  font-family: 'Open Sans', sans-serif;
-  font-weight: bold;
+25% {
+opacity:0;
 }
-.disabled {
-  color: #4F5F64;
-  text-align: center;
+75% {
+opacity:1;
 }
-tbody tr {
-  transition: background 0.25s ease;
+100% {
+opacity:1;
 }
-tbody tr:hover {
-  background: #014055;
+}
+
+@keyframes cf3FadeInOut {
+  0% {
+  opacity:1;
+}
+25% {
+opacity:1;
+}
+75% {
+opacity:0;
+}
+100% {
+opacity:0;
+}
+}
+
+#cf {
+  position:relative;
+  width:700px;
+  margin:0 auto;
+}
+
+#cf img {
+  position:absolute;
+  left:0;
+  -webkit-transition: opacity 1s ease-in-out;
+  -moz-transition: opacity 1s ease-in-out;
+  -o-transition: opacity 1s ease-in-out;
+  transition: opacity 1s ease-in-out;
+}
+
+#cf img.top {
+  animation-name: cf3FadeInOut;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-duration: 10s;
+  animation-direction: alternate;
+  }
+
+  #cf img.bottom {
+    animation-name: cf3FadeOutIn;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-duration: 10s;
+    animation-direction: alternate;
+    }
+
+/*TEXTO BIENVENIDO*/
+
+@import url(https://fonts.googleapis.com/css?family=Montserrat);
+
+svg {
+    letter-spacing: 15px;
+    display: block;
+    font: 8.5em 'Montserrat';
+    width: 1060px;
+    height: 300px;
+    margin: 0 auto;
+}
+
+.text-copy {
+    fill: none;
+    stroke: white;
+    stroke-dasharray: 6% 29%;
+    stroke-width: 5px;
+    stroke-dashoffset: 0%;
+    animation: stroke-offset 6.5s infinite linear;
+}
+
+.text-copy:nth-child(1){
+  stroke: #066d8b;
+/*  stroke: #4D163D;*/
+  animation-delay: -1;
+}
+
+.text-copy:nth-child(2){
+  stroke: #309191;
+/*  stroke: #840037;*/
+  animation-delay: -2s;
+}
+
+.text-copy:nth-child(3){
+  stroke: #34b5aa;
+  /*  stroke: #BD0034;*/
+  animation-delay: -3s;
+}
+
+.text-copy:nth-child(4){
+  stroke: #6fa84b;
+/*  stroke: #BD0034;*/
+  animation-delay: -4s;
+}
+
+.text-copy:nth-child(5){
+  stroke: #ecbe14;
+/*  stroke: #FDB731;*/
+  animation-delay: -5s;
+}
+
+@keyframes stroke-offset{
+  100% {stroke-dashoffset: -35%;}
+}
+
+/*ANIMACIÓN ADIÓS*/
+@import url("https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900");
+
+
+.salida {
+margin-left: 10rem;
+padding: 100px; /*Margen superior*/
+position: relative;
+font-family: "Poppins", sans-serif;
+align-items: center;
+justify-content: center;
+}
+
+.salida h2 {
+color: #fff;
+font-size: 8em;
+position: absolute;
+transform: translate(-50%, -50%);
+}
+
+.salida h2:nth-child(1) {
+color: transparent;
+-webkit-text-stroke: 2px #19a39c;
+}
+
+.salida h2:nth-child(2) {
+color: #19a39c;
+animation: animate 4s ease-in-out infinite;
+}
+
+@keyframes animate {
+0%,
+100% {
+clip-path: polygon(
+  0% 45%,
+  16% 44%,
+  33% 50%,
+  54% 60%,
+  70% 61%,
+  84% 59%,
+  100% 52%,
+  100% 100%,
+  0% 100%
+);
+}
+
+50% {
+clip-path: polygon(
+  0% 60%,
+  15% 65%,
+  34% 66%,
+  51% 62%,
+  67% 50%,
+  84% 45%,
+  100% 46%,
+  100% 100%,
+  0% 100%
+);
+}
 }
 
 
- .parte-select{
-  position: relative;
-  font-family: 'Open Sans', sans-serif;
-  border: 1px solid #364043;
-  color:rgb(255, 255, 255);
-  background-color: #012B39;
-  text-align: center;
-}
-*/
+
+
+/*OTROS EFECTOS DE IMAGEN*/
+.imagengris:hover {filter: grayscale(80%);}
+
+.imagenborrosa:hover {filter: blur(5px);}

@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'ParteWebpagedjango',
+    'django_tex',
 ]
 
 MIDDLEWARE = [
@@ -61,6 +62,10 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'ParteWebpagedjango.urls'
 
+LATEX_INTERPRETER = 'pdflatex'
+
+LATEX_GRAPHICSPATH = [str(BASE_DIR / 'blog/templates/blog/tex'),]
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -74,6 +79,11 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
             ],
         },
+    },
+    {
+        'NAME': 'tex',
+        'BACKEND': 'django_tex.engine.TeXEngine', 
+        'APP_DIRS': True,
     },
 ]
 

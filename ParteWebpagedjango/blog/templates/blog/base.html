@@ -59,7 +59,8 @@
                       <a href="{% url 'profile' %}">Perfil</a>
                       <a href="{% url 'logout' %}">Salir</a>
                       {% if user.username == 'parteadmin'%}
-                        <a href="{% url 'blog-extras' %}">Zona Admin</a>
+                        <a href="{% url 'blog-extras' %}">DxT Admin</a>
+                        <a href="{% url 'blog-imprimir' %}">Parte Admin</a>
                       {% endif %}
                     </div>
                   </div>
