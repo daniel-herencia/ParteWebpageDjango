@@ -79,31 +79,7 @@
 
     <!-- Sidebar of the webpage -->
     <main role="main" class="container">
-      <div class="row">
-        <div class="col-md-8">
-          {% if messages %}
-            {% for message in messages %}
-              <div class="alert alert-{{ message.tags }}">
-                {{ message }}
-              </div>
-            {% endfor %}
-          {% endif %}
-          {% block content %}{% endblock %}
-        </div>
-        <div class="col-md-4">
-          <div class="content-section">
-            <h3>Novedades</h3>
-            <p class='text-muted'>Próximamente:
-              <ul class="list-group">
-                <li class="list-group-item list-group-item-light">Pablocoins</li>
-                <li class="list-group-item list-group-item-light">Anuncios</li>
-                <li class="list-group-item list-group-item-light">Calendario</li>
-                <li class="list-group-item list-group-item-light">...</li>
-              </ul>
-            </p>
-          </div>
-        </div>
-      </div>
+      {% block content %}{% endblock %}
     </main>
       <!--FUNCTION TO INCREASE OPACITY WHILE SCROLLING-->
       <script>

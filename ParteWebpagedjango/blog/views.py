@@ -204,7 +204,7 @@ def Parte(request):
                 D=Dia1(b=vari[6][0],l=vari[6][1],d=vari[6][2],m=vari[6][3]).save())"""
         answer.save() #guarda la nueva respuesta en la base de datos
 
-    dias = ["Lunes","Martes","Miercoles","Jueves","Viernes","Sábado","Domingo"]
+    dias = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"]
 #    num = [0, 1, 2, 3, 4, 5, 6]
 #    dias = {'0':"Lunes", '1':"Martes", '2':"Miercoles", '3':"Jueves", '4':"Viernes", '5':"Sábado", '6':"Domingo"}
     variables = [[],[],[],[],[],[],[]]

@@ -78,44 +78,48 @@ body {
     font-size: 110%;
   }
 
+
+  @font-face {
+    font-family: 'fuente-header2';
+    src:  url("/media/Letras/geomanist-regular-webfont.ttf");
+  }
+
   /*Opciones del la navigation bar (parte, mensajes...)*/
   .menuheader{
-    color: #dff7ff;
-    /*font-family: 'fuente-titulo';*/
-    font-size: 150%;
-    padding: 15px 0px; 
+    color: #ffffff;
+    font-size: 130%;
+    font-family: 'fuente-header2';
+    padding: 25px 0px; 
     display:inline-block;
   }
 
   .menuheader:hover{
-    color: #ffffff;
-    /*font-family: 'fuente-titulo';*/
-    font-size: 160%;
+    color: #ececec;
+    font-size: 140%;
     box-shadow: inset 0 -3px 0 0 rgb(255, 255, 255);
     box-shadow: none;
     text-decoration:none;
-    padding: 10px 0px; 
+    padding: 20px 0px; 
     display:inline-block;
     }
 
 
   /*Opciones del la navigation bar (parte, mensajes...)*/
   .login{
-    color: #dff7ff;
-    /*font-family: 'fuente-titulo';*/
-    font-size: 150%;
-    padding: 10px 0px;
+    color: #ffffff;
+    font-size: 130%;
+    font-family: 'fuente-header2';
+    padding: 25px 0px;
     display:inline-block;
   }
 
   .login:hover{
-    color: #ffffff;
-    /*font-family: 'fuente-titulo';*/
-    font-size: 160%;
+    color: #ececec;
+    font-size: 140%;
     box-shadow: inset 0 -3px 0 0 rgb(255, 255, 255);
     box-shadow: none;
     text-decoration:none;
-    padding: 10px 0px; 
+    padding: 20px 0px; 
     display:inline-block;
     }
 
@@ -138,7 +142,7 @@ body {
   /*Fuente usada en el título barcelona*/
   @font-face {
     font-family: 'fuente-titulo';
-    src:  url("/media/background/OPTIAlternateThree.otf");
+    src:  url("/media/Letras/OPTIAlternateThree.otf");
   }
   
   .site-header .navbar-nav .nav-link.active {
@@ -334,6 +338,90 @@ body {
   font-family: 'Open Sans', sans-serif;
 }*/
 table {
+  background: #f1f1f1;
+  border-radius: 1em;
+  border-collapse: collapse;
+  margin: 1em;
+  font-family: 'fuente-header2';
+}
+th {
+ /* border-bottom: 1px solid #f1f1f1;*/
+  background: #9CB4B3;
+  color: #ffffff;
+  font-size: 1.2em;
+  font-weight: 900;
+  padding: 0.5em 1em;
+  text-align: center;
+  font-family: 'fuente-header2';
+}
+td {
+  color: #4f4f4f;
+  padding: 0.65em 1em;
+  font-family: 'fuente-header2';
+  font-weight: 100;
+}
+.disabled {
+  color: #4F5F64;
+  text-align: center;
+}
+tbody tr {
+  transition: background 0.25s ease;
+}
+tbody tr:hover {
+  background: #dbe4e6;
+}
+
+/*BOTÓN SELECT DEL PARTE*/
+ /* The container must be positioned relative: */
+  .parte-select{
+  position: relative;
+  font-family: 'fuente-header2';
+  font-weight:100;
+  border: 1px solid #9CB4B3;
+  color:rgb(43, 43, 43);
+  background-color: #f1f1f1;
+  text-align: center;
+}
+
+  .parte-select .dropdown{
+  font-family: 'fuente-header2';
+  font-weight:100;
+  color:rgb(43, 43, 43);
+  text-align: center;
+}
+
+/*BOTÓN SUBMINT PARTE*/
+.boton-parte{
+  font-size:15px;
+  /*font-family:;*/
+  font-weight:bold;
+  font-family: 'fuente-header2';
+  color:white;
+  background:#9CB4B3;
+  width:120px;
+  height:40px;
+ }
+
+
+/*IMAGEN ESPECIAL*/
+.especial-imagen{
+  width:200px;
+}
+
+.especial-imagen:hover{
+  transition: .5s ease-in-out;
+  border-radius:50%;
+  -webkit-border-radius:50%;
+  box-shadow: 0px 0px 5px 5px #ec731e;
+  -webkit-box-shadow: 0px 0px 5px 5px #ec731e;
+  transform: rotate(360deg);
+  -webkit-transform: rotate(360deg);
+}
+
+
+
+/*
+table {
   background: #012B39;
   border-radius: 0.25em;
   border-collapse: collapse;
@@ -346,7 +434,7 @@ th {
   font-size: 1.1em;
   font-weight: 900;
   padding: 0.5em 1em;
-  text-align: left;
+  text-align: center;
   font-family: 'Open Sans', sans-serif;
 }
 td {
@@ -366,9 +454,8 @@ tbody tr:hover {
   background: #014055;
 }
 
-/*BOTÓN SELECT DEL PARTE*/
- /* The container must be positioned relative: */
-  .parte-select{
+
+ .parte-select{
   position: relative;
   font-family: 'Open Sans', sans-serif;
   border: 1px solid #364043;
@@ -376,3 +463,4 @@ tbody tr:hover {
   background-color: #012B39;
   text-align: center;
 }
+*/

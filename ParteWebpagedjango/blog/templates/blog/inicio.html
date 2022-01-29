@@ -1,16 +1,39 @@
 
 {% extends "blog/base.html" %}
 {% block content %}
-    <h1>BIENVENIDO!!!</h1>
-    <p>Bienvenido a la nueva página del piso de Barcelona. Aquí encontraras todo lo que necesitas para tu estancia.
-    De momento la página está en fase de pruebas, cualquier error que detectes reportalo a los encargados. También 
-    se adminten sugerencias. Para empezar simplemente tienes que crearte un usario y si quieres puedes añadir
-    una imagen de perfil. Acuérdate bien de la contraseña, que de momento el enlace para actualizar la contraseña
-    no está implementado. La parte de deporte estará operativa a partir del domingo día 23/01/2022.</p>
-    <img      width="700" src="media/background/init1.png">
-    <h3>Usuarios:</h3>
-    {% for use in users %}
-        <img class="rounded-circle init-img" src="{{ use.profile.image.url }}">
-<!--        <p>{{ user.username }} </p>-->
-    {% endfor %}
+    <div class="row">
+        <div class="col-md-8">
+            <h1>BIENVENIDO!!!</h1>
+            <p>Bienvenido a la nueva página del piso de Barcelona. Aquí encontraras todo lo que necesitas para tu estancia.
+            De momento la página está en fase de pruebas, cualquier error que detectes reportalo a los encargados. También 
+            se adminten sugerencias. Para empezar simplemente tienes que crearte un usario y si quieres puedes añadir
+            una imagen de perfil. Acuérdate bien de la contraseña, que de momento el enlace para actualizar la contraseña
+            no está implementado. La parte de deporte estará operativa a partir del domingo día 23/01/2022.</p>
+            <img      width="700" src="media/background/init1.png">
+            <h3>Usuarios:</h3>
+            {% for use in users %}
+                <img class="rounded-circle init-img" src="{{ use.profile.image.url }}">
+            <!--        <p>{{ user.username }} </p>-->
+            {% endfor %}
+            <br>
+            <br>
+            <br>
+            <p>Empleado del mes:</p>
+            <br>
+            <img class="especial-imagen" src="../media/profile_pics/Perfil_linkedin.jpg">
+        </div>
+        <div class="col-md-4">
+            <div class="content-section">
+            <h3>Novedades</h3>
+            <p class='text-muted'>Próximamente:
+                <ul class="list-group">
+                <li class="list-group-item list-group-item-light">Pablocoins</li>
+                <li class="list-group-item list-group-item-light">Anuncios</li>
+                <li class="list-group-item list-group-item-light">Calendario</li>
+                <li class="list-group-item list-group-item-light">...</li>
+                </ul>
+            </p>
+            </div>
+        </div>
+    </div>
 {% endblock content %}
