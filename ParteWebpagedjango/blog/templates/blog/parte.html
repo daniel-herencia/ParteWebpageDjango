@@ -4,5 +4,87 @@
 {% extends "blog/base.html" %}
 {% block content %}
     <h1>Parte</h1>
-    <h3>Página en proceso, disculpen las molestias</h3>
+    <h3>Página en fase de pruebas</h3>
+    <form method="post" action="{% url 'blog-parte' %}">{% csrf_token %}
+        <table>
+            <thead>
+            <tr>
+                <th style="border-radius: 15px 0px 0px 0px;">DIA
+                <th>DESAYUNO
+                <th>COMIDA
+                <th>CENA
+                <th style="border-radius: 0px 15px 0px 0px;">Media mañana
+            </thead>
+            <tbody align="center">
+            <!-- <tbody>
+            {% with dias="Lunes" %}
+            {% endwith %}
+            {{ dias|add:"Martes" }}
+            {{ dias }}-->
+            {% for var, dia, etiqueta in variables %}
+                {% with i=forloop.counter0 %}     
+            <tr>
+                {% if dia == "Domingo" %}
+                    <td style="background-color: rgb(219, 219, 219); border-radius: 0px 0px 0px 15px;">{{ dia }}
+                {% else %}
+                    <td style="background-color: rgb(219, 219, 219);">{{ dia }}
+                {% endif %}
+                <td><select class="custom-select parte-select" id="inputGroupSelect04" name={{ etiqueta.0 }}>
+                    <option value={{ var.0 }} selected>{{ var.0 }}</option>
+                    <option value="-">-</option>
+                    <option value="Normal">Normal</option>
+                    <option value="Bocadillo-Pequeño">Bocadillo-Pequeño</option>
+                    <option value="Bocadillo">Bocadillo</option>
+                    <option value="Cesta">Cesta</option>
+                    <option value="Fiambrera">Fiambrera</option>
+                </select>
+                <td><select class="custom-select parte-select" id="inputGroupSelect04" name={{ etiqueta.1 }}>
+                    <option value={{ var.1 }} selected>{{ var.1 }}</option>
+                    <option value="-">-</option>
+                    <option value="Normal">Normal</option>
+                    <option value="Bocadillo-Pequeño">Bocadillo-Pequeño</option>
+                    <option value="Bocadillo">Bocadillo</option>
+                    <option value="Cesta">Cesta</option>
+                    <option value="Fiambrera">Fiambrera</option>
+                    <option value="Comida-13:00">Comida-13:00</option>
+                    <option value="Comida-13:30">Comida-13:30</option>
+                    <option value="Comida-14:00">Comida-14:00</option>
+                </select>           
+                <td><select class="custom-select parte-select" id="inputGroupSelect04" name={{ etiqueta.2 }}>
+                    <option value={{ var.2 }} selected>{{ var.2 }}</option>
+                    <option value="-">-</option>
+                    <option value="Normal">Normal</option>
+                    <option value="Bocadillo-Pequeño">Bocadillo-Pequeño</option>
+                    <option value="Bocadillo">Bocadillo</option>
+                    <option value="Cesta">Cesta</option>
+                    <option value="Fiambrera">Fiambrera</option>
+                </select>
+                {% if dia == "Sábado" or dia == "Domingo"%}
+                    <td disabled><select class="custom-select parte-select" id="inputGroupSelect04" name={{ etiqueta.3 }}>
+                        <option value="-">-</option>
+                    </select>
+                {% else %}
+                    <td><select class="custom-select parte-select" id="inputGroupSelect04" name={{ etiqueta.3 }}>
+                            <option value={{ var.3 }} selected>{{ var.3 }}</option>
+                            <option value="Si">Si</option>
+                            <option value="-">-</option>
+                        </select>
+                {% endif %}
+                {% endwith %}
+            {% endfor %}
+            </tbody>
+        </table>
+        <button type="submit" class="btn boton-parte">Guardar</button>
+    </form>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
 {% endblock content %}
