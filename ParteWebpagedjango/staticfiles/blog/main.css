@@ -78,44 +78,48 @@ body {
     font-size: 110%;
   }
 
+
+  @font-face {
+    font-family: 'fuente-header2';
+    src:  url("/media/Letras/geomanist-regular-webfont.ttf");
+  }
+
   /*Opciones del la navigation bar (parte, mensajes...)*/
   .menuheader{
-    color: #dff7ff;
-    /*font-family: 'fuente-titulo';*/
-    font-size: 150%;
-    padding: 15px 0px; 
+    color: #ffffff;
+    font-size: 130%;
+    font-family: 'fuente-header2';
+    padding: 25px 0px; 
     display:inline-block;
   }
 
   .menuheader:hover{
-    color: #ffffff;
-    /*font-family: 'fuente-titulo';*/
-    font-size: 160%;
+    color: #ececec;
+    font-size: 140%;
     box-shadow: inset 0 -3px 0 0 rgb(255, 255, 255);
     box-shadow: none;
     text-decoration:none;
-    padding: 10px 0px; 
+    padding: 20px 0px; 
     display:inline-block;
     }
 
 
   /*Opciones del la navigation bar (parte, mensajes...)*/
   .login{
-    color: #dff7ff;
-    /*font-family: 'fuente-titulo';*/
-    font-size: 150%;
-    padding: 10px 0px;
+    color: #ffffff;
+    font-size: 130%;
+    font-family: 'fuente-header2';
+    padding: 25px 0px;
     display:inline-block;
   }
 
   .login:hover{
-    color: #ffffff;
-    /*font-family: 'fuente-titulo';*/
-    font-size: 160%;
+    color: #ececec;
+    font-size: 140%;
     box-shadow: inset 0 -3px 0 0 rgb(255, 255, 255);
     box-shadow: none;
     text-decoration:none;
-    padding: 10px 0px; 
+    padding: 20px 0px; 
     display:inline-block;
     }
 
@@ -138,7 +142,7 @@ body {
   /*Fuente usada en el título barcelona*/
   @font-face {
     font-family: 'fuente-titulo';
-    src:  url("/media/background/OPTIAlternateThree.otf");
+    src:  url("/media/Letras/OPTIAlternateThree.otf");
   }
   
   .site-header .navbar-nav .nav-link.active {
@@ -188,6 +192,39 @@ body {
 .dropdown:hover .dropbtn {background-color: #3e8e41;}
 
 /* Imagenes sección de enlaces*/
+
+
+@keyframes blurringImage {
+  0% {
+    filter: blur(5px);
+}
+25% {
+  filter: blur(5px);
+}
+75% {
+  filter: blur(0px);
+}
+100% {
+  filter: blur(0px);
+}
+}
+
+@keyframes grayImage {
+  0% {
+    filter: grayscale(80%);
+}
+25% {
+  filter: grayscale(80%);
+}
+75% {
+  filter: grayscale(0%);
+}
+100% {
+  filter: grayscale(0%);
+}
+}
+
+
 .enlaces-container {
   position: relative;
   margin-right: 10px;
@@ -197,6 +234,10 @@ body {
   display: block;
   width: 100%;
   height: 200px;
+  animation-name: grayImage;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: 1;
+  animation-duration: 2s;
 }
 
 .enlaces-overlay {
@@ -237,9 +278,14 @@ body {
 .init-img {
   height: 75px;
   width: 75px;
+  /*width: 100%;
+  background-size: cover; 
+  background-position: center center;*/
   /*margin-right: 20px;
   margin-bottom: 16px;*/
 }
+
+
 
 /*Extraidos del tutorial del blog*/
 
@@ -313,3 +359,294 @@ body {
     transition: all .2s ease-in-out;
   }
   
+
+  /*TABLAS PARTE*/
+
+  @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600);
+
+*, *:before, *:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+/*
+body {
+  background: #105469;
+  font-family: 'Open Sans', sans-serif;
+}*/
+table {
+  background: #f1f1f1;
+  border-radius: 1em;
+  border-collapse: collapse;
+  margin: 1em;
+  font-family: 'fuente-header2';
+}
+th {
+ /* border-bottom: 1px solid #f1f1f1;*/
+  background: #9CB4B3;
+  color: #ffffff;
+  font-size: 1.2em;
+  font-weight: 900;
+  padding: 0.5em 1em;
+  text-align: center;
+  font-family: 'fuente-header2';
+}
+td {
+  color: #4f4f4f;
+  padding: 0.65em 1em;
+  font-family: 'fuente-header2';
+  font-weight: 100;
+}
+.disabled {
+  color: #4F5F64;
+  text-align: center;
+}
+tbody tr {
+  transition: background 0.25s ease;
+}
+tbody tr:hover {
+  background: #dbe4e6;
+}
+
+/*BOTÓN SELECT DEL PARTE*/
+ /* The container must be positioned relative: */
+  .parte-select{
+  position: relative;
+  font-family: 'fuente-header2';
+  font-weight:100;
+  border: 1px solid #9CB4B3;
+  color:rgb(43, 43, 43);
+  background-color: #f1f1f1;
+  text-align: center;
+}
+
+  .parte-select .dropdown{
+  font-family: 'fuente-header2';
+  font-weight:100;
+  color:rgb(43, 43, 43);
+  text-align: center;
+}
+
+/*BOTÓN SUBMINT PARTE*/
+.boton-parte{
+  font-size:15px;
+  /*font-family:;*/
+  font-weight:bold;
+  font-family: 'fuente-header2';
+  color:white;
+  background:#9CB4B3;
+  width:120px;
+  height:40px;
+ }
+
+
+/*IMAGEN ESPECIAL*/
+.especial-imagen{
+  width:200px;
+}
+
+.especial-imagen:hover{
+  transition: .5s ease-in-out;
+  border-radius:50%;
+  -webkit-border-radius:50%;
+  box-shadow: 0px 0px 5px 5px #ec731e;
+  -webkit-box-shadow: 0px 0px 5px 5px #ec731e;
+  transform: rotate(360deg);
+  -webkit-transform: rotate(360deg);
+}
+
+
+
+/* BOTÓN IMPRIMIR PARTE */
+.fcc-btn {
+  background-color: #198b93;
+  color: white;
+}
+
+/*IMAGEN CON TRANSICIÓN DE INICIO*/
+
+@keyframes cf3FadeOutIn {
+  0% {
+  opacity:0;
+}
+25% {
+opacity:0;
+}
+75% {
+opacity:1;
+}
+100% {
+opacity:1;
+}
+}
+
+@keyframes cf3FadeInOut {
+  0% {
+  opacity:1;
+}
+25% {
+opacity:1;
+}
+75% {
+opacity:0;
+}
+100% {
+opacity:0;
+}
+}
+
+#cf {
+  position:relative;
+  width:700px;
+  margin:0 auto;
+}
+
+#cf img {
+  position:absolute;
+  left:0;
+  -webkit-transition: opacity 1s ease-in-out;
+  -moz-transition: opacity 1s ease-in-out;
+  -o-transition: opacity 1s ease-in-out;
+  transition: opacity 1s ease-in-out;
+}
+
+#cf img.top {
+  animation-name: cf3FadeInOut;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-duration: 10s;
+  animation-direction: alternate;
+  }
+
+  #cf img.bottom {
+    animation-name: cf3FadeOutIn;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-duration: 10s;
+    animation-direction: alternate;
+    }
+
+/*TEXTO BIENVENIDO*/
+
+@import url(https://fonts.googleapis.com/css?family=Montserrat);
+
+svg {
+    letter-spacing: 15px;
+    display: block;
+    font: 8.5em 'Montserrat';
+    width: 1060px;
+    height: 300px;
+    margin: 0 auto;
+}
+
+.text-copy {
+    fill: none;
+    stroke: white;
+    stroke-dasharray: 6% 29%;
+    stroke-width: 5px;
+    stroke-dashoffset: 0%;
+    animation: stroke-offset 6.5s infinite linear;
+}
+
+.text-copy:nth-child(1){
+  stroke: #066d8b;
+/*  stroke: #4D163D;*/
+  animation-delay: -1;
+}
+
+.text-copy:nth-child(2){
+  stroke: #309191;
+/*  stroke: #840037;*/
+  animation-delay: -2s;
+}
+
+.text-copy:nth-child(3){
+  stroke: #34b5aa;
+  /*  stroke: #BD0034;*/
+  animation-delay: -3s;
+}
+
+.text-copy:nth-child(4){
+  stroke: #6fa84b;
+/*  stroke: #BD0034;*/
+  animation-delay: -4s;
+}
+
+.text-copy:nth-child(5){
+  stroke: #ecbe14;
+/*  stroke: #FDB731;*/
+  animation-delay: -5s;
+}
+
+@keyframes stroke-offset{
+  100% {stroke-dashoffset: -35%;}
+}
+
+/*ANIMACIÓN ADIÓS*/
+@import url("https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900");
+
+
+.salida {
+margin-left: 10rem;
+padding: 100px; /*Margen superior*/
+position: relative;
+font-family: "Poppins", sans-serif;
+align-items: center;
+justify-content: center;
+}
+
+.salida h2 {
+color: #fff;
+font-size: 8em;
+position: absolute;
+transform: translate(-50%, -50%);
+}
+
+.salida h2:nth-child(1) {
+color: transparent;
+-webkit-text-stroke: 2px #19a39c;
+}
+
+.salida h2:nth-child(2) {
+color: #19a39c;
+animation: animate 4s ease-in-out infinite;
+}
+
+@keyframes animate {
+0%,
+100% {
+clip-path: polygon(
+  0% 45%,
+  16% 44%,
+  33% 50%,
+  54% 60%,
+  70% 61%,
+  84% 59%,
+  100% 52%,
+  100% 100%,
+  0% 100%
+);
+}
+
+50% {
+clip-path: polygon(
+  0% 60%,
+  15% 65%,
+  34% 66%,
+  51% 62%,
+  67% 50%,
+  84% 45%,
+  100% 46%,
+  100% 100%,
+  0% 100%
+);
+}
+}
+
+
+
+
+/*OTROS EFECTOS DE IMAGEN*/
+.imagengris:hover {filter: grayscale(80%);}
+
+.imagenborrosa:hover {filter: blur(5px);}
