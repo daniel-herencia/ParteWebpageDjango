@@ -1,8 +1,121 @@
-\documentclass{article}
+\documentclass[12pt]{report}
+\usepackage[utf8]{inputenc}
+\usepackage{float}
+\usepackage{vmargin}
+\usepackage{multicol}
+\usepackage[table,xcdraw]{xcolor} %Table color
+\usepackage{tabularx,booktabs}
+\usepackage{longtable}
+\usepackage{lipsum}% just to generate filler text for the example
+\setlength{\parindent}{0pt}
+%------------------------------------------------------
+
+
+\setpapersize{A4}
+\setmargins{2cm}       % margen izquierdo
+{0.5cm}                        % margen superior
+{18cm}                      % anchura del texto
+{26.5cm}                    % altura del texto
+{10pt}                           % altura de los encabezados
+{1cm}                           % espacio entre el texto y los encabezados
+{0cm}                             % altura del pie de página
+{1cm}                           % espacio entre el texto y el pie de página
+
+\renewcommand{\labelitemi}{\tiny$\blacksquare$}
 
 \begin{document}
+\centering
+\underline{\textsc{\Huge {{ dia }}, {{ numerodia }} de {{ mes }} de {{ año }}}}
 
-Hi, I'm using LaTeX with django
+\vspace{1cm}
 
+\raggedright
+{\huge Platos:}
+
+\begin{table}[H]
+\begin{tabular}{|l|cccc|
+>{\columncolor[HTML]{EFEFEF}}c |c|}
+\hline
+\multicolumn{1}{|c|}{Tipo}       & \multicolumn{4}{c|}{\cellcolor[HTML]{C0C0C0}COMIDA (hoy)}                                                                        & \cellcolor[HTML]{C0C0C0}CENA (hoy) & \cellcolor[HTML]{C0C0C0}DESAYUNO (mañana) \\ \hline
+\cellcolor[HTML]{EFEFEF}Hora     & \multicolumn{1}{c|}{\textbf{13:00}} & \multicolumn{1}{c|}{\textbf{13:30}} & \multicolumn{1}{c|}{\textbf{14:00}} & \textbf{14:30} & \textbf{21:00}                     & \textbf{7:00}                             \\ \hline
+\cellcolor[HTML]{EFEFEF}NORMALES & \multicolumn{1}{c|}{\textbf{ {{ comida.get('Comida-13:00') }} }}     & \multicolumn{1}{c|}{\textbf{ {{ comida.get('Comida-13:30') }} }}     & \multicolumn{1}{c|}{\textbf{ {{ comida.get('Comida-14:00') }} }}     & \textbf{ {{ comida.Normal }} }     & \textbf{ {{ cena.Normal }} }                         & \textbf{ {{ desayuno.Normal }} }                                \\ \hline
+{% if tipo.dieta != 0 %}
+\cellcolor[HTML]{EFEFEF}DIETA    & \multicolumn{1}{c|}{\textbf{ {{ comidaD.get('Comida-13:00') }} }}     & \multicolumn{1}{c|}{\textbf{ {{ comidaD.get('Comida-13:30') }} }}     & \multicolumn{1}{c|}{\textbf{ {{ comidaD.get('Comida-14:00') }} }}     & \textbf{ {{ comidaD.Normal }} }     & \textbf{ {{ cenaD.Normal }} }                         & \textbf{ {{ desayunoD.Normal }} }                                \\ \hline
+{% endif %}
+{% if tipo.enfermo != 0 %}
+\cellcolor[HTML]{EFEFEF}ENFERMOS & \multicolumn{1}{c|}{\textbf{ {{ comidaE.get('Comida-13:00') }} }}     & \multicolumn{1}{c|}{\textbf{ {{ comidaE.get('Comida-13:30') }} }}     & \multicolumn{1}{c|}{\textbf{ {{ comidaE.get('Comida-14:00') }} }}     & \textbf{ {{ comidaE.Normal }} }     & \textbf{ {{ cenaE.Normal }} }                         & \textbf{ {{ desayunoE.Normal }} }                                \\ \hline
+{% endif %}
+{% if tipo.blando != 0 %}
+\cellcolor[HTML]{EFEFEF}BLANDO   & \multicolumn{1}{c|}{\textbf{ {{ comidaB.get('Comida-13:00') }} }}     & \multicolumn{1}{c|}{\textbf{ {{ comidaB.get('Comida-13:30') }} }}     & \multicolumn{1}{c|}{\textbf{ {{ comidaB.get('Comida-14:00') }} }}     & \textbf{ {{ comidaB.Normal }} }     & \textbf{ {{ cenaB.Normal }} }                         & \textbf{ {{ desayunoB.Normal }} }                                \\ \hline
+{% endif %}
+\end{tabular}
+\end{table}
+
+\vspace{1cm}
+{\huge Bocadillos:}
+
+\begin{table}[H]
+\begin{tabular}{|l|c|
+>{\columncolor[HTML]{EFEFEF}}c |c|
+>{\columncolor[HTML]{EFEFEF}}c |c|}
+\hline
+\multicolumn{1}{|c|}{Tipo}                              & \cellcolor[HTML]{C0C0C0}PEQUEÑO & \cellcolor[HTML]{C0C0C0}GRANDE & \cellcolor[HTML]{C0C0C0}DIETA & \cellcolor[HTML]{C0C0C0}ENFERO & \cellcolor[HTML]{C0C0C0}BLANDO \\ \hline
+\cellcolor[HTML]{EFEFEF}Bocadillo DESAYUNO (mañana)     & \textbf{ {{ desayuno.get('Bocadillo-Pequeño') }} }                      & \textbf{ {{ desayuno.Bocadillo }} }                     & \textbf{ {{ desayunoD.Bocadillo }} }                    & \textbf{ {{ desayunoE.Bocadillo }} }                     & \textbf{ {{ desayunoB.Bocadillo }} }                     \\ \hline
+\cellcolor[HTML]{EFEFEF}Bocadillo COMIDA (mañana)       & \textbf{ {{ bocayfiambreras.get('Bocadillo-Pequeño') }} }                      & \textbf{ {{ bocayfiambreras.Bocadillo }} }                     & \textbf{ {{ bocayfiambrerasD.Bocadillo }} }                    & \textbf{ {{ bocayfiambrerasE.Bocadillo }} }                     & \textbf{ {{ bocayfiambrerasB.Bocadillo }} }                     \\ \hline
+\cellcolor[HTML]{EFEFEF}Bocadillo CENA (hoy)            & \textbf{ {{ cena.get('Bocadillo-Pequeño') }} }                      & \textbf{ {{ cena.Bocadillo }} }                     & \textbf{ {{ cenaD.Bocadillo }} }                    & \textbf{ {{ cenaE.Bocadillo }} }                     & \textbf{ {{ cenaB.Bocadillo }} }                     \\ \hline
+\cellcolor[HTML]{EFEFEF}Bocadillo MEDIA MAÑANA & \textbf{-}                     & \textbf{ {{ mediamañana.Si }} }                    & \textbf{ {{ mediamañanaD.Si }} }                   & \textbf{ {{ mediamañanaE.Si }} }                    & \textbf{ {{ mediamañanaB.Si }} }                    \\ \hline
+\end{tabular}
+\end{table}
+\vspace{0.2cm}
+{% if bocayfiambreras.getBocadillo != 0%}
+Usuarios Bocadillo Comida: {{ " ".join(usuariosBocyF.Bocadillo) }} } \\
+{% endif %}
+{% if bocayfiambreras.get('Bocadillo-Pequeño') != 0%}
+Usuarios Bocadillo Comida: {{ " ".join(usuariosBocyF.get('Bocadillo-Pequeño')) }} \\
+{% endif %}
+\vspace{1cm}
+{\huge Cestas y Fiambreras:}
+\begin{table}[H]
+\begin{tabular}{|l|c|
+>{\columncolor[HTML]{EFEFEF}}c |c|}
+\hline
+Tipo                                      & \cellcolor[HTML]{C0C0C0}DESAYUNO & \cellcolor[HTML]{C0C0C0}COMIDA & \cellcolor[HTML]{C0C0C0}CENA \\ \hline
+\cellcolor[HTML]{EFEFEF}CESTA             & \textbf{ {{ desayuno.Cesta }} }                       & \textbf{ {{ comida.Cesta }} }                     & \textbf{ {{ cena.Cesta }} }                   \\ \hline
+\cellcolor[HTML]{EFEFEF}FIAMBRERA         & \textbf{ {{ desayuno.Fiambrera }} }                       & \textbf{ {{ bocayfiambreras.Fiambrera }}* }                     & \textbf{ {{ cena.Fiambrera }} }                   \\ \hline
+{% if (desayunoE.Cesta + comidaE.Cesta + cenaE.Cesta) != 0 %}
+\cellcolor[HTML]{EFEFEF}Cesta ENFERMO     & \textbf{ {{ desayunoE.Cesta }} }                       & \textbf{ {{ comidaE.Cesta }} }                     & \textbf{ {{ cenaE.Cesta }} }                   \\ \hline
+{% endif %}
+{% if (desayunoD.Cesta + comidaD.Cesta + cenaD.Cesta) != 0 %}
+\cellcolor[HTML]{EFEFEF}Cesta DIETA       & \textbf{ {{ desayunoD.Cesta }} }                      & \textbf{ {{ comidaD.Cesta }} }                    & \textbf{ {{ cenaD.Cesta }} }                  \\ \hline
+{% endif %}
+{% if (desayunoB.Cesta + comidaB.Cesta + cenaB.Cesta) != 0 %}
+\cellcolor[HTML]{EFEFEF}Cesta BLANDO      & \textbf{ {{ desayunoB.Cesta }} }                      & \textbf{ {{ comidaB.Cesta }} }                    & \textbf{ {{ cenaB.Cesta }} }                  \\ \hline
+{% endif %}
+{% if (desayunoE.Fiambrera + bocayfiambrerasE.Fiambrera + cenaE.Fiambrera) != 0 %}
+\cellcolor[HTML]{EFEFEF}Fiambrera ENFERMO      & \textbf{ {{ desayunoE.Fiambrera }} }                      & \textbf{ {{ bocayfiambrerasE.Fiambrera }}* }                    & \textbf{ {{ cenaE.Fiambrera }} }                  \\ \hline
+{% endif %}
+{% if (desayunoD.Fiambrera + bocayfiambrerasD.Fiambrera + cenaD.Fiambrera) != 0 %}
+\cellcolor[HTML]{EFEFEF}Fiambrera DIETA   & \textbf{ {{ desayunoD.Fiambrera }} }                      & \textbf{ {{ bocayfiambrerasD.Fiambrera }}* }                    & \textbf{ {{ cenaD.Fiambrera }} }                  \\ \hline
+{% endif %}
+{% if (desayunoB.Fiambrera + bocayfiambrerasB.Fiambrera + cenaB.Fiambrera) != 0 %}
+\cellcolor[HTML]{EFEFEF}Fiambrera BLANDO  & \textbf{ {{ desayunoB.Fiambrera }} }                      & \textbf{ {{ bocayfiambrerasB.Fiambrera }}* }                    & \textbf{ {{ cenaB.Fiambrera }} }                  \\ \hline
+{% endif %}
+\end{tabular}
+\end{table}
+* Las fiambreras de comida son para el día siguiente\\
+{% if bocayfiambreras.Fiambrera != 0%}
+Usuarios Fiambrera Comida: {{ " ".join(usuariosBocyF.Fiambrera) }} \\
+{% endif %}
+{% if bocayfiambrerasD.Fiambrera != 0%}
+Usuarios Fiambrera Comida Dieta: {{ " ".join(usuariosBocyFD.Fiambrera) }} \\
+{% endif %}
+{% if bocayfiambrerasE.Fiambrera != 0%}
+Usuarios Fiambrera Comida Enfermo: {{ " ".join(usuariosBocyFE.Fiambrera) }} \\
+{% endif %}
+{% if bocayfiambrerasB.Fiambrera != 0%}
+Usuarios Fiambrera Comida Blando: {{ " ".join(usuariosBocyFB.Fiambrera) }} \\
+{% endif %}
+\vspace{1cm}
+{\LARGE Observaciones: {{ observaciones }}}
 
 \end{document}

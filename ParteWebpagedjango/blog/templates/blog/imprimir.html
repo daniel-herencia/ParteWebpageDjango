@@ -1,8 +1,13 @@
 {% extends "blog/base.html" %}
 {% block content %}
     <h1>Zona de Administrador Parte</h1>
+    <br>
+    <div class="form-group">
+        <label for="name">Observaciones:</label>
+        <input type="text" class="form-control" id="name" name='observaciones' placeholder="Observaciones que escribir en el parte de cocina">
+    </div>
     <h3>Botones especiales:</h3>
-    <button type="button" class="btn btn-success" onclick="export_to_pdf()">Descargar Parte</button>
+    <button type="button" class="btn btn-success" onclick="export_to_pdf()">Descargar Parte Cocina</button>
  <!--   <a class="float-right btn btn-primary" onclick="export_to_pdf()">Descargar Parte</a>
     <a target="_blank" class="fcc-btn" href='blog-imprimir'>Imprimir Parte</a>  
     <form method="post" action="{% url 'blog-imprimir' %}">{% csrf_token %}

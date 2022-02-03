@@ -19,6 +19,8 @@ from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.utils.html import strip_tags
 from django_tex.shortcuts import render_to_pdf
+from datetime import date   #Para saber la fecha
+from datetime import datetime   #Para saber la fecha
 
 
 #Logic of html files
@@ -297,15 +299,460 @@ def deportista(request):
         answer.save() #guarda la nueva respuesta en la base de datos
     return render(request, 'blog/deporte.html', {'dxt': dxt, 'title': 'Deporte'})
 
-
-@login_required 
+@login_required
 def parte_to_pdf(request):
     template_name = 'blog/tex/test.tex'
-    context = {'title': 'Parte en PDF'}
+    today = date.today()
+    dias = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"]
+    meses = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"]
+    num_day = today.weekday()
+    dia = dias[num_day]
+    tipo = {
+		'enfermo': 0,
+		'dieta': 0,
+		'blando': 0,
+		'item_author': 0,
+        'cesta_enfermo': 0,
+        'cesta_dieta': 0,
+        'cesta_blando': 0,
+        'fiambrera_enfermo': 0,
+        'fiambrera_dieta': 0,
+        'fiambrera_blando': 0
+    }
+    #NORMALES
+    desayuno = {
+        'Normal': 0,
+        'Bocadillo-Pequeño': 0,
+        '-': 0,
+        'Bocadillo': 0,
+        'Cesta': 0,
+        'Fiambrera': 0
+    }
+    comida = {
+        'Normal': 0,
+        'Bocadillo-Pequeño': 0,
+        '-': 0,
+        'Bocadillo': 0,
+        'Cesta': 0,
+        'Fiambrera': 0,
+        'Comida-13:00': 0,
+        'Comida-13:30': 0,
+        'Comida-14:00': 0
+    }
+    cena = {
+        'Normal': 0,
+        'Bocadillo-Pequeño': 0,
+        '-': 0,
+        'Bocadillo': 0,
+        'Cesta': 0,
+        'Fiambrera': 0
+    }
+    mediamañana = {
+        '-': 0,
+        'Si': 0
+    }
+    bocayfiambreras = {     #ESTO ES DE LA COMDIA DEL DIA SIGUIENTE
+        'Bocadillo-Pequeño': 0,
+        'Bocadillo': 0,
+        'Fiambrera': 0
+    }
+    usuariosBocyF = {       #ESTO ES DE LA COMIDA DEL DIA SIGUIENTE
+        'Bocadillo-Pequeño': [],
+        'Bocadillo': [],
+        'Fiambrera': []
+    }
+    #DIETA
+    usuariosDieta = []
+    desayunoD = {
+        'Normal': 0,
+        'Bocadillo-Pequeño': 0,
+        '-': 0,
+        'Bocadillo': 0,
+        'Cesta': 0,
+        'Fiambrera': 0
+    }
+    comidaD = {
+        'Normal': 0,
+        'Bocadillo-Pequeño': 0,
+        '-': 0,
+        'Bocadillo': 0,
+        'Cesta': 0,
+        'Fiambrera': 0,
+        'Comida-13:00': 0,
+        'Comida-13:30': 0,
+        'Comida-14:00': 0
+    }
+    cenaD = {
+        'Normal': 0,
+        'Bocadillo-Pequeño': 0,
+        '-': 0,
+        'Bocadillo': 0,
+        'Cesta': 0,
+        'Fiambrera': 0
+    }
+    mediamañanaD = {
+        '-': 0,
+        'Si': 0
+    }
+    bocayfiambrerasD = {
+        'Bocadillo-Pequeño': 0,
+        'Bocadillo': 0,
+        'Fiambrera': 0
+    }
+    usuariosBocyFD = {
+        'Bocadillo-Pequeño': [],
+        'Bocadillo': [],
+        'Fiambrera': []
+    }
+    #ENFERMOS
+    desayunoE = {
+        'Normal': 0,
+        'Bocadillo-Pequeño': 0,
+        '-': 0,
+        'Bocadillo': 0,
+        'Cesta': 0,
+        'Fiambrera': 0
+    }
+    comidaE = {
+        'Normal': 0,
+        'Bocadillo-Pequeño': 0,
+        '-': 0,
+        'Bocadillo': 0,
+        'Cesta': 0,
+        'Fiambrera': 0,
+        'Comida-13:00': 0,
+        'Comida-13:30': 0,
+        'Comida-14:00': 0
+    }
+    cenaE = {
+        'Normal': 0,
+        'Bocadillo-Pequeño': 0,
+        '-': 0,
+        'Bocadillo': 0,
+        'Cesta': 0,
+        'Fiambrera': 0
+    }
+    mediamañanaE = {
+        '-': 0,
+        'Si': 0
+    }
+    bocayfiambrerasE = {
+        'Bocadillo-Pequeño': 0,
+        'Bocadillo': 0,
+        'Fiambrera': 0
+    }
+    usuariosBocyFE = {
+        'Bocadillo-Pequeño': [],
+        'Bocadillo': [],
+        'Fiambrera': []
+    }
+    #BLANDOS
+    desayunoB = {
+        'Normal': 0,
+        'Bocadillo-Pequeño': 0,
+        '-': 0,
+        'Bocadillo': 0,
+        'Cesta': 0,
+        'Fiambrera': 0
+    }
+    comidaB = {
+        'Normal': 0,
+        'Bocadillo-Pequeño': 0,
+        '-': 0,
+        'Bocadillo': 0,
+        'Cesta': 0,
+        'Fiambrera': 0,
+        'Comida-13:00': 0,
+        'Comida-13:30': 0,
+        'Comida-14:00': 0
+    }
+    cenaB = {
+        'Normal': 0,
+        'Bocadillo-Pequeño': 0,
+        '-': 0,
+        'Bocadillo': 0,
+        'Cesta': 0,
+        'Fiambrera': 0
+    }
+    mediamañanaB = {
+        '-': 0,
+        'Si': 0
+    }
+    bocayfiambrerasB = {
+        'Bocadillo-Pequeño': 0,
+        'Bocadillo': 0,
+        'Fiambrera': 0
+    }
+    usuariosBocyFB = {
+        'Bocadillo-Pequeño': [],
+        'Bocadillo': [],
+        'Fiambrera': []
+    }
+
+    #Para obtener la respuesta anterior si la hay
+    #comensales = Comensal.objects.get()    #query para sacar las respuestas
+
+    #for comensal in comensales.user:
+
+    for com in Comensal.objects.all():
+        try:
+            comensal = com.user
+            parte = Comensal.objects.get(user=comensal)
+            if parte.opciones == 'Normal':
+                if num_day == 0:
+                    comida[parte.L.l]+=1
+                    cena[parte.L.d]+=1
+                    desayuno[parte.M.b]+=1
+                    mediamañana[parte.M.m]+=1
+                    if (parte.M.l == 'Fiambrera') or (parte.M.l == 'Bocadillo-Pequeño') or (parte.M.l == 'Bocadillo'):
+                        bocayfiambreras[parte.M.l]+=1
+                        usuariosBocyF[parte.M.l].append(comensal)
+                elif num_day == 1:
+                    comida[parte.M.l]+=1
+                    cena[parte.M.d]+=1
+                    desayuno[parte.X.b]+=1
+                    mediamañana[parte.X.m]+=1
+                    if (parte.X.l == 'Fiambrera') or (parte.X.l == 'Bocadillo-Pequeño') or (parte.X.l == 'Bocadillo'):
+                        bocayfiambreras[parte.X.l]+=1
+                        usuariosBocyF[parte.X.l].append(comensal)
+                elif num_day == 2:
+                    comida[parte.X.l]+=1
+                    cena[parte.X.d]+=1
+                    desayuno[parte.J.b]+=1
+                    mediamañana[parte.J.m]+=1
+                    if (parte.J.l == 'Fiambrera') or (parte.J.l == 'Bocadillo-Pequeño') or (parte.J.l == 'Bocadillo'):
+                        bocayfiambreras[parte.J.l]+=1
+                        usuariosBocyF[parte.J.l].append(comensal)
+                elif num_day == 3:
+                    comida[parte.J.l]+=1
+                    cena[parte.J.d]+=1
+                    desayuno[parte.V.b]+=1
+                    mediamañana[parte.V.m]+=1
+                    if (parte.V.l == 'Fiambrera') or (parte.V.l == 'Bocadillo-Pequeño') or (parte.V.l == 'Bocadillo'):
+                        bocayfiambreras[parte.V.l]+=1
+                        usuariosBocyF[parte.V.l].append(comensal)
+                elif num_day == 4:
+                    comida[parte.V.l]+=1
+                    cena[parte.V.d]+=1
+                    desayuno[parte.S.b]+=1
+                    mediamañana[parte.S.m]+=1
+                    if (parte.S.l == 'Fiambrera') or (parte.S.l == 'Bocadillo-Pequeño') or (parte.S.l == 'Bocadillo'):
+                        bocayfiambreras[parte.S.l]+=1
+                        usuariosBocyF[parte.S.l].append(comensal)
+                elif num_day == 5:
+                    comida[parte.S.l]+=1
+                    cena[parte.S.d]+=1
+                    desayuno[parte.D.b]+=1
+                    mediamañana[parte.D.m]+=1
+                    if (parte.D.l == 'Fiambrera') or (parte.D.l == 'Bocadillo-Pequeño') or (parte.D.l == 'Bocadillo'):
+                        bocayfiambreras[parte.D.l]+=1
+                        usuariosBocyF[parte.D.l].append(comensal)
+                elif num_day == 6:
+                    comida[parte.D.l]+=1
+                    cena[parte.D.d]+=1
+                    desayuno[parte.L.b]+=1
+                    mediamañana[parte.L.m]+=1
+                    if (parte.L.l == 'Fiambrera') or (parte.L.l == 'Bocadillo-Pequeño') or (parte.L.l == 'Bocadillo'):
+                        bocayfiambreras[parte.L.l]+=1
+                        usuariosBocyF[parte.L.l].append(comensal)
+
+            elif parte.opciones == 'Dieta':
+                tipo['dieta']+=1
+                usuariosDieta.append(comensal)
+                if num_day == 0:
+                    comidaD[parte.L.l]+=1
+                    cenaD[parte.L.d]+=1
+                    desayunoD[parte.M.b]+=1
+                    mediamañanaD[parte.M.m]+=1
+                    if (parte.M.l == 'Fiambrera') or (parte.M.l == 'Bocadillo-Pequeño') or (parte.M.l == 'Bocadillo'):
+                        bocayfiambrerasD[parte.M.l]+=1
+                        usuariosBocyFD[parte.M.l].append(comensal)
+                elif num_day == 1:
+                    comidaD[parte.M.l]+=1
+                    cenaD[parte.M.d]+=1
+                    desayunoD[parte.X.b]+=1
+                    mediamañanaD[parte.X.m]+=1
+                    if (parte.X.l == 'Fiambrera') or (parte.X.l == 'Bocadillo-Pequeño') or (parte.X.l == 'Bocadillo'):
+                        bocayfiambrerasD[parte.X.l]+=1
+                        usuariosBocyFD[parte.X.l].append(comensal)
+                elif num_day == 2:
+                    comidaD[parte.X.l]+=1
+                    cenaD[parte.X.d]+=1
+                    desayunoD[parte.J.b]+=1
+                    mediamañanaD[parte.J.m]+=1
+                    if (parte.J.l == 'Fiambrera') or (parte.J.l == 'Bocadillo-Pequeño') or (parte.J.l == 'Bocadillo'):
+                        bocayfiambrerasD[parte.J.l]+=1
+                        usuariosBocyFD[parte.J.l].append(comensal)
+                elif num_day == 3:
+                    comidaD[parte.J.l]+=1
+                    cenaD[parte.J.d]+=1
+                    desayunoD[parte.V.b]+=1
+                    mediamañanaD[parte.V.m]+=1
+                    if (parte.V.l == 'Fiambrera') or (parte.V.l == 'Bocadillo-Pequeño') or (parte.V.l == 'Bocadillo'):
+                        bocayfiambrerasD[parte.V.l]+=1
+                        usuariosBocyFD[parte.V.l].append(comensal)
+                elif num_day == 4:
+                    comidaD[parte.V.l]+=1
+                    cenaD[parte.V.d]+=1
+                    desayunoD[parte.S.b]+=1
+                    mediamañanaD[parte.S.m]+=1
+                    if (parte.S.l == 'Fiambrera') or (parte.S.l == 'Bocadillo-Pequeño') or (parte.S.l == 'Bocadillo'):
+                        bocayfiambrerasD[parte.S.l]+=1
+                        usuariosBocyFD[parte.S.l].append(comensal)
+                elif num_day == 5:
+                    comidaD[parte.S.l]+=1
+                    cenaD[parte.S.d]+=1
+                    desayunoD[parte.D.b]+=1
+                    mediamañanaD[parte.D.m]+=1
+                    if (parte.D.l == 'Fiambrera') or (parte.D.l == 'Bocadillo-Pequeño') or (parte.D.l == 'Bocadillo'):
+                        bocayfiambrerasD[parte.D.l]+=1
+                        usuariosBocyFD[parte.D.l].append(comensal)
+                elif num_day == 6:
+                    comidaD[parte.D.l]+=1
+                    cenaD[parte.D.d]+=1
+                    desayunoD[parte.L.b]+=1
+                    mediamañanaD[parte.L.m]+=1
+                    if (parte.L.l == 'Fiambrera') or (parte.L.l == 'Bocadillo-Pequeño') or (parte.L.l == 'Bocadillo'):
+                        bocayfiambrerasD[parte.L.l]+=1
+                        usuariosBocyFD[parte.L.l].append(comensal)
+            elif parte.opciones == 'Enfermo':
+                tipo['enfermo']+=1
+                if num_day == 0:
+                    comidaE[parte.L.l]+=1
+                    cenaE[parte.L.d]+=1
+                    desayunoE[parte.M.b]+=1
+                    mediamañanaE[parte.M.m]+=1
+                    if (parte.M.l == 'Fiambrera') or (parte.M.l == 'Bocadillo-Pequeño') or (parte.M.l == 'Bocadillo'):
+                        bocayfiambrerasE[parte.M.l]+=1
+                        usuariosBocyFE[parte.M.l].append(comensal)
+                elif num_day == 1:
+                    comidaE[parte.M.l]+=1
+                    cenaE[parte.M.d]+=1
+                    desayunoE[parte.X.b]+=1
+                    mediamañanaE[parte.X.m]+=1
+                    if (parte.X.l == 'Fiambrera') or (parte.X.l == 'Bocadillo-Pequeño') or (parte.X.l == 'Bocadillo'):
+                        bocayfiambrerasE[parte.X.l]+=1
+                        usuariosBocyFE[parte.X.l].append(comensal)
+                elif num_day == 2:
+                    comidaE[parte.X.l]+=1
+                    cenaE[parte.X.d]+=1
+                    desayunoE[parte.J.b]+=1
+                    mediamañanaE[parte.J.m]+=1
+                    if (parte.J.l == 'Fiambrera') or (parte.J.l == 'Bocadillo-Pequeño') or (parte.J.l == 'Bocadillo'):
+                        bocayfiambrerasE[parte.J.l]+=1
+                        usuariosBocyFE[parte.J.l].append(comensal)
+                elif num_day == 3:
+                    comidaE[parte.J.l]+=1
+                    cenaE[parte.J.d]+=1
+                    desayunoE[parte.V.b]+=1
+                    mediamañanaE[parte.V.m]+=1
+                    if (parte.V.l == 'Fiambrera') or (parte.V.l == 'Bocadillo-Pequeño') or (parte.V.l == 'Bocadillo'):
+                        bocayfiambrerasE[parte.V.l]+=1
+                        usuariosBocyFE[parte.V.l].append(comensal)
+                elif num_day == 4:
+                    comidaE[parte.V.l]+=1
+                    cenaE[parte.V.d]+=1
+                    desayunoE[parte.S.b]+=1
+                    mediamañanaE[parte.S.m]+=1
+                    if (parte.S.l == 'Fiambrera') or (parte.S.l == 'Bocadillo-Pequeño') or (parte.S.l == 'Bocadillo'):
+                        bocayfiambrerasE[parte.S.l]+=1
+                        usuariosBocyFE[parte.S.l].append(comensal)
+                elif num_day == 5:
+                    comidaE[parte.S.l]+=1
+                    cenaE[parte.S.d]+=1
+                    desayunoE[parte.D.b]+=1
+                    mediamañanaE[parte.D.m]+=1
+                    if (parte.D.l == 'Fiambrera') or (parte.D.l == 'Bocadillo-Pequeño') or (parte.D.l == 'Bocadillo'):
+                        bocayfiambrerasE[parte.D.l]+=1
+                        usuariosBocyFE[parte.D.l].append(comensal)
+                elif num_day == 6:
+                    comidaE[parte.D.l]+=1
+                    cenaE[parte.D.d]+=1
+                    desayunoE[parte.L.b]+=1
+                    mediamañanaE[parte.L.m]+=1
+                    if (parte.L.l == 'Fiambrera') or (parte.L.l == 'Bocadillo-Pequeño') or (parte.L.l == 'Bocadillo'):
+                        bocayfiambrerasE[parte.L.l]+=1
+                        usuariosBocyFE[parte.L.l].append(comensal)
+            elif parte.opciones == 'Blando':
+                tipo['blando']+=1
+                if num_day == 0:
+                    comidaB[parte.L.l]+=1
+                    cenaB[parte.L.d]+=1
+                    desayunoB[parte.M.b]+=1
+                    mediamañanaB[parte.M.m]+=1
+                    if (parte.M.l == 'Fiambrera') or (parte.M.l == 'Bocadillo-Pequeño') or (parte.M.l == 'Bocadillo'):
+                        bocayfiambrerasB[parte.M.l]+=1
+                        usuariosBocyFB[parte.M.l].append(comensal)
+                elif num_day == 1:
+                    comidaB[parte.M.l]+=1
+                    cenaB[parte.M.d]+=1
+                    desayunoB[parte.X.b]+=1
+                    mediamañanaB[parte.X.m]+=1
+                    if (parte.X.l == 'Fiambrera') or (parte.X.l == 'Bocadillo-Pequeño') or (parte.X.l == 'Bocadillo'):
+                        bocayfiambrerasB[parte.X.l]+=1
+                        usuariosBocyFB[parte.X.l].append(comensal)
+                elif num_day == 2:
+                    comidaB[parte.X.l]+=1
+                    cenaB[parte.X.d]+=1
+                    desayunoB[parte.J.b]+=1
+                    mediamañanaB[parte.J.m]+=1
+                    if (parte.J.l == 'Fiambrera') or (parte.J.l == 'Bocadillo-Pequeño') or (parte.J.l == 'Bocadillo'):
+                        bocayfiambrerasB[parte.J.l]+=1
+                        usuariosBocyFB[parte.J.l].append(comensal)
+                elif num_day == 3:
+                    comidaB[parte.J.l]+=1
+                    cenaB[parte.J.d]+=1
+                    desayunoB[parte.V.b]+=1
+                    mediamañanaB[parte.V.m]+=1
+                    if (parte.V.l == 'Fiambrera') or (parte.V.l == 'Bocadillo-Pequeño') or (parte.V.l == 'Bocadillo'):
+                        bocayfiambrerasB[parte.V.l]+=1
+                        usuariosBocyFB[parte.V.l].append(comensal)
+                elif num_day == 4:
+                    comidaB[parte.V.l]+=1
+                    cenaB[parte.V.d]+=1
+                    desayunoB[parte.S.b]+=1
+                    mediamañanaB[parte.S.m]+=1
+                    if (parte.S.l == 'Fiambrera') or (parte.S.l == 'Bocadillo-Pequeño') or (parte.S.l == 'Bocadillo'):
+                        bocayfiambrerasB[parte.S.l]+=1
+                        usuariosBocyFB[parte.S.l].append(comensal)
+                elif num_day == 5:
+                    comidaB[parte.S.l]+=1
+                    cenaB[parte.S.d]+=1
+                    desayunoB[parte.D.b]+=1
+                    mediamañanaB[parte.D.m]+=1
+                    if (parte.D.l == 'Fiambrera') or (parte.D.l == 'Bocadillo-Pequeño') or (parte.D.l == 'Bocadillo'):
+                        bocayfiambrerasB[parte.D.l]+=1
+                        usuariosBocyFB[parte.D.l].append(comensal)
+                elif num_day == 6:
+                    comidaB[parte.D.l]+=1
+                    cenaB[parte.D.d]+=1
+                    desayunoB[parte.L.b]+=1
+                    mediamañanaB[parte.L.m]+=1
+                    if (parte.L.l == 'Fiambrera') or (parte.L.l == 'Bocadillo-Pequeño') or (parte.L.l == 'Bocadillo'):
+                        bocayfiambrerasB[parte.L.l]+=1
+                        usuariosBocyFB[parte.L.l].append(comensal)
+        except Comensal.DoesNotExist:
+            a = 1
+
+    #parte = Comensal.objects.get(user='parteadmin')
+    #letra = 'L'
+    #comida[parte.L.l]+=1
+    #observaciones = comida[parte.L.l]
+    observaciones = request.get('observaciones', '')
+    context = {'title': 'Parte en PDF', 'tipo': tipo, 'observaciones': observaciones, 'numerodia': today.day, 'mes': meses[today.month],
+     'año': today.year, 'dia':dia,
+     'comida': comida, 'cena': cena, 'desayuno': desayuno, 'mediamañana': mediamañana, 'bocayfiambreras': bocayfiambreras, 'usuariosBocyF': usuariosBocyF,
+     'comidaD': comidaD, 'cenaD': cenaD, 'desayunoD': desayunoD, 'mediamañanaD': mediamañanaD, 'bocayfiambrerasD': bocayfiambrerasD, 'usuariosBocyFD': usuariosBocyFD,
+     'comidaB': comidaB, 'cenaB': cenaB, 'desayunoB': desayunoB, 'mediamañanaB': mediamañanaB, 'bocayfiambrerasB': bocayfiambrerasB, 'usuariosBocyFB': usuariosBocyFB,
+     'comidaE': comidaE, 'cenaE': cenaE, 'desayunoE': desayunoE, 'mediamañanaE': mediamañanaE, 'bocayfiambrerasE': bocayfiambrerasE, 'usuariosBocyFE': usuariosBocyFE,
+     'usuariosDieta': usuariosDieta}
+
     return render_to_pdf(request, template_name, context, filename='PartePDF.pdf')
 
+#        return render_to_pdf(request, template_name, "ERROR!!!",filename='PartePDF.pdf')
 
-@login_required 
+
+@login_required
 def Imprimir(request):
     if  request.user.username == 'parteadmin':
         return render(request, 'blog/imprimir.html', {'title': 'Imprimir'})
