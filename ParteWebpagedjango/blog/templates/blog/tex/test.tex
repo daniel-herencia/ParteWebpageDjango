@@ -67,11 +67,11 @@
 \end{tabular}
 \end{table}
 \vspace{0.2cm}
-{% if bocayfiambreras.getBocadillo != 0%}
-Usuarios Bocadillo Comida: {{ " ".join(usuariosBocyF.Bocadillo) }} } \\
+{% if bocayfiambreras.Bocadillo != 0%}
+Usuarios Bocadillo Comida: {{ " ".join(usuariosBocyF.Bocadillo) }} \\
 {% endif %}
 {% if bocayfiambreras.get('Bocadillo-Pequeño') != 0%}
-Usuarios Bocadillo Comida: {{ " ".join(usuariosBocyF.get('Bocadillo-Pequeño')) }} \\
+Usuarios Bocadillo Pequeño Comida: {{ " ".join(usuariosBocyF.get('Bocadillo-Pequeño')) }} \\
 {% endif %}
 \vspace{1cm}
 {\huge Cestas y Fiambreras:}
@@ -116,6 +116,6 @@ Usuarios Fiambrera Comida Enfermo: {{ " ".join(usuariosBocyFE.Fiambrera) }} \\
 Usuarios Fiambrera Comida Blando: {{ " ".join(usuariosBocyFB.Fiambrera) }} \\
 {% endif %}
 \vspace{1cm}
-{\LARGE Observaciones: {{ observaciones }}}
+{\LARGE Observaciones:} {\large {{ observaciones }} }
 
 \end{document}

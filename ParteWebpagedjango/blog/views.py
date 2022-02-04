@@ -738,7 +738,9 @@ def parte_to_pdf(request):
     #letra = 'L'
     #comida[parte.L.l]+=1
     #observaciones = comida[parte.L.l]
-    observaciones = request.get('observaciones', '')
+    observaciones = 'Adios'
+    if request.method=="POST":
+        observaciones = request.POST.get('observaciones', '')
     context = {'title': 'Parte en PDF', 'tipo': tipo, 'observaciones': observaciones, 'numerodia': today.day, 'mes': meses[today.month],
      'año': today.year, 'dia':dia,
      'comida': comida, 'cena': cena, 'desayuno': desayuno, 'mediamañana': mediamañana, 'bocayfiambreras': bocayfiambreras, 'usuariosBocyF': usuariosBocyF,
@@ -750,6 +752,65 @@ def parte_to_pdf(request):
     return render_to_pdf(request, template_name, context, filename='PartePDF.pdf')
 
 #        return render_to_pdf(request, template_name, "ERROR!!!",filename='PartePDF.pdf')
+
+
+@login_required
+def parte_to_pdf2(request):
+    template_name = 'blog/tex/parte2.tex'
+    today = date.today()
+    dias = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"]
+    meses = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"]
+    num_day = today.weekday()
+    dia = dias[num_day]
+    usuarios = []
+    """
+    partesL1 = []
+    partesD1 = []
+    partesB2 = []
+    partesL2 = []
+    partesD2 = []
+    partesM = []
+    """
+    partesDia1 = []
+    partesDia2 = []
+
+
+    for com in Comensal.objects.all():
+        usuarios.append(com.user)
+        if num_day == 0:
+            """
+            partesL1.append()
+            partesD1.append()
+            partesB2.append()
+            partesL2.append()
+            partesD2.append()
+            partesM.append()
+            """
+            partesDia1.append(com.L)
+            partesDia2.append(com.M)
+        elif num_day == 1:
+            partesDia1.append(com.M)
+            partesDia2.append(com.X)
+        elif num_day == 2:
+            partesDia1.append(com.X)
+            partesDia2.append(com.J)
+        elif num_day == 3:
+            partesDia1.append(com.J)
+            partesDia2.append(com.V)
+        elif num_day == 4:
+            partesDia1.append(com.V)
+            partesDia2.append(com.S)
+        elif num_day == 5:
+            partesDia1.append(com.S)
+            partesDia2.append(com.D)
+        elif num_day == 6:
+            partesDia1.append(com.D)
+            partesDia2.append(com.L)
+        
+    context = {'title': 'Parte en PDF', 'usuarios': usuarios, 'partesDia1': partesDia1, 'partesDia2': partesDia1, 'numerodia': today.day, 'mes': meses[today.month],
+     'año': today.year, 'dia':dia}
+
+    return render_to_pdf(request, template_name, context, filename='PartePDF2.pdf')
 
 
 @login_required
