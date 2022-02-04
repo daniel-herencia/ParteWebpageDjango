@@ -738,7 +738,9 @@ def parte_to_pdf(request):
     #letra = 'L'
     #comida[parte.L.l]+=1
     #observaciones = comida[parte.L.l]
-    observaciones = request.get('observaciones', '')
+    observaciones = 'Adios'
+    if request.method=="POST":
+        observaciones = request.POST.get('observaciones', '')
     context = {'title': 'Parte en PDF', 'tipo': tipo, 'observaciones': observaciones, 'numerodia': today.day, 'mes': meses[today.month],
      'año': today.year, 'dia':dia,
      'comida': comida, 'cena': cena, 'desayuno': desayuno, 'mediamañana': mediamañana, 'bocayfiambreras': bocayfiambreras, 'usuariosBocyF': usuariosBocyF,
