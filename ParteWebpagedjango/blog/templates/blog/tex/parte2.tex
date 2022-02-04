@@ -1,0 +1,53 @@
+\documentclass[12pt]{report}
+\usepackage[utf8]{inputenc}
+\usepackage{float}
+\usepackage{vmargin}
+\usepackage{multicol}
+\usepackage[table,xcdraw]{xcolor} %Table color
+\usepackage{tabularx,booktabs}
+\usepackage{longtable}
+\usepackage{lipsum}% just to generate filler text for the example
+\setlength{\parindent}{0pt}
+%------------------------------------------------------
+
+
+\setpapersize{A4}
+\setmargins{2cm}       % margen izquierdo
+{0.5cm}                        % margen superior
+{18cm}                      % anchura del texto
+{26.5cm}                    % altura del texto
+{10pt}                           % altura de los encabezados
+{1cm}                           % espacio entre el texto y los encabezados
+{0cm}                             % altura del pie de página
+{1cm}                           % espacio entre el texto y el pie de página
+
+\renewcommand{\labelitemi}{\tiny$\blacksquare$}
+
+\begin{document}
+\centering
+\underline{\textsc{\Huge {{ dia }}, {{ numerodia }} de {{ mes }} de {{ año }}}}
+
+\vspace{1cm}
+
+\begin{table}[H]
+\begin{tabular}{c|c
+>{\columncolor[HTML]{F0F0F0}}c |c
+>{\columncolor[HTML]{F4F4F4}}c c|}
+\cline{2-6}
+                                                               & \multicolumn{2}{c|}{\cellcolor[HTML]{C0C0C0}\textbf{HOY}}                                            & \multicolumn{3}{c|}{\cellcolor[HTML]{C0C0C0}\textbf{MAÑANA}}                                                                                                          \\ \hline
+\multicolumn{1}{|c|}{\cellcolor[HTML]{E0DEDE}\textbf{USUARIO}} & \multicolumn{1}{c|}{\cellcolor[HTML]{E0DEDE}\textbf{COMIDA}} & \cellcolor[HTML]{E0DEDE}\textbf{CENA} & \multicolumn{1}{c|}{\cellcolor[HTML]{E0DEDE}\textbf{DESAYUNO}} & \multicolumn{1}{c|}{\cellcolor[HTML]{E0DEDE}\textbf{COMIDA}} & \cellcolor[HTML]{E0DEDE}\textbf{CENA} \\ \hline
+{% for usuario in usuarios %}
+\multicolumn{1}{|c|}{\cellcolor[HTML]{F2F2F2} {{ usuario }} }              & \multicolumn{1}{c|}{1}                                       & 2                                     & \multicolumn{1}{c|}{3}                                         & \multicolumn{1}{c|}{\cellcolor[HTML]{F4F4F4}4}               & 5                                     \\ \hline
+{% endfor %}
+\multicolumn{1}{|c|}{\cellcolor[HTML]{F2F2F2}Total NORMALES}   & \multicolumn{1}{c|}{n1}                                      & n2                                    & \multicolumn{1}{c|}{n3}                                        & \multicolumn{1}{c|}{\cellcolor[HTML]{F4F4F4}n4}              & n5                                    \\ \hline
+\multicolumn{1}{|c|}{\cellcolor[HTML]{F2F2F2}Total DIETA}      & \multicolumn{1}{c|}{d1}                                      & d2                                    & \multicolumn{1}{c|}{d3}                                        & \multicolumn{1}{c|}{\cellcolor[HTML]{F4F4F4}d4}              & d5                                    \\ \hline
+\multicolumn{1}{|c|}{\cellcolor[HTML]{F2F2F2}Total ENFERMO}    & \multicolumn{1}{c|}{e1}                                      & e2                                    & \multicolumn{1}{c|}{e3}                                        & \multicolumn{1}{c|}{\cellcolor[HTML]{F4F4F4}e4}              & e5                                    \\ \hline
+\multicolumn{1}{|c|}{\cellcolor[HTML]{F2F2F2}Total BLANDO}     & \multicolumn{1}{c|}{b1}                                      & b2                                    & \multicolumn{1}{c|}{b3}                                        & \multicolumn{1}{c|}{\cellcolor[HTML]{F4F4F4}b4}              & b5                                    \\ \hline
+\multicolumn{1}{|c|}{\cellcolor[HTML]{F2F2F2}TOTAL}            & \multicolumn{1}{c|}{tot1}                                    & tot2                                  & \multicolumn{1}{c|}{tot3}                                      & \multicolumn{1}{c|}{\cellcolor[HTML]{F4F4F4}tot4}            & tot5                                  \\ \hline
+\end{tabular}
+\end{table}
+
+\raggedright
+{\huge Comentarios:}
+
+\end{document}
