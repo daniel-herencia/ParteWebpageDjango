@@ -51,7 +51,7 @@
 {% endif %}
 \end{tabular}
 \end{table}
-
+Usuarios DIETA: {{ " ".join(usuariosDieta) }} \\
 \vspace{1cm}
 {\huge Bocadillos:}
 
@@ -60,19 +60,39 @@
 >{\columncolor[HTML]{EFEFEF}}c |c|
 >{\columncolor[HTML]{EFEFEF}}c |c|}
 \hline
-\multicolumn{1}{|c|}{Tipo}                              & \cellcolor[HTML]{C0C0C0}PEQUEÑO & \cellcolor[HTML]{C0C0C0}GRANDE & \cellcolor[HTML]{C0C0C0}DIETA & \cellcolor[HTML]{C0C0C0}ENFERO & \cellcolor[HTML]{C0C0C0}BLANDO \\ \hline
+\multicolumn{1}{|c|}{Tipo}                              & \cellcolor[HTML]{C0C0C0}PEQUEÑO & \cellcolor[HTML]{C0C0C0}GRANDE & \cellcolor[HTML]{C0C0C0}DIETA* & \cellcolor[HTML]{C0C0C0}ENFERMO* & \cellcolor[HTML]{C0C0C0}BLANDO* \\ \hline
+\cellcolor[HTML]{EFEFEF}Bocadillo CENA (hoy)            & \textbf{ {{ cena.get('Bocadillo-Pequeño') }} }                      & \textbf{ {{ cena.Bocadillo }} }                     & \textbf{ {{ cenaD.Bocadillo }} }                    & \textbf{ {{ cenaE.Bocadillo }} }                     & \textbf{ {{ cenaB.Bocadillo }} }                     \\ \hline
 \cellcolor[HTML]{EFEFEF}Bocadillo DESAYUNO (mañana)     & \textbf{ {{ desayuno.get('Bocadillo-Pequeño') }} }                      & \textbf{ {{ desayuno.Bocadillo }} }                     & \textbf{ {{ desayunoD.Bocadillo }} }                    & \textbf{ {{ desayunoE.Bocadillo }} }                     & \textbf{ {{ desayunoB.Bocadillo }} }                     \\ \hline
 \cellcolor[HTML]{EFEFEF}Bocadillo COMIDA (mañana)       & \textbf{ {{ bocayfiambreras.get('Bocadillo-Pequeño') }} }                      & \textbf{ {{ bocayfiambreras.Bocadillo }} }                     & \textbf{ {{ bocayfiambrerasD.Bocadillo }} }                    & \textbf{ {{ bocayfiambrerasE.Bocadillo }} }                     & \textbf{ {{ bocayfiambrerasB.Bocadillo }} }                     \\ \hline
-\cellcolor[HTML]{EFEFEF}Bocadillo CENA (hoy)            & \textbf{ {{ cena.get('Bocadillo-Pequeño') }} }                      & \textbf{ {{ cena.Bocadillo }} }                     & \textbf{ {{ cenaD.Bocadillo }} }                    & \textbf{ {{ cenaE.Bocadillo }} }                     & \textbf{ {{ cenaB.Bocadillo }} }                     \\ \hline
+\cellcolor[HTML]{EFEFEF}Bocadillo CENA (mañana)            & \textbf{ {{ bocayfiambreras.get('BocadilloPeq-Ans') }} }                      & \textbf{ {{ bocayfiambreras.get('Bocadillo-Ans') }} }                     & \textbf{ {{ bocayfiambrerasD.get('BocadilloPeq-Ans') }} + {{ bocayfiambrerasD.get('Bocadillo-Ans') }} }                    & \textbf{ {{ bocayfiambrerasE.get('BocadilloPeq-Ans') }} + {{ bocayfiambrerasE.get('Bocadillo-Ans') }} }                     & \textbf{ {{ bocayfiambrerasB.get('BocadilloPeq-Ans') }} + {{ bocayfiambrerasB.get('Bocadillo-Ans') }} }                     \\ \hline
 \cellcolor[HTML]{EFEFEF}Bocadillo MEDIA MAÑANA & \textbf{-}                     & \textbf{ {{ mediamañana.Si }} }                    & \textbf{ {{ mediamañanaD.Si }} }                   & \textbf{ {{ mediamañanaE.Si }} }                    & \textbf{ {{ mediamañanaB.Si }} }                    \\ \hline
 \end{tabular}
 \end{table}
+* Pequeños + Grandes\\
 \vspace{0.2cm}
 {% if bocayfiambreras.Bocadillo != 0%}
-Usuarios Bocadillo Comida: {{ " ".join(usuariosBocyF.Bocadillo) }} \\
+Usuarios Bocadillo Comida Mañana: {{ " ".join(usuariosBocyF.Bocadillo) }} \\
 {% endif %}
 {% if bocayfiambreras.get('Bocadillo-Pequeño') != 0%}
-Usuarios Bocadillo Pequeño Comida: {{ " ".join(usuariosBocyF.get('Bocadillo-Pequeño')) }} \\
+Usuarios Bocadillo Pequeño Comida Mañana: {{ " ".join(usuariosBocyF.get('Bocadillo-Pequeño')) }} \\
+{% endif %}
+{% if bocayfiambreras.get('Bocadillo-Ans') != 0%}
+Usuarios Bocadillo Cena Mañana: {{ " ".join(usuariosBocyF.get('Bocadillo-Ans')) }} \\
+{% endif %}
+{% if bocayfiambreras.get('BocadilloPeq-Ans') != 0%}
+Usuarios Bocadillo Pequeño Cena Mañana: {{ " ".join(usuariosBocyF.get('BocadilloPeq-Ans')) }} \\
+{% endif %}
+{% if bocayfiambrerasD.Bocadillo != 0%}
+Usuarios Bocadillo Comida DIETA Mañana: {{ " ".join(usuariosBocyFD.Bocadillo) }} \\
+{% endif %}
+{% if bocayfiambrerasD.get('Bocadillo-Pequeño') != 0%}
+Usuarios Bocadillo Pequeño Comida DIETA Mañana: {{ " ".join(usuariosBocyFD.get('Bocadillo-Pequeño')) }} \\
+{% endif %}
+{% if bocayfiambrerasD.get('Bocadillo-Ans') != 0%}
+Usuarios Bocadillo Cena DIETA Mañana: {{ " ".join(usuariosBocyFD.get('Bocadillo-Ans')) }} \\
+{% endif %}
+{% if bocayfiambrerasD.get('BocadilloPeq-Ans') != 0%}
+Usuarios Bocadillo Pequeño Cena DIETA Mañana: {{ " ".join(usuariosBocyFD.get('BocadilloPeq-Ans')) }} \\
 {% endif %}
 \vspace{1cm}
 {\huge Cestas y Fiambreras:}
@@ -108,13 +128,13 @@ Tipo                                      & \cellcolor[HTML]{C0C0C0}DESAYUNO & \
 Usuarios Fiambrera Comida: {{ " ".join(usuariosBocyF.Fiambrera) }} \\
 {% endif %}
 {% if bocayfiambrerasD.Fiambrera != 0%}
-Usuarios Fiambrera Comida Dieta: {{ " ".join(usuariosBocyFD.Fiambrera) }} \\
+Usuarios Fiambrera Comida DIETA: {{ " ".join(usuariosBocyFD.Fiambrera) }} \\
 {% endif %}
 {% if bocayfiambrerasE.Fiambrera != 0%}
-Usuarios Fiambrera Comida Enfermo: {{ " ".join(usuariosBocyFE.Fiambrera) }} \\
+Usuarios Fiambrera Comida ENFERMO: {{ " ".join(usuariosBocyFE.Fiambrera) }} \\
 {% endif %}
 {% if bocayfiambrerasB.Fiambrera != 0%}
-Usuarios Fiambrera Comida Blando: {{ " ".join(usuariosBocyFB.Fiambrera) }} \\
+Usuarios Fiambrera Comida BLANDO: {{ " ".join(usuariosBocyFB.Fiambrera) }} \\
 {% endif %}
 \vspace{1cm}
 {\LARGE Observaciones:} {\large {{ observaciones }} }
