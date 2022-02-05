@@ -1,0 +1,86 @@
+{% load inlinecss %}
+{% inlinecss "blog/email.css" %}
+<html>
+    <body>
+        Buenos días,
+        <br>
+        Tu respuesta actual del parte es la siguiente:
+        <br>
+        Tipo: {{ context.tipo }}
+        <br><br>      
+        <table class="tg">
+        <thead>
+        <tr>
+            <th class="tg-xud4">DIA</th>
+            <th class="tg-xud4">DESAYUNO</th>
+            <th class="tg-xud4">COMIDA</th>
+            <th class="tg-xud4">CENA</th>
+            <th class="tg-xud4">Media mañana</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="tg-yd3j">Lunes</td>
+            <td class="tg-tcrt"> {{ context.variables.L.b }} </td>
+            <td class="tg-tcrt"> {{ context.variables.L.l }} </td>
+            <td class="tg-tcrt"> {{ context.variables.L.d }} </td>
+            <td class="tg-tcrt"> {{ context.variables.L.m }} </td>
+        </tr>
+        <tr>
+            <td class="tg-yd3j">Martes</td>
+            <td class="tg-tcrt"> {{ context.variables.M.b }} </td>
+            <td class="tg-tcrt"> {{ context.variables.M.l }} </td>
+            <td class="tg-tcrt"> {{ context.variables.M.d }} </td>
+            <td class="tg-tcrt"> {{ context.variables.M.m }} </td>
+        </tr>
+        <tr>
+            <td class="tg-yd3j">Miércoles</td>
+            <td class="tg-tcrt"> {{ context.variables.X.b }} </td>
+            <td class="tg-tcrt"> {{ context.variables.X.l }} </td>
+            <td class="tg-tcrt"> {{ context.variables.X.d }} </td>
+            <td class="tg-tcrt"> {{ context.variables.X.m }} </td>
+        </tr>
+        <tr>
+            <td class="tg-yd3j">Jueves</td>
+            <td class="tg-tcrt"> {{ context.variables.J.b }} </td>
+            <td class="tg-tcrt"> {{ context.variables.J.l }} </td>
+            <td class="tg-tcrt"> {{ context.variables.J.d }} </td>
+            <td class="tg-tcrt"> {{ context.variables.J.m }} </td>
+        </tr>
+        <tr>
+            <td class="tg-yd3j">Viernes</td>
+            <td class="tg-tcrt"> {{ context.variables.V.b }} </td>
+            <td class="tg-tcrt"> {{ context.variables.V.l }} </td>
+            <td class="tg-tcrt"> {{ context.variables.V.d }} </td>
+            <td class="tg-tcrt"> {{ context.variables.V.m }} </td>
+        </tr>
+        <tr>
+            <td class="tg-yd3j">Sábado</td>
+            <td class="tg-tcrt"> {{ context.variables.S.b }} </td>
+            <td class="tg-tcrt"> {{ context.variables.S.l }} </td>
+            <td class="tg-tcrt"> {{ context.variables.S.d }} </td>
+            <td class="tg-tcrt"> {{ context.variables.S.m }} </td>
+        </tr>
+        <tr>
+            <td class="tg-yd3j">Domingo</td>
+            <td class="tg-tcrt"> {{ context.variables.D.b }} </td>
+            <td class="tg-tcrt"> {{ context.variables.D.l }} </td>
+            <td class="tg-tcrt"> {{ context.variables.D.d }} </td>
+            <td class="tg-tcrt"> {{ context.variables.D.m }} </td>
+        </tr>
+        </tbody>
+        </table>
+        
+        <br>
+        ¿Quieres enviar otra respuesta?
+        <br>
+        Entra en el siguiente enlace: https://partebarcelona.pythonanywhere.com/parte/
+        <br>
+        No conteste a este correo, se ha generado automáticamente.
+        <br>
+        Atentamente,
+        <br><br>
+        Equipo del Parte
+    </body>
+</html>
+{% endinlinecss %}

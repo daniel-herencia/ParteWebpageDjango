@@ -22,6 +22,10 @@ from django_tex.shortcuts import render_to_pdf
 from datetime import date   #Para saber la fecha
 from datetime import datetime   #Para saber la fecha
 
+#Email with dynamic content
+from django.core import mail
+from django.template.loader import render_to_string
+
 
 #Logic of html files
 
@@ -845,6 +849,33 @@ def parte_to_pdf2(request):
 @login_required
 def Imprimir(request):
     if  request.user.username == 'parteadmin':
+        if request.method=="POST": 
+            usuarios = User.objects.all()
+            for usuario in usuarios:
+                destinatario = usuario.email
+                try:    #Para obtener la respuesta si la hay
+                    variables = Comensal.objects.get(user=usuario.username)
+                    tipo = variables.opciones
+                    #html = """ """
+                    
+                    #mensaje = strip_tags(html)
+                    #send_mail('Correo semanal del Parte',
+                    #mensaje,
+                    #EMAIL_HOST_USER,
+                    #[destinatario],
+                    #fail_silently=False)
+                    
+                    subject = 'Correo semanal del Parte'
+                    context =  {'variables': variables, 'tipo': tipo}
+                    html_message = render_to_string('blog/mailparte.html', {'context': context})
+                    plain_message = strip_tags(html_message)
+                    #from_email = 'From <partebcn@gmail.com>'
+                    from_email = EMAIL_HOST_USER
+                    to = destinatario
+                    mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)
+
+                except Comensal.DoesNotExist:
+                    hola = 'N'
         return render(request, 'blog/imprimir.html', {'title': 'Imprimir'})
     else:
         return render(request, 'blog/parte.html', {'title': 'Parte'})

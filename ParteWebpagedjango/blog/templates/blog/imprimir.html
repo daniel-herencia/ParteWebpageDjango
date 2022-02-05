@@ -12,7 +12,11 @@
     </form>
     <br>
     <button type="button" class="btn btn-success" onclick="export_to_pdf2()" style="background-color:#9CB4B3; border:none">Descargar Parte Comedor</button>
-
+    <br>
+    <hr/>
+    <form method="post" action="{% url 'blog-imprimir' %}">{% csrf_token %}
+        <button type="submit" class="btn btn-success" style="background-color:#9CB4B3; border:none">Correo Parte</button>
+    </form>
  <!--   <a class="float-right btn btn-primary" onclick="export_to_pdf()">Descargar Parte</a>
     <a target="_blank" class="fcc-btn" href='blog-imprimir'>Imprimir Parte</a>  
     <form method="post" action="{% url 'blog-imprimir' %}">{% csrf_token %}
