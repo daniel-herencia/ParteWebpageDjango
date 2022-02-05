@@ -773,41 +773,70 @@ def parte_to_pdf2(request):
     """
     partesDia1 = []
     partesDia2 = []
+    variables = []
+    contadores = { 'Dieta': [0, 0, 0, 0, 0],
+                   'Enfermo': [0, 0, 0, 0, 0],
+                   'Blando': [0, 0, 0, 0, 0],
+                   'Normal': [0, 0, 0, 0, 0]}
+    totales = [0, 0, 0, 0, 0]
+    blando = False
+    enfermo = False
 
 
     for com in Comensal.objects.all():
-        usuarios.append(com.user)
+        usuario = com.user
+        tipo = com.opciones
+        if tipo == 'Enfermo':
+            enfermo = True
+        if tipo == 'Blando':
+            blando = True
+
         if num_day == 0:
-            """
-            partesL1.append()
-            partesD1.append()
-            partesB2.append()
-            partesL2.append()
-            partesD2.append()
-            partesM.append()
-            """
-            partesDia1.append(com.L)
-            partesDia2.append(com.M)
+            dia1 = com.L
+            dia2 = com.M
         elif num_day == 1:
-            partesDia1.append(com.M)
-            partesDia2.append(com.X)
+            dia1 = com.M
+            dia2 = com.X
         elif num_day == 2:
-            partesDia1.append(com.X)
-            partesDia2.append(com.J)
+            dia1 = com.X
+            dia2 = com.J
         elif num_day == 3:
-            partesDia1.append(com.J)
-            partesDia2.append(com.V)
+            dia1 = com.J
+            dia2 = com.V
         elif num_day == 4:
-            partesDia1.append(com.V)
-            partesDia2.append(com.S)
+            dia1 = com.V
+            dia2 = com.S
         elif num_day == 5:
-            partesDia1.append(com.S)
-            partesDia2.append(com.D)
+            dia1 = com.S
+            dia2 = com.D
         elif num_day == 6:
-            partesDia1.append(com.D)
-            partesDia2.append(com.L)
-        
-    context = {'title': 'Parte en PDF', 'usuarios': usuarios, 'partesDia1': partesDia1, 'partesDia2': partesDia1, 'numerodia': today.day, 'mes': meses[today.month],
+            dia1 = com.D
+            dia2 = com.L
+        #HAY QUE ACTUALIZAR EL DICCIONARIO => ACCEDER A LA CLAVE Y A 1, 2 ... DEPENDE DEL DIA Y COMIDA
+        if dia1.l == 'Normal':
+            #my_dict = { **my_dict, 'Pooja': 12}
+            #contadores = { **contadores, tipo: contadores.get(tipo)[0] + 1}
+            contadores[tipo][0] = contadores[tipo][0] + 1
+            totales[0] += 1
+        if dia1.d == 'Normal':
+            contadores[tipo][1] = contadores[tipo][1] + 1
+            totales[1] += 1
+        if dia2.b == 'Normal':
+            contadores[tipo][2] = contadores[tipo][2] + 1
+            totales[2] += 1
+        if dia2.l == 'Normal':
+            contadores[tipo][3] = contadores[tipo][3] + 1
+            totales[3] += 1
+        if dia2.d == 'Normal':
+            contadores[tipo][4] = contadores[tipo][4] + 1
+            totales[4] += 1
+
+        var = [usuario, dia1, dia2, tipo]
+        variables.append(var)
+
+    #totales = contadores['Dieta'] + contadores['Enfermo'] + contadores['Blando'] + contadores['Normal']
+    context = {'title': 'Parte en PDF', 'variables': variables, 'numerodia': today.day, 'mes': meses[today.month],
+     'enfermo': enfermo, 'blando': blando, 'contadores': contadores, 'totales': totales,
      'año': today.year, 'dia':dia}
 
     return render_to_pdf(request, template_name, context, filename='PartePDF2.pdf')

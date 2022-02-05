@@ -8,6 +8,8 @@
 \usepackage{longtable}
 \usepackage{lipsum}% just to generate filler text for the example
 \setlength{\parindent}{0pt}
+
+\pagestyle{empty}
 %------------------------------------------------------
 
 
@@ -22,32 +24,47 @@
 {1cm}                           % espacio entre el texto y el pie de página
 
 \renewcommand{\labelitemi}{\tiny$\blacksquare$}
+\usepackage{lscape}
 
 \begin{document}
+\begin{landscape}
 \centering
 \underline{\textsc{\Huge {{ dia }}, {{ numerodia }} de {{ mes }} de {{ año }}}}
 
 \vspace{1cm}
 
 \begin{table}[H]
+\centering
 \begin{tabular}{c|c
 >{\columncolor[HTML]{F0F0F0}}c |c
 >{\columncolor[HTML]{F4F4F4}}c c|}
 \cline{2-6}
                                                                & \multicolumn{2}{c|}{\cellcolor[HTML]{C0C0C0}\textbf{HOY}}                                            & \multicolumn{3}{c|}{\cellcolor[HTML]{C0C0C0}\textbf{MAÑANA}}                                                                                                          \\ \hline
 \multicolumn{1}{|c|}{\cellcolor[HTML]{E0DEDE}\textbf{USUARIO}} & \multicolumn{1}{c|}{\cellcolor[HTML]{E0DEDE}\textbf{COMIDA}} & \cellcolor[HTML]{E0DEDE}\textbf{CENA} & \multicolumn{1}{c|}{\cellcolor[HTML]{E0DEDE}\textbf{DESAYUNO}} & \multicolumn{1}{c|}{\cellcolor[HTML]{E0DEDE}\textbf{COMIDA}} & \cellcolor[HTML]{E0DEDE}\textbf{CENA} \\ \hline
-{% for usuario in usuarios %}
-\multicolumn{1}{|c|}{\cellcolor[HTML]{F2F2F2} {{ usuario }} }              & \multicolumn{1}{c|}{1}                                       & 2                                     & \multicolumn{1}{c|}{3}                                         & \multicolumn{1}{c|}{\cellcolor[HTML]{F4F4F4}4}               & 5                                     \\ \hline
+{% for usuario, dia1, dia2, opciones in variables %}
+{% if opciones == 'Normal'%}
+\multicolumn{1}{|c|}{\cellcolor[HTML]{F2F2F2} {{ usuario }} }              & \multicolumn{1}{c|}{ {{ dia1.l }} }                                       &  {{ dia1.d }}                                      & \multicolumn{1}{c|}{ {{ dia2.b }} }                                         & \multicolumn{1}{c|}{\cellcolor[HTML]{F4F4F4} {{ dia2.l }} }               &  {{ dia2.d }}                                      \\ \hline
+{% elif opciones == 'Dieta'%}
+\multicolumn{1}{|c|}{\cellcolor[HTML]{F2F2F2} {{ usuario }} }              & \multicolumn{1}{c|}{ D {{ dia1.l }} }                                       &  D {{ dia1.d }}                                      & \multicolumn{1}{c|}{ D {{ dia2.b }} }                                         & \multicolumn{1}{c|}{\cellcolor[HTML]{F4F4F4} D {{ dia2.l }} }               &  D {{ dia2.d }}                                      \\ \hline
+{% elif opciones == 'Enfermo'%}
+\multicolumn{1}{|c|}{\cellcolor[HTML]{F2F2F2} {{ usuario }} }              & \multicolumn{1}{c|}{ E {{ dia1.l }} }                                       &  E {{ dia1.d }}                                      & \multicolumn{1}{c|}{ E {{ dia2.b }} }                                         & \multicolumn{1}{c|}{\cellcolor[HTML]{F4F4F4} E {{ dia2.l }} }               &  E {{ dia2.d }}                                      \\ \hline
+{% elif opciones == 'Blando'%}
+\multicolumn{1}{|c|}{\cellcolor[HTML]{F2F2F2} {{ usuario }} }              & \multicolumn{1}{c|}{ B {{ dia1.l }} }                                       &  B {{ dia1.d }}                                      & \multicolumn{1}{c|}{ B {{ dia2.b }} }                                         & \multicolumn{1}{c|}{\cellcolor[HTML]{F4F4F4} B {{ dia2.l }} }               &  B {{ dia2.d }}                                      \\ \hline
+{% endif %}
 {% endfor %}
-\multicolumn{1}{|c|}{\cellcolor[HTML]{F2F2F2}Total NORMALES}   & \multicolumn{1}{c|}{n1}                                      & n2                                    & \multicolumn{1}{c|}{n3}                                        & \multicolumn{1}{c|}{\cellcolor[HTML]{F4F4F4}n4}              & n5                                    \\ \hline
-\multicolumn{1}{|c|}{\cellcolor[HTML]{F2F2F2}Total DIETA}      & \multicolumn{1}{c|}{d1}                                      & d2                                    & \multicolumn{1}{c|}{d3}                                        & \multicolumn{1}{c|}{\cellcolor[HTML]{F4F4F4}d4}              & d5                                    \\ \hline
-\multicolumn{1}{|c|}{\cellcolor[HTML]{F2F2F2}Total ENFERMO}    & \multicolumn{1}{c|}{e1}                                      & e2                                    & \multicolumn{1}{c|}{e3}                                        & \multicolumn{1}{c|}{\cellcolor[HTML]{F4F4F4}e4}              & e5                                    \\ \hline
-\multicolumn{1}{|c|}{\cellcolor[HTML]{F2F2F2}Total BLANDO}     & \multicolumn{1}{c|}{b1}                                      & b2                                    & \multicolumn{1}{c|}{b3}                                        & \multicolumn{1}{c|}{\cellcolor[HTML]{F4F4F4}b4}              & b5                                    \\ \hline
-\multicolumn{1}{|c|}{\cellcolor[HTML]{F2F2F2}TOTAL}            & \multicolumn{1}{c|}{tot1}                                    & tot2                                  & \multicolumn{1}{c|}{tot3}                                      & \multicolumn{1}{c|}{\cellcolor[HTML]{F4F4F4}tot4}            & tot5                                  \\ \hline
-\end{tabular}
+\multicolumn{1}{|c|}{\cellcolor[HTML]{F2F2F2}Total NORMALES}   & \multicolumn{1}{c|}{ {{ contadores.Normal.0 }} }                                      &  {{ contadores.Normal.1 }}                                     & \multicolumn{1}{c|}{ {{ contadores.Normal.2 }} }                                        & \multicolumn{1}{c|}{\cellcolor[HTML]{F4F4F4} {{ contadores.Normal.3 }} }              &  {{ contadores.Normal.4 }}                                     \\ \hline
+\multicolumn{1}{|c|}{\cellcolor[HTML]{F2F2F2}Total DIETA}      & \multicolumn{1}{c|}{ {{ contadores.Dieta.0 }} }                                      &  {{ contadores.Dieta.1 }}                                     & \multicolumn{1}{c|}{ {{ contadores.Dieta.2 }} }                                        & \multicolumn{1}{c|}{\cellcolor[HTML]{F4F4F4} {{ contadores.Dieta.3 }} }              &  {{ contadores.Dieta.4 }}                                     \\ \hline
+{% if enfermo %}
+\multicolumn{1}{|c|}{\cellcolor[HTML]{F2F2F2}Total ENFERMO}    & \multicolumn{1}{c|}{ {{ contadores.Enfermo.0 }} }                                      &  {{ contadores.Enfermo.1 }}                                     & \multicolumn{1}{c|}{ {{ contadores.Enfermo.2 }} }                                        & \multicolumn{1}{c|}{\cellcolor[HTML]{F4F4F4} {{ contadores.Enfermo.3 }} }              &  {{ contadores.Enfermo.4 }}                                     \\ \hline
+{% endif %}
+{% if blando %}
+\multicolumn{1}{|c|}{\cellcolor[HTML]{F2F2F2}Total BLANDO}     & \multicolumn{1}{c|}{ {{ contadores.Blando.0 }} }                                      &  {{ contadores.Blando.1 }}                                     & \multicolumn{1}{c|}{ {{ contadores.Blando.2 }} }                                        & \multicolumn{1}{c|}{\cellcolor[HTML]{F4F4F4} {{ contadores.Blando.3 }} }              &  {{ contadores.Blando.4 }}                                     \\ \hline
+{% endif %}
+\multicolumn{1}{|c|}{\cellcolor[HTML]{DCDADA}\textbf{TOTAL}}   & \multicolumn{1}{c|}{\cellcolor[HTML]{DCDADA}\textbf{ {{ totales.0 }} }}   & \cellcolor[HTML]{DCDADA}\textbf{ {{ totales.1 }} } & \multicolumn{1}{c|}{\cellcolor[HTML]{DCDADA}\textbf{ {{ totales.2 }} }}     & \multicolumn{1}{c|}{\cellcolor[HTML]{DCDADA}\textbf{ {{ totales.3 }} }}   & \cellcolor[HTML]{DCDADA}\textbf{ {{ totales.4 }} } \\ \hline\end{tabular}
 \end{table}
 
 \raggedright
-{\huge Comentarios:}
+{\LARGE Comentarios: D : Dieta ; E : Enfermo ; B : Blando}
+\end{landscape}
 
 \end{document}
