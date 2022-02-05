@@ -26,7 +26,8 @@ class Deportista(models.Model):
     dxt = models.CharField(max_length=1, default="N")
 
     def __str__(self):
-        return self.user
+        texto = self.user + " : " + self.dxt
+        return texto 
 
 class Dia1(models.Model):
     msg_id2 = models.AutoField(primary_key=True, default=None)
