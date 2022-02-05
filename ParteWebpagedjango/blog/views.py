@@ -349,7 +349,9 @@ def parte_to_pdf(request):
         '-': 0,
         'Bocadillo': 0,
         'Cesta': 0,
-        'Fiambrera': 0
+        'Fiambrera': 0,
+        'Bocadillo-Ans': 0,
+        'BocadilloPeq-Ans': 0
     }
     mediamañana = {
         '-': 0,
@@ -358,12 +360,16 @@ def parte_to_pdf(request):
     bocayfiambreras = {     #ESTO ES DE LA COMDIA DEL DIA SIGUIENTE
         'Bocadillo-Pequeño': 0,
         'Bocadillo': 0,
-        'Fiambrera': 0
+        'Fiambrera': 0,
+        'Bocadillo-Ans': 0,
+        'BocadilloPeq-Ans': 0
     }
     usuariosBocyF = {       #ESTO ES DE LA COMIDA DEL DIA SIGUIENTE
         'Bocadillo-Pequeño': [],
         'Bocadillo': [],
-        'Fiambrera': []
+        'Fiambrera': [],
+        'Bocadillo-Ans': [],
+        'BocadilloPeq-Ans': []
     }
     #DIETA
     usuariosDieta = []
@@ -392,7 +398,9 @@ def parte_to_pdf(request):
         '-': 0,
         'Bocadillo': 0,
         'Cesta': 0,
-        'Fiambrera': 0
+        'Fiambrera': 0,
+        'Bocadillo-Ans': 0,
+        'BocadilloPeq-Ans': 0
     }
     mediamañanaD = {
         '-': 0,
@@ -401,12 +409,16 @@ def parte_to_pdf(request):
     bocayfiambrerasD = {
         'Bocadillo-Pequeño': 0,
         'Bocadillo': 0,
-        'Fiambrera': 0
+        'Fiambrera': 0,
+        'Bocadillo-Ans': 0,
+        'BocadilloPeq-Ans': 0
     }
     usuariosBocyFD = {
         'Bocadillo-Pequeño': [],
         'Bocadillo': [],
-        'Fiambrera': []
+        'Fiambrera': [],
+        'Bocadillo-Ans': [],
+        'BocadilloPeq-Ans': []
     }
     #ENFERMOS
     desayunoE = {
@@ -434,7 +446,9 @@ def parte_to_pdf(request):
         '-': 0,
         'Bocadillo': 0,
         'Cesta': 0,
-        'Fiambrera': 0
+        'Fiambrera': 0,
+        'Bocadillo-Ans': 0,
+        'BocadilloPeq-Ans': 0
     }
     mediamañanaE = {
         '-': 0,
@@ -443,12 +457,16 @@ def parte_to_pdf(request):
     bocayfiambrerasE = {
         'Bocadillo-Pequeño': 0,
         'Bocadillo': 0,
-        'Fiambrera': 0
+        'Fiambrera': 0,
+        'Bocadillo-Ans': 0,
+        'BocadilloPeq-Ans': 0
     }
     usuariosBocyFE = {
         'Bocadillo-Pequeño': [],
         'Bocadillo': [],
-        'Fiambrera': []
+        'Fiambrera': [],
+        'Bocadillo-Ans': [],
+        'BocadilloPeq-Ans': []
     }
     #BLANDOS
     desayunoB = {
@@ -476,7 +494,9 @@ def parte_to_pdf(request):
         '-': 0,
         'Bocadillo': 0,
         'Cesta': 0,
-        'Fiambrera': 0
+        'Fiambrera': 0,
+        'Bocadillo-Ans': 0,
+        'BocadilloPeq-Ans': 0
     }
     mediamañanaB = {
         '-': 0,
@@ -485,12 +505,16 @@ def parte_to_pdf(request):
     bocayfiambrerasB = {
         'Bocadillo-Pequeño': 0,
         'Bocadillo': 0,
-        'Fiambrera': 0
+        'Fiambrera': 0,
+        'Bocadillo-Ans': 0,
+        'BocadilloPeq-Ans': 0
     }
     usuariosBocyFB = {
         'Bocadillo-Pequeño': [],
         'Bocadillo': [],
-        'Fiambrera': []
+        'Fiambrera': [],
+        'Bocadillo-Ans': [],
+        'BocadilloPeq-Ans': []
     }
 
     #Para obtener la respuesta anterior si la hay
@@ -508,7 +532,7 @@ def parte_to_pdf(request):
                     cena[parte.L.d]+=1
                     desayuno[parte.M.b]+=1
                     mediamañana[parte.M.m]+=1
-                    if (parte.M.l == 'Fiambrera') or (parte.M.l == 'Bocadillo-Pequeño') or (parte.M.l == 'Bocadillo'):
+                    if (parte.M.l == 'Fiambrera') or (parte.M.l == 'Bocadillo-Pequeño') or (parte.M.l == 'Bocadillo') or (parte.M.d == 'Bocadillo-Ans') or (parte.M.d == 'BocadilloPeq-Ans'):
                         bocayfiambreras[parte.M.l]+=1
                         usuariosBocyF[parte.M.l].append(comensal)
                 elif num_day == 1:
@@ -516,7 +540,7 @@ def parte_to_pdf(request):
                     cena[parte.M.d]+=1
                     desayuno[parte.X.b]+=1
                     mediamañana[parte.X.m]+=1
-                    if (parte.X.l == 'Fiambrera') or (parte.X.l == 'Bocadillo-Pequeño') or (parte.X.l == 'Bocadillo'):
+                    if (parte.X.l == 'Fiambrera') or (parte.X.l == 'Bocadillo-Pequeño') or (parte.X.l == 'Bocadillo') or (parte.X.d == 'Bocadillo-Ans') or (parte.X.d == 'BocadilloPeq-Ans'):
                         bocayfiambreras[parte.X.l]+=1
                         usuariosBocyF[parte.X.l].append(comensal)
                 elif num_day == 2:
@@ -524,7 +548,7 @@ def parte_to_pdf(request):
                     cena[parte.X.d]+=1
                     desayuno[parte.J.b]+=1
                     mediamañana[parte.J.m]+=1
-                    if (parte.J.l == 'Fiambrera') or (parte.J.l == 'Bocadillo-Pequeño') or (parte.J.l == 'Bocadillo'):
+                    if (parte.J.l == 'Fiambrera') or (parte.J.l == 'Bocadillo-Pequeño') or (parte.J.l == 'Bocadillo') or (parte.J.d == 'Bocadillo-Ans') or (parte.J.d == 'BocadilloPeq-Ans'):
                         bocayfiambreras[parte.J.l]+=1
                         usuariosBocyF[parte.J.l].append(comensal)
                 elif num_day == 3:
@@ -532,7 +556,7 @@ def parte_to_pdf(request):
                     cena[parte.J.d]+=1
                     desayuno[parte.V.b]+=1
                     mediamañana[parte.V.m]+=1
-                    if (parte.V.l == 'Fiambrera') or (parte.V.l == 'Bocadillo-Pequeño') or (parte.V.l == 'Bocadillo'):
+                    if (parte.V.l == 'Fiambrera') or (parte.V.l == 'Bocadillo-Pequeño') or (parte.V.l == 'Bocadillo') or (parte.V.d == 'Bocadillo-Ans') or (parte.V.d == 'BocadilloPeq-Ans'):
                         bocayfiambreras[parte.V.l]+=1
                         usuariosBocyF[parte.V.l].append(comensal)
                 elif num_day == 4:
@@ -540,7 +564,7 @@ def parte_to_pdf(request):
                     cena[parte.V.d]+=1
                     desayuno[parte.S.b]+=1
                     mediamañana[parte.S.m]+=1
-                    if (parte.S.l == 'Fiambrera') or (parte.S.l == 'Bocadillo-Pequeño') or (parte.S.l == 'Bocadillo'):
+                    if (parte.S.l == 'Fiambrera') or (parte.S.l == 'Bocadillo-Pequeño') or (parte.S.l == 'Bocadillo') or (parte.S.d == 'Bocadillo-Ans') or (parte.S.d == 'BocadilloPeq-Ans'):
                         bocayfiambreras[parte.S.l]+=1
                         usuariosBocyF[parte.S.l].append(comensal)
                 elif num_day == 5:
@@ -548,7 +572,7 @@ def parte_to_pdf(request):
                     cena[parte.S.d]+=1
                     desayuno[parte.D.b]+=1
                     mediamañana[parte.D.m]+=1
-                    if (parte.D.l == 'Fiambrera') or (parte.D.l == 'Bocadillo-Pequeño') or (parte.D.l == 'Bocadillo'):
+                    if (parte.D.l == 'Fiambrera') or (parte.D.l == 'Bocadillo-Pequeño') or (parte.D.l == 'Bocadillo') or (parte.S.D == 'Bocadillo-Ans') or (parte.S.D == 'BocadilloPeq-Ans'):
                         bocayfiambreras[parte.D.l]+=1
                         usuariosBocyF[parte.D.l].append(comensal)
                 elif num_day == 6:
@@ -556,7 +580,7 @@ def parte_to_pdf(request):
                     cena[parte.D.d]+=1
                     desayuno[parte.L.b]+=1
                     mediamañana[parte.L.m]+=1
-                    if (parte.L.l == 'Fiambrera') or (parte.L.l == 'Bocadillo-Pequeño') or (parte.L.l == 'Bocadillo'):
+                    if (parte.L.l == 'Fiambrera') or (parte.L.l == 'Bocadillo-Pequeño') or (parte.L.l == 'Bocadillo') or (parte.S.L == 'Bocadillo-Ans') or (parte.S.L == 'BocadilloPeq-Ans'):
                         bocayfiambreras[parte.L.l]+=1
                         usuariosBocyF[parte.L.l].append(comensal)
 
@@ -568,7 +592,7 @@ def parte_to_pdf(request):
                     cenaD[parte.L.d]+=1
                     desayunoD[parte.M.b]+=1
                     mediamañanaD[parte.M.m]+=1
-                    if (parte.M.l == 'Fiambrera') or (parte.M.l == 'Bocadillo-Pequeño') or (parte.M.l == 'Bocadillo'):
+                    if (parte.M.l == 'Fiambrera') or (parte.M.l == 'Bocadillo-Pequeño') or (parte.M.l == 'Bocadillo') or (parte.M.d == 'Bocadillo-Ans') or (parte.M.d == 'BocadilloPeq-Ans'):
                         bocayfiambrerasD[parte.M.l]+=1
                         usuariosBocyFD[parte.M.l].append(comensal)
                 elif num_day == 1:
@@ -576,7 +600,7 @@ def parte_to_pdf(request):
                     cenaD[parte.M.d]+=1
                     desayunoD[parte.X.b]+=1
                     mediamañanaD[parte.X.m]+=1
-                    if (parte.X.l == 'Fiambrera') or (parte.X.l == 'Bocadillo-Pequeño') or (parte.X.l == 'Bocadillo'):
+                    if (parte.X.l == 'Fiambrera') or (parte.X.l == 'Bocadillo-Pequeño') or (parte.X.l == 'Bocadillo') or (parte.X.d == 'Bocadillo-Ans') or (parte.X.d == 'BocadilloPeq-Ans'):
                         bocayfiambrerasD[parte.X.l]+=1
                         usuariosBocyFD[parte.X.l].append(comensal)
                 elif num_day == 2:
@@ -584,7 +608,7 @@ def parte_to_pdf(request):
                     cenaD[parte.X.d]+=1
                     desayunoD[parte.J.b]+=1
                     mediamañanaD[parte.J.m]+=1
-                    if (parte.J.l == 'Fiambrera') or (parte.J.l == 'Bocadillo-Pequeño') or (parte.J.l == 'Bocadillo'):
+                    if (parte.J.l == 'Fiambrera') or (parte.J.l == 'Bocadillo-Pequeño') or (parte.J.l == 'Bocadillo') or (parte.J.d == 'Bocadillo-Ans') or (parte.J.d == 'BocadilloPeq-Ans'):
                         bocayfiambrerasD[parte.J.l]+=1
                         usuariosBocyFD[parte.J.l].append(comensal)
                 elif num_day == 3:
@@ -592,7 +616,7 @@ def parte_to_pdf(request):
                     cenaD[parte.J.d]+=1
                     desayunoD[parte.V.b]+=1
                     mediamañanaD[parte.V.m]+=1
-                    if (parte.V.l == 'Fiambrera') or (parte.V.l == 'Bocadillo-Pequeño') or (parte.V.l == 'Bocadillo'):
+                    if (parte.V.l == 'Fiambrera') or (parte.V.l == 'Bocadillo-Pequeño') or (parte.V.l == 'Bocadillo') or (parte.V.d == 'Bocadillo-Ans') or (parte.V.d == 'BocadilloPeq-Ans'):
                         bocayfiambrerasD[parte.V.l]+=1
                         usuariosBocyFD[parte.V.l].append(comensal)
                 elif num_day == 4:
@@ -600,7 +624,7 @@ def parte_to_pdf(request):
                     cenaD[parte.V.d]+=1
                     desayunoD[parte.S.b]+=1
                     mediamañanaD[parte.S.m]+=1
-                    if (parte.S.l == 'Fiambrera') or (parte.S.l == 'Bocadillo-Pequeño') or (parte.S.l == 'Bocadillo'):
+                    if (parte.S.l == 'Fiambrera') or (parte.S.l == 'Bocadillo-Pequeño') or (parte.S.l == 'Bocadillo') or (parte.S.d == 'Bocadillo-Ans') or (parte.S.d == 'BocadilloPeq-Ans'):
                         bocayfiambrerasD[parte.S.l]+=1
                         usuariosBocyFD[parte.S.l].append(comensal)
                 elif num_day == 5:
@@ -608,7 +632,7 @@ def parte_to_pdf(request):
                     cenaD[parte.S.d]+=1
                     desayunoD[parte.D.b]+=1
                     mediamañanaD[parte.D.m]+=1
-                    if (parte.D.l == 'Fiambrera') or (parte.D.l == 'Bocadillo-Pequeño') or (parte.D.l == 'Bocadillo'):
+                    if (parte.D.l == 'Fiambrera') or (parte.D.l == 'Bocadillo-Pequeño') or (parte.D.l == 'Bocadillo') or (parte.S.D == 'Bocadillo-Ans') or (parte.S.D == 'BocadilloPeq-Ans'):
                         bocayfiambrerasD[parte.D.l]+=1
                         usuariosBocyFD[parte.D.l].append(comensal)
                 elif num_day == 6:
@@ -616,7 +640,7 @@ def parte_to_pdf(request):
                     cenaD[parte.D.d]+=1
                     desayunoD[parte.L.b]+=1
                     mediamañanaD[parte.L.m]+=1
-                    if (parte.L.l == 'Fiambrera') or (parte.L.l == 'Bocadillo-Pequeño') or (parte.L.l == 'Bocadillo'):
+                    if (parte.L.l == 'Fiambrera') or (parte.L.l == 'Bocadillo-Pequeño') or (parte.L.l == 'Bocadillo') or (parte.S.L == 'Bocadillo-Ans') or (parte.S.L == 'BocadilloPeq-Ans'):
                         bocayfiambrerasD[parte.L.l]+=1
                         usuariosBocyFD[parte.L.l].append(comensal)
             elif parte.opciones == 'Enfermo':
@@ -626,7 +650,7 @@ def parte_to_pdf(request):
                     cenaE[parte.L.d]+=1
                     desayunoE[parte.M.b]+=1
                     mediamañanaE[parte.M.m]+=1
-                    if (parte.M.l == 'Fiambrera') or (parte.M.l == 'Bocadillo-Pequeño') or (parte.M.l == 'Bocadillo'):
+                    if (parte.M.l == 'Fiambrera') or (parte.M.l == 'Bocadillo-Pequeño') or (parte.M.l == 'Bocadillo') or (parte.M.d == 'Bocadillo-Ans') or (parte.M.d == 'BocadilloPeq-Ans'):
                         bocayfiambrerasE[parte.M.l]+=1
                         usuariosBocyFE[parte.M.l].append(comensal)
                 elif num_day == 1:
@@ -634,7 +658,7 @@ def parte_to_pdf(request):
                     cenaE[parte.M.d]+=1
                     desayunoE[parte.X.b]+=1
                     mediamañanaE[parte.X.m]+=1
-                    if (parte.X.l == 'Fiambrera') or (parte.X.l == 'Bocadillo-Pequeño') or (parte.X.l == 'Bocadillo'):
+                    if (parte.X.l == 'Fiambrera') or (parte.X.l == 'Bocadillo-Pequeño') or (parte.X.l == 'Bocadillo') or (parte.X.d == 'Bocadillo-Ans') or (parte.X.d == 'BocadilloPeq-Ans'):
                         bocayfiambrerasE[parte.X.l]+=1
                         usuariosBocyFE[parte.X.l].append(comensal)
                 elif num_day == 2:
@@ -642,7 +666,7 @@ def parte_to_pdf(request):
                     cenaE[parte.X.d]+=1
                     desayunoE[parte.J.b]+=1
                     mediamañanaE[parte.J.m]+=1
-                    if (parte.J.l == 'Fiambrera') or (parte.J.l == 'Bocadillo-Pequeño') or (parte.J.l == 'Bocadillo'):
+                    if (parte.J.l == 'Fiambrera') or (parte.J.l == 'Bocadillo-Pequeño') or (parte.J.l == 'Bocadillo') or (parte.J.d == 'Bocadillo-Ans') or (parte.J.d == 'BocadilloPeq-Ans'):
                         bocayfiambrerasE[parte.J.l]+=1
                         usuariosBocyFE[parte.J.l].append(comensal)
                 elif num_day == 3:
@@ -650,7 +674,7 @@ def parte_to_pdf(request):
                     cenaE[parte.J.d]+=1
                     desayunoE[parte.V.b]+=1
                     mediamañanaE[parte.V.m]+=1
-                    if (parte.V.l == 'Fiambrera') or (parte.V.l == 'Bocadillo-Pequeño') or (parte.V.l == 'Bocadillo'):
+                    if (parte.V.l == 'Fiambrera') or (parte.V.l == 'Bocadillo-Pequeño') or (parte.V.l == 'Bocadillo') or (parte.V.d == 'Bocadillo-Ans') or (parte.V.d == 'BocadilloPeq-Ans'):
                         bocayfiambrerasE[parte.V.l]+=1
                         usuariosBocyFE[parte.V.l].append(comensal)
                 elif num_day == 4:
@@ -658,7 +682,7 @@ def parte_to_pdf(request):
                     cenaE[parte.V.d]+=1
                     desayunoE[parte.S.b]+=1
                     mediamañanaE[parte.S.m]+=1
-                    if (parte.S.l == 'Fiambrera') or (parte.S.l == 'Bocadillo-Pequeño') or (parte.S.l == 'Bocadillo'):
+                    if (parte.S.l == 'Fiambrera') or (parte.S.l == 'Bocadillo-Pequeño') or (parte.S.l == 'Bocadillo') or (parte.S.d == 'Bocadillo-Ans') or (parte.S.d == 'BocadilloPeq-Ans'):
                         bocayfiambrerasE[parte.S.l]+=1
                         usuariosBocyFE[parte.S.l].append(comensal)
                 elif num_day == 5:
@@ -666,7 +690,7 @@ def parte_to_pdf(request):
                     cenaE[parte.S.d]+=1
                     desayunoE[parte.D.b]+=1
                     mediamañanaE[parte.D.m]+=1
-                    if (parte.D.l == 'Fiambrera') or (parte.D.l == 'Bocadillo-Pequeño') or (parte.D.l == 'Bocadillo'):
+                    if (parte.D.l == 'Fiambrera') or (parte.D.l == 'Bocadillo-Pequeño') or (parte.D.l == 'Bocadillo') or (parte.S.D == 'Bocadillo-Ans') or (parte.S.D == 'BocadilloPeq-Ans'):
                         bocayfiambrerasE[parte.D.l]+=1
                         usuariosBocyFE[parte.D.l].append(comensal)
                 elif num_day == 6:
@@ -674,7 +698,7 @@ def parte_to_pdf(request):
                     cenaE[parte.D.d]+=1
                     desayunoE[parte.L.b]+=1
                     mediamañanaE[parte.L.m]+=1
-                    if (parte.L.l == 'Fiambrera') or (parte.L.l == 'Bocadillo-Pequeño') or (parte.L.l == 'Bocadillo'):
+                    if (parte.L.l == 'Fiambrera') or (parte.L.l == 'Bocadillo-Pequeño') or (parte.L.l == 'Bocadillo') or (parte.S.L == 'Bocadillo-Ans') or (parte.S.L == 'BocadilloPeq-Ans'):
                         bocayfiambrerasE[parte.L.l]+=1
                         usuariosBocyFE[parte.L.l].append(comensal)
             elif parte.opciones == 'Blando':
@@ -684,7 +708,7 @@ def parte_to_pdf(request):
                     cenaB[parte.L.d]+=1
                     desayunoB[parte.M.b]+=1
                     mediamañanaB[parte.M.m]+=1
-                    if (parte.M.l == 'Fiambrera') or (parte.M.l == 'Bocadillo-Pequeño') or (parte.M.l == 'Bocadillo'):
+                    if (parte.M.l == 'Fiambrera') or (parte.M.l == 'Bocadillo-Pequeño') or (parte.M.l == 'Bocadillo') or (parte.M.d == 'Bocadillo-Ans') or (parte.M.d == 'BocadilloPeq-Ans'):
                         bocayfiambrerasB[parte.M.l]+=1
                         usuariosBocyFB[parte.M.l].append(comensal)
                 elif num_day == 1:
@@ -692,7 +716,7 @@ def parte_to_pdf(request):
                     cenaB[parte.M.d]+=1
                     desayunoB[parte.X.b]+=1
                     mediamañanaB[parte.X.m]+=1
-                    if (parte.X.l == 'Fiambrera') or (parte.X.l == 'Bocadillo-Pequeño') or (parte.X.l == 'Bocadillo'):
+                    if (parte.X.l == 'Fiambrera') or (parte.X.l == 'Bocadillo-Pequeño') or (parte.X.l == 'Bocadillo') or (parte.X.d == 'Bocadillo-Ans') or (parte.X.d == 'BocadilloPeq-Ans'):
                         bocayfiambrerasB[parte.X.l]+=1
                         usuariosBocyFB[parte.X.l].append(comensal)
                 elif num_day == 2:
@@ -700,7 +724,7 @@ def parte_to_pdf(request):
                     cenaB[parte.X.d]+=1
                     desayunoB[parte.J.b]+=1
                     mediamañanaB[parte.J.m]+=1
-                    if (parte.J.l == 'Fiambrera') or (parte.J.l == 'Bocadillo-Pequeño') or (parte.J.l == 'Bocadillo'):
+                    if (parte.J.l == 'Fiambrera') or (parte.J.l == 'Bocadillo-Pequeño') or (parte.J.l == 'Bocadillo') or (parte.J.d == 'Bocadillo-Ans') or (parte.J.d == 'BocadilloPeq-Ans'):
                         bocayfiambrerasB[parte.J.l]+=1
                         usuariosBocyFB[parte.J.l].append(comensal)
                 elif num_day == 3:
@@ -708,7 +732,7 @@ def parte_to_pdf(request):
                     cenaB[parte.J.d]+=1
                     desayunoB[parte.V.b]+=1
                     mediamañanaB[parte.V.m]+=1
-                    if (parte.V.l == 'Fiambrera') or (parte.V.l == 'Bocadillo-Pequeño') or (parte.V.l == 'Bocadillo'):
+                    if (parte.V.l == 'Fiambrera') or (parte.V.l == 'Bocadillo-Pequeño') or (parte.V.l == 'Bocadillo') or (parte.V.d == 'Bocadillo-Ans') or (parte.V.d == 'BocadilloPeq-Ans'):
                         bocayfiambrerasB[parte.V.l]+=1
                         usuariosBocyFB[parte.V.l].append(comensal)
                 elif num_day == 4:
@@ -716,7 +740,7 @@ def parte_to_pdf(request):
                     cenaB[parte.V.d]+=1
                     desayunoB[parte.S.b]+=1
                     mediamañanaB[parte.S.m]+=1
-                    if (parte.S.l == 'Fiambrera') or (parte.S.l == 'Bocadillo-Pequeño') or (parte.S.l == 'Bocadillo'):
+                    if (parte.S.l == 'Fiambrera') or (parte.S.l == 'Bocadillo-Pequeño') or (parte.S.l == 'Bocadillo') or (parte.S.d == 'Bocadillo-Ans') or (parte.S.d == 'BocadilloPeq-Ans'):
                         bocayfiambrerasB[parte.S.l]+=1
                         usuariosBocyFB[parte.S.l].append(comensal)
                 elif num_day == 5:
@@ -724,7 +748,7 @@ def parte_to_pdf(request):
                     cenaB[parte.S.d]+=1
                     desayunoB[parte.D.b]+=1
                     mediamañanaB[parte.D.m]+=1
-                    if (parte.D.l == 'Fiambrera') or (parte.D.l == 'Bocadillo-Pequeño') or (parte.D.l == 'Bocadillo'):
+                    if (parte.D.l == 'Fiambrera') or (parte.D.l == 'Bocadillo-Pequeño') or (parte.D.l == 'Bocadillo') or (parte.S.D == 'Bocadillo-Ans') or (parte.S.D == 'BocadilloPeq-Ans'):
                         bocayfiambrerasB[parte.D.l]+=1
                         usuariosBocyFB[parte.D.l].append(comensal)
                 elif num_day == 6:
@@ -732,7 +756,7 @@ def parte_to_pdf(request):
                     cenaB[parte.D.d]+=1
                     desayunoB[parte.L.b]+=1
                     mediamañanaB[parte.L.m]+=1
-                    if (parte.L.l == 'Fiambrera') or (parte.L.l == 'Bocadillo-Pequeño') or (parte.L.l == 'Bocadillo'):
+                    if (parte.L.l == 'Fiambrera') or (parte.L.l == 'Bocadillo-Pequeño') or (parte.L.l == 'Bocadillo') or (parte.S.L == 'Bocadillo-Ans') or (parte.S.L == 'BocadilloPeq-Ans'):
                         bocayfiambrerasB[parte.L.l]+=1
                         usuariosBocyFB[parte.L.l].append(comensal)
         except Comensal.DoesNotExist:
@@ -742,7 +766,7 @@ def parte_to_pdf(request):
     #letra = 'L'
     #comida[parte.L.l]+=1
     #observaciones = comida[parte.L.l]
-    observaciones = 'Adios'
+    observaciones = ''
     if request.method=="POST":
         observaciones = request.POST.get('observaciones', '')
     context = {'title': 'Parte en PDF', 'tipo': tipo, 'observaciones': observaciones, 'numerodia': today.day, 'mes': meses[today.month],
@@ -766,17 +790,6 @@ def parte_to_pdf2(request):
     meses = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"]
     num_day = today.weekday()
     dia = dias[num_day]
-    usuarios = []
-    """
-    partesL1 = []
-    partesD1 = []
-    partesB2 = []
-    partesL2 = []
-    partesD2 = []
-    partesM = []
-    """
-    partesDia1 = []
-    partesDia2 = []
     variables = []
     contadores = { 'Dieta': [0, 0, 0, 0, 0],
                    'Enfermo': [0, 0, 0, 0, 0],
