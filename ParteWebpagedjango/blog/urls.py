@@ -25,7 +25,8 @@ urlpatterns = [
     path('extras/', views.Extras, name='blog-extras'),
     path('imprimir/', views.Imprimir, name='blog-imprimir'),
     path('partepdf/', views.parte_to_pdf, name='parte_to_pdf'),
-    path('partepdf2/', views.parte_to_pdf2, name='parte_to_pdf2')
+    path('partepdf2/', views.parte_to_pdf2, name='parte_to_pdf2'),
+    path('modificar/', views.Modificar, name='blog-modificar')
 #    path("contact/", views.contact, name="blog-contact"),
 
 ]

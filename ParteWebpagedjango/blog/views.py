@@ -88,45 +88,6 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
             return True
         return False
 
-"""
-@login_required 
-def Parte(request):
-    vari = [[],[],[],[]]
-    user = None
-    etiquetas = [['respuestaLb','respuestaLl','respuestaLd','respuestaLm']]
-    if request.user.is_authenticated:   #Este if no es necesario
-        user = request.user.username #guarda el nombre de usuario
-    try:    #Para obtener la respuesta anterior si la hay
-        answer = Comensal.objects.get(user=user)    #query para sacar la respuesta anterior
-        vari[0] = [answer.Lb, answer.Ll, answer.Ld, answer.Lm]
-    except Comensal.DoesNotExist:
-        vari[0] = ['-','-','-','-']
-
-    if request.method=="POST":
-        #for i in range(7):
-        i=0
-        vari[0]=[request.POST.get(etiquetas[i][0],''),request.POST.get(etiquetas[i][1],''),request.POST.get(etiquetas[i][2],''),request.POST.get(etiquetas[i][3],'')]
-        #vari.append(request.POST.get('respuestaLl',''))
-        #vari.append(request.POST.get('respuestaLd',''))
-        #vari.append(request.POST.get('respuestaLm',''))
-
-        try:
-            answer = Comensal.objects.get(user=user)    #query para sacar la respuesta anterior
-            answer.Lb=vari[0][0]
-            answer.Ll=vari[0][1]
-            answer.Ld=vari[0][2]
-            answer.Lm=vari[0][3]
-
-
-        except Comensal.DoesNotExist:
-            answer = Comensal(user=user, Lb=vari[0][0], Ll=vari[0][1], Ld=vari[0][2], Lm=vari[0][3])
-        answer.save() #guarda la nueva respuesta en la base de datos
-
-    dias = ["Lunes"]#,"Martes","Miercoles","Jueves","Viernes","Sábado","Domingo"]
-    num = [0]#, 1, 2, 3, 4, 5, 6]
-    return render(request, 'blog/parte.html', {'vari': vari, 'dias': dias, 'num': num, 'etiquetas': etiquetas, 'title': 'Parte'})
-"""
-
 @login_required 
 def Parte(request):
     vari = [[],[],[],[],[],[],[]]
@@ -165,9 +126,6 @@ def Parte(request):
         for i in range(7):
             vari[i]=[request.POST.get(etiquetas[i][0],''),request.POST.get(etiquetas[i][1],''),request.POST.get(etiquetas[i][2],''),request.POST.get(etiquetas[i][3],'')]
         ops = request.POST.get('opciones','')
-        #vari.append(request.POST.get('respuestaLl',''))
-        #vari.append(request.POST.get('respuestaLd',''))
-        #vari.append(request.POST.get('respuestaLm',''))
         
         L = Dia1(b=vari[0][0],l=vari[0][1],d=vari[0][2],m=vari[0][3])
         M = Dia1(b=vari[1][0],l=vari[1][1],d=vari[1][2],m=vari[1][3])
@@ -193,26 +151,10 @@ def Parte(request):
             answer.V = V
             answer.S = S
             answer.D = D
-            
-            """answer.L = Dia1(b=vari[0][0],l=vari[0][1],d=vari[0][2],m=vari[0][3]).save()
-            answer.M = Dia1(b=vari[1][0],l=vari[1][1],d=vari[1][2],m=vari[1][3]).save()
-            answer.X = Dia1(b=vari[2][0],l=vari[2][1],d=vari[2][2],m=vari[2][3]).save()
-            answer.J = Dia1(b=vari[3][0],l=vari[3][1],d=vari[3][2],m=vari[3][3]).save()
-            answer.V = Dia1(b=vari[4][0],l=vari[4][1],d=vari[4][2],m=vari[4][3]).save()
-            answer.S = Dia1(b=vari[5][0],l=vari[5][1],d=vari[5][2],m=vari[5][3]).save()
-            answer.D = Dia1(b=vari[6][0],l=vari[6][1],d=vari[6][2],m=vari[6][3]).save()
-"""
+
         except Comensal.DoesNotExist:
             answer = Comensal(user=user,opciones=ops,L=L,M=M,X=X,J=J,V=V,S=S,D=S)
 
-            """answer = Comensal(user=user, 
-                L=Dia1(b=vari[0][0],l=vari[0][1],d=vari[0][2],m=vari[0][3]).save(), 
-                M=Dia1(b=vari[1][0],l=vari[1][1],d=vari[1][2],m=vari[1][3]).save(), 
-                X=Dia1(b=vari[2][0],l=vari[2][1],d=vari[2][2],m=vari[2][3]).save(), 
-                J=Dia1(b=vari[3][0],l=vari[3][1],d=vari[3][2],m=vari[3][3]).save(), 
-                V=Dia1(b=vari[4][0],l=vari[4][1],d=vari[4][2],m=vari[4][3]).save(), 
-                S=Dia1(b=vari[5][0],l=vari[5][1],d=vari[5][2],m=vari[5][3]).save(), 
-                D=Dia1(b=vari[6][0],l=vari[6][1],d=vari[6][2],m=vari[6][3]).save())"""
         answer.save() #guarda la nueva respuesta en la base de datos
 
     dias = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"]
@@ -223,6 +165,97 @@ def Parte(request):
         variables[i] = [vari[i], dias[i], etiquetas[i]]
 
     return render(request, 'blog/parte.html', {'variables': variables, 'title': 'Parte', 'opciones': ops})
+
+#FUNCIÓN PARA MODIFICAR EL PARTE DE CUALQUIER USUARIO (SOLO DISPONIBLE PARA EL ADMINISTRADOR)
+@login_required 
+def Modificar(request):
+    if request.user.username == 'parteadmin':
+        mostrar = False
+        usernames = User.objects.all()
+        names = []
+        for uname in usernames:
+            names.append(uname.username)
+
+        vari = [[],[],[],[],[],[],[]]
+        user = None
+        etiquetas = [
+        ['respuestaLb','respuestaLl','respuestaLd','respuestaLm'],
+        ['respuestaMb','respuestaMl','respuestaMd','respuestaMm'],
+        ['respuestaXb','respuestaXl','respuestaXd','respuestaXm'],
+        ['respuestaJb','respuestaJl','respuestaJd','respuestaJm'],
+        ['respuestaVb','respuestaVl','respuestaVd','respuestaVm'],
+        ['respuestaSb','respuestaSl','respuestaSd','respuestaSm'],
+        ['respuestaDb','respuestaDl','respuestaDd','respuestaDm'],
+        ]
+        ops = ''
+        if request.method=="POST": 
+            mostrar = True
+            if request.POST.get("mostrar"):
+                user = request.POST.get('selectuser','')
+                try:    #Para obtener la respuesta anterior si la hay
+                    answer = Comensal.objects.get(user=user)    #query para sacar la respuesta anterior
+                    ops = answer.opciones
+                    vari[0] = [answer.L.b,answer.L.l,answer.L.d,answer.L.m]
+                    vari[1] = [answer.M.b,answer.M.l,answer.M.d,answer.M.m]
+                    vari[2] = [answer.X.b,answer.X.l,answer.X.d,answer.X.m]
+                    vari[3] = [answer.J.b,answer.J.l,answer.J.d,answer.J.m]
+                    vari[4] = [answer.V.b,answer.V.l,answer.V.d,answer.V.m]
+                    vari[5] = [answer.S.b,answer.S.l,answer.S.d,answer.S.m]
+                    vari[6] = [answer.D.b,answer.D.l,answer.D.d,answer.D.m]
+                except Comensal.DoesNotExist:
+                    ops = 'Normal'
+                    vari[0] = ['-','-','-','-']
+                    vari[1] = ['-','-','-','-']
+                    vari[2] = ['-','-','-','-']
+                    vari[3] = ['-','-','-','-']
+                    vari[4] = ['-','-','-','-']
+                    vari[5] = ['-','-','-','-']
+                    vari[6] = ['-','-','-','-']
+            elif request.POST.get("guardar"):
+                user = request.POST.get('selectuser','')
+                for i in range(7):
+                    vari[i]=[request.POST.get(etiquetas[i][0],''),request.POST.get(etiquetas[i][1],''),request.POST.get(etiquetas[i][2],''),request.POST.get(etiquetas[i][3],'')]
+                ops = request.POST.get('opciones','')
+                
+                L = Dia1(b=vari[0][0],l=vari[0][1],d=vari[0][2],m=vari[0][3])
+                M = Dia1(b=vari[1][0],l=vari[1][1],d=vari[1][2],m=vari[1][3])
+                X = Dia1(b=vari[2][0],l=vari[2][1],d=vari[2][2],m=vari[2][3])
+                J = Dia1(b=vari[3][0],l=vari[3][1],d=vari[3][2],m=vari[3][3])
+                V = Dia1(b=vari[4][0],l=vari[4][1],d=vari[4][2],m=vari[4][3])
+                S = Dia1(b=vari[5][0],l=vari[5][1],d=vari[5][2],m=vari[5][3])
+                D = Dia1(b=vari[6][0],l=vari[6][1],d=vari[6][2],m=vari[6][3])
+                L.save()
+                M.save()
+                X.save()
+                J.save()
+                V.save()
+                S.save()
+                D.save()
+                try:
+                    answer = Comensal.objects.get(user=user)    #query para sacar la respuesta anterior
+                    answer.opciones = ops
+                    answer.L = L
+                    answer.M = M
+                    answer.X = X
+                    answer.J = J
+                    answer.V = V
+                    answer.S = S
+                    answer.D = D
+
+                except Comensal.DoesNotExist:
+                    answer = Comensal(user=user,opciones=ops,L=L,M=M,X=X,J=J,V=V,S=S,D=S)
+
+                answer.save() #guarda la nueva respuesta en la base de datos
+        else:
+            mostrar = False             
+
+        dias = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"]
+        variables = [[],[],[],[],[],[],[]]
+        for i in range(7):
+            variables[i] = [vari[i], dias[i], etiquetas[i]]
+        return render(request, 'blog/modificar.html', {'variables': variables, 'title': 'Modificar', 'opciones': ops, 'names': names, 'mostrar': mostrar, 'currentuser': user})
+    else:
+        return render(request, 'blog/parte.html', {'title': 'Parte'})
 
 def Inicio(request):
     context = {
@@ -532,57 +565,78 @@ def parte_to_pdf(request):
                     cena[parte.L.d]+=1
                     desayuno[parte.M.b]+=1
                     mediamañana[parte.M.m]+=1
-                    if (parte.M.l == 'Fiambrera') or (parte.M.l == 'Bocadillo-Pequeño') or (parte.M.l == 'Bocadillo') or (parte.M.d == 'Bocadillo-Ans') or (parte.M.d == 'BocadilloPeq-Ans'):
+                    if (parte.M.l == 'Fiambrera') or (parte.M.l == 'Bocadillo-Pequeño') or (parte.M.l == 'Bocadillo'):
                         bocayfiambreras[parte.M.l]+=1
                         usuariosBocyF[parte.M.l].append(comensal)
+                    if (parte.M.d == 'Bocadillo-Ans') or (parte.M.d == 'BocadilloPeq-Ans'):
+                        bocayfiambreras[parte.M.d]+=1
+                        usuariosBocyF[parte.M.d].append(comensal)
                 elif num_day == 1:
                     comida[parte.M.l]+=1
                     cena[parte.M.d]+=1
                     desayuno[parte.X.b]+=1
                     mediamañana[parte.X.m]+=1
-                    if (parte.X.l == 'Fiambrera') or (parte.X.l == 'Bocadillo-Pequeño') or (parte.X.l == 'Bocadillo') or (parte.X.d == 'Bocadillo-Ans') or (parte.X.d == 'BocadilloPeq-Ans'):
+                    if (parte.X.l == 'Fiambrera') or (parte.X.l == 'Bocadillo-Pequeño') or (parte.X.l == 'Bocadillo'):
                         bocayfiambreras[parte.X.l]+=1
                         usuariosBocyF[parte.X.l].append(comensal)
+                    if (parte.X.d == 'Bocadillo-Ans') or (parte.X.d == 'BocadilloPeq-Ans'):
+                        bocayfiambreras[parte.X.d]+=1
+                        usuariosBocyF[parte.X.d].append(comensal)
                 elif num_day == 2:
                     comida[parte.X.l]+=1
                     cena[parte.X.d]+=1
                     desayuno[parte.J.b]+=1
                     mediamañana[parte.J.m]+=1
-                    if (parte.J.l == 'Fiambrera') or (parte.J.l == 'Bocadillo-Pequeño') or (parte.J.l == 'Bocadillo') or (parte.J.d == 'Bocadillo-Ans') or (parte.J.d == 'BocadilloPeq-Ans'):
+                    if (parte.J.l == 'Fiambrera') or (parte.J.l == 'Bocadillo-Pequeño') or (parte.J.l == 'Bocadillo'):
                         bocayfiambreras[parte.J.l]+=1
                         usuariosBocyF[parte.J.l].append(comensal)
+                    if (parte.J.d == 'Bocadillo-Ans') or (parte.J.d == 'BocadilloPeq-Ans'):
+                        bocayfiambreras[parte.J.d]+=1
+                        usuariosBocyF[parte.J.d].append(comensal)
                 elif num_day == 3:
                     comida[parte.J.l]+=1
                     cena[parte.J.d]+=1
                     desayuno[parte.V.b]+=1
                     mediamañana[parte.V.m]+=1
-                    if (parte.V.l == 'Fiambrera') or (parte.V.l == 'Bocadillo-Pequeño') or (parte.V.l == 'Bocadillo') or (parte.V.d == 'Bocadillo-Ans') or (parte.V.d == 'BocadilloPeq-Ans'):
+                    if (parte.V.l == 'Fiambrera') or (parte.V.l == 'Bocadillo-Pequeño') or (parte.V.l == 'Bocadillo'):
                         bocayfiambreras[parte.V.l]+=1
                         usuariosBocyF[parte.V.l].append(comensal)
+                    if (parte.V.d == 'Bocadillo-Ans') or (parte.V.d == 'BocadilloPeq-Ans'):
+                        bocayfiambreras[parte.V.d]+=1
+                        usuariosBocyF[parte.V.d].append(comensal)
                 elif num_day == 4:
                     comida[parte.V.l]+=1
                     cena[parte.V.d]+=1
                     desayuno[parte.S.b]+=1
                     mediamañana[parte.S.m]+=1
-                    if (parte.S.l == 'Fiambrera') or (parte.S.l == 'Bocadillo-Pequeño') or (parte.S.l == 'Bocadillo') or (parte.S.d == 'Bocadillo-Ans') or (parte.S.d == 'BocadilloPeq-Ans'):
+                    if (parte.S.l == 'Fiambrera') or (parte.S.l == 'Bocadillo-Pequeño') or (parte.S.l == 'Bocadillo'):
                         bocayfiambreras[parte.S.l]+=1
                         usuariosBocyF[parte.S.l].append(comensal)
+                    if (parte.S.d == 'Bocadillo-Ans') or (parte.S.d == 'BocadilloPeq-Ans'):
+                        bocayfiambreras[parte.S.d]+=1
+                        usuariosBocyF[parte.S.d].append(comensal)
                 elif num_day == 5:
                     comida[parte.S.l]+=1
                     cena[parte.S.d]+=1
                     desayuno[parte.D.b]+=1
                     mediamañana[parte.D.m]+=1
-                    if (parte.D.l == 'Fiambrera') or (parte.D.l == 'Bocadillo-Pequeño') or (parte.D.l == 'Bocadillo') or (parte.S.D == 'Bocadillo-Ans') or (parte.S.D == 'BocadilloPeq-Ans'):
+                    if (parte.D.l == 'Fiambrera') or (parte.D.l == 'Bocadillo-Pequeño') or (parte.D.l == 'Bocadillo'):
                         bocayfiambreras[parte.D.l]+=1
                         usuariosBocyF[parte.D.l].append(comensal)
+                    if (parte.D.d == 'Bocadillo-Ans') or (parte.D.d == 'BocadilloPeq-Ans'):
+                        bocayfiambreras[parte.D.d]+=1
+                        usuariosBocyF[parte.D.d].append(comensal)
                 elif num_day == 6:
                     comida[parte.D.l]+=1
                     cena[parte.D.d]+=1
                     desayuno[parte.L.b]+=1
                     mediamañana[parte.L.m]+=1
-                    if (parte.L.l == 'Fiambrera') or (parte.L.l == 'Bocadillo-Pequeño') or (parte.L.l == 'Bocadillo') or (parte.S.L == 'Bocadillo-Ans') or (parte.S.L == 'BocadilloPeq-Ans'):
+                    if (parte.L.l == 'Fiambrera') or (parte.L.l == 'Bocadillo-Pequeño') or (parte.L.l == 'Bocadillo'):
                         bocayfiambreras[parte.L.l]+=1
                         usuariosBocyF[parte.L.l].append(comensal)
+                    if (parte.L.d == 'Bocadillo-Ans') or (parte.L.d == 'BocadilloPeq-Ans'):
+                        bocayfiambreras[parte.L.d]+=1
+                        usuariosBocyF[parte.L.d].append(comensal)
 
             elif parte.opciones == 'Dieta':
                 tipo['dieta']+=1
@@ -592,57 +646,78 @@ def parte_to_pdf(request):
                     cenaD[parte.L.d]+=1
                     desayunoD[parte.M.b]+=1
                     mediamañanaD[parte.M.m]+=1
-                    if (parte.M.l == 'Fiambrera') or (parte.M.l == 'Bocadillo-Pequeño') or (parte.M.l == 'Bocadillo') or (parte.M.d == 'Bocadillo-Ans') or (parte.M.d == 'BocadilloPeq-Ans'):
+                    if (parte.M.l == 'Fiambrera') or (parte.M.l == 'Bocadillo-Pequeño') or (parte.M.l == 'Bocadillo'):
                         bocayfiambrerasD[parte.M.l]+=1
                         usuariosBocyFD[parte.M.l].append(comensal)
+                    if (parte.M.d == 'Bocadillo-Ans') or (parte.M.d == 'BocadilloPeq-Ans'):
+                        bocayfiambrerasD[parte.M.d]+=1
+                        usuariosBocyFD[parte.M.d].append(comensal)
                 elif num_day == 1:
                     comidaD[parte.M.l]+=1
                     cenaD[parte.M.d]+=1
                     desayunoD[parte.X.b]+=1
                     mediamañanaD[parte.X.m]+=1
-                    if (parte.X.l == 'Fiambrera') or (parte.X.l == 'Bocadillo-Pequeño') or (parte.X.l == 'Bocadillo') or (parte.X.d == 'Bocadillo-Ans') or (parte.X.d == 'BocadilloPeq-Ans'):
+                    if (parte.X.l == 'Fiambrera') or (parte.X.l == 'Bocadillo-Pequeño') or (parte.X.l == 'Bocadillo'):
                         bocayfiambrerasD[parte.X.l]+=1
                         usuariosBocyFD[parte.X.l].append(comensal)
+                    if (parte.X.d == 'Bocadillo-Ans') or (parte.X.d == 'BocadilloPeq-Ans'):
+                        bocayfiambrerasD[parte.X.d]+=1
+                        usuariosBocyFD[parte.X.d].append(comensal)
                 elif num_day == 2:
                     comidaD[parte.X.l]+=1
                     cenaD[parte.X.d]+=1
                     desayunoD[parte.J.b]+=1
                     mediamañanaD[parte.J.m]+=1
-                    if (parte.J.l == 'Fiambrera') or (parte.J.l == 'Bocadillo-Pequeño') or (parte.J.l == 'Bocadillo') or (parte.J.d == 'Bocadillo-Ans') or (parte.J.d == 'BocadilloPeq-Ans'):
+                    if (parte.J.l == 'Fiambrera') or (parte.J.l == 'Bocadillo-Pequeño') or (parte.J.l == 'Bocadillo'):
                         bocayfiambrerasD[parte.J.l]+=1
                         usuariosBocyFD[parte.J.l].append(comensal)
+                    if (parte.J.d == 'Bocadillo-Ans') or (parte.J.d == 'BocadilloPeq-Ans'):
+                        bocayfiambrerasD[parte.J.d]+=1
+                        usuariosBocyFD[parte.J.d].append(comensal)
                 elif num_day == 3:
                     comidaD[parte.J.l]+=1
                     cenaD[parte.J.d]+=1
                     desayunoD[parte.V.b]+=1
                     mediamañanaD[parte.V.m]+=1
-                    if (parte.V.l == 'Fiambrera') or (parte.V.l == 'Bocadillo-Pequeño') or (parte.V.l == 'Bocadillo') or (parte.V.d == 'Bocadillo-Ans') or (parte.V.d == 'BocadilloPeq-Ans'):
+                    if (parte.V.l == 'Fiambrera') or (parte.V.l == 'Bocadillo-Pequeño') or (parte.V.l == 'Bocadillo'):
                         bocayfiambrerasD[parte.V.l]+=1
                         usuariosBocyFD[parte.V.l].append(comensal)
+                    if (parte.V.d == 'Bocadillo-Ans') or (parte.V.d == 'BocadilloPeq-Ans'):
+                        bocayfiambrerasD[parte.V.d]+=1
+                        usuariosBocyFD[parte.V.d].append(comensal)
                 elif num_day == 4:
                     comidaD[parte.V.l]+=1
                     cenaD[parte.V.d]+=1
                     desayunoD[parte.S.b]+=1
                     mediamañanaD[parte.S.m]+=1
-                    if (parte.S.l == 'Fiambrera') or (parte.S.l == 'Bocadillo-Pequeño') or (parte.S.l == 'Bocadillo') or (parte.S.d == 'Bocadillo-Ans') or (parte.S.d == 'BocadilloPeq-Ans'):
+                    if (parte.S.l == 'Fiambrera') or (parte.S.l == 'Bocadillo-Pequeño') or (parte.S.l == 'Bocadillo'):
                         bocayfiambrerasD[parte.S.l]+=1
                         usuariosBocyFD[parte.S.l].append(comensal)
+                    if (parte.S.d == 'Bocadillo-Ans') or (parte.S.d == 'BocadilloPeq-Ans'):
+                        bocayfiambrerasD[parte.S.d]+=1
+                        usuariosBocyFD[parte.S.d].append(comensal)
                 elif num_day == 5:
                     comidaD[parte.S.l]+=1
                     cenaD[parte.S.d]+=1
                     desayunoD[parte.D.b]+=1
                     mediamañanaD[parte.D.m]+=1
-                    if (parte.D.l == 'Fiambrera') or (parte.D.l == 'Bocadillo-Pequeño') or (parte.D.l == 'Bocadillo') or (parte.S.D == 'Bocadillo-Ans') or (parte.S.D == 'BocadilloPeq-Ans'):
+                    if (parte.D.l == 'Fiambrera') or (parte.D.l == 'Bocadillo-Pequeño') or (parte.D.l == 'Bocadillo'):
                         bocayfiambrerasD[parte.D.l]+=1
                         usuariosBocyFD[parte.D.l].append(comensal)
+                    if (parte.D.d == 'Bocadillo-Ans') or (parte.D.d == 'BocadilloPeq-Ans'):
+                        bocayfiambrerasD[parte.D.d]+=1
+                        usuariosBocyFD[parte.D.d].append(comensal)
                 elif num_day == 6:
                     comidaD[parte.D.l]+=1
                     cenaD[parte.D.d]+=1
                     desayunoD[parte.L.b]+=1
                     mediamañanaD[parte.L.m]+=1
-                    if (parte.L.l == 'Fiambrera') or (parte.L.l == 'Bocadillo-Pequeño') or (parte.L.l == 'Bocadillo') or (parte.S.L == 'Bocadillo-Ans') or (parte.S.L == 'BocadilloPeq-Ans'):
+                    if (parte.L.l == 'Fiambrera') or (parte.L.l == 'Bocadillo-Pequeño') or (parte.L.l == 'Bocadillo'):
                         bocayfiambrerasD[parte.L.l]+=1
                         usuariosBocyFD[parte.L.l].append(comensal)
+                    if (parte.L.d == 'Bocadillo-Ans') or (parte.L.d == 'BocadilloPeq-Ans'):
+                        bocayfiambrerasD[parte.L.d]+=1
+                        usuariosBocyFD[parte.L.d].append(comensal)
             elif parte.opciones == 'Enfermo':
                 tipo['enfermo']+=1
                 if num_day == 0:
@@ -650,57 +725,78 @@ def parte_to_pdf(request):
                     cenaE[parte.L.d]+=1
                     desayunoE[parte.M.b]+=1
                     mediamañanaE[parte.M.m]+=1
-                    if (parte.M.l == 'Fiambrera') or (parte.M.l == 'Bocadillo-Pequeño') or (parte.M.l == 'Bocadillo') or (parte.M.d == 'Bocadillo-Ans') or (parte.M.d == 'BocadilloPeq-Ans'):
+                    if (parte.M.l == 'Fiambrera') or (parte.M.l == 'Bocadillo-Pequeño') or (parte.M.l == 'Bocadillo'):
                         bocayfiambrerasE[parte.M.l]+=1
                         usuariosBocyFE[parte.M.l].append(comensal)
+                    if (parte.M.d == 'Bocadillo-Ans') or (parte.M.d == 'BocadilloPeq-Ans'):
+                        bocayfiambrerasE[parte.M.d]+=1
+                        usuariosBocyFE[parte.M.d].append(comensal)
                 elif num_day == 1:
                     comidaE[parte.M.l]+=1
                     cenaE[parte.M.d]+=1
                     desayunoE[parte.X.b]+=1
                     mediamañanaE[parte.X.m]+=1
-                    if (parte.X.l == 'Fiambrera') or (parte.X.l == 'Bocadillo-Pequeño') or (parte.X.l == 'Bocadillo') or (parte.X.d == 'Bocadillo-Ans') or (parte.X.d == 'BocadilloPeq-Ans'):
+                    if (parte.X.l == 'Fiambrera') or (parte.X.l == 'Bocadillo-Pequeño') or (parte.X.l == 'Bocadillo'):
                         bocayfiambrerasE[parte.X.l]+=1
                         usuariosBocyFE[parte.X.l].append(comensal)
+                    if (parte.X.d == 'Bocadillo-Ans') or (parte.X.d == 'BocadilloPeq-Ans'):
+                        bocayfiambrerasE[parte.X.d]+=1
+                        usuariosBocyFE[parte.X.d].append(comensal)
                 elif num_day == 2:
                     comidaE[parte.X.l]+=1
                     cenaE[parte.X.d]+=1
                     desayunoE[parte.J.b]+=1
                     mediamañanaE[parte.J.m]+=1
-                    if (parte.J.l == 'Fiambrera') or (parte.J.l == 'Bocadillo-Pequeño') or (parte.J.l == 'Bocadillo') or (parte.J.d == 'Bocadillo-Ans') or (parte.J.d == 'BocadilloPeq-Ans'):
+                    if (parte.J.l == 'Fiambrera') or (parte.J.l == 'Bocadillo-Pequeño') or (parte.J.l == 'Bocadillo'):
                         bocayfiambrerasE[parte.J.l]+=1
                         usuariosBocyFE[parte.J.l].append(comensal)
+                    if (parte.J.d == 'Bocadillo-Ans') or (parte.J.d == 'BocadilloPeq-Ans'):
+                        bocayfiambrerasE[parte.J.d]+=1
+                        usuariosBocyFE[parte.J.d].append(comensal)
                 elif num_day == 3:
                     comidaE[parte.J.l]+=1
                     cenaE[parte.J.d]+=1
                     desayunoE[parte.V.b]+=1
                     mediamañanaE[parte.V.m]+=1
-                    if (parte.V.l == 'Fiambrera') or (parte.V.l == 'Bocadillo-Pequeño') or (parte.V.l == 'Bocadillo') or (parte.V.d == 'Bocadillo-Ans') or (parte.V.d == 'BocadilloPeq-Ans'):
+                    if (parte.V.l == 'Fiambrera') or (parte.V.l == 'Bocadillo-Pequeño') or (parte.V.l == 'Bocadillo'):
                         bocayfiambrerasE[parte.V.l]+=1
                         usuariosBocyFE[parte.V.l].append(comensal)
+                    if (parte.V.d == 'Bocadillo-Ans') or (parte.V.d == 'BocadilloPeq-Ans'):
+                        bocayfiambrerasE[parte.V.d]+=1
+                        usuariosBocyFE[parte.V.d].append(comensal)
                 elif num_day == 4:
                     comidaE[parte.V.l]+=1
                     cenaE[parte.V.d]+=1
                     desayunoE[parte.S.b]+=1
                     mediamañanaE[parte.S.m]+=1
-                    if (parte.S.l == 'Fiambrera') or (parte.S.l == 'Bocadillo-Pequeño') or (parte.S.l == 'Bocadillo') or (parte.S.d == 'Bocadillo-Ans') or (parte.S.d == 'BocadilloPeq-Ans'):
+                    if (parte.S.l == 'Fiambrera') or (parte.S.l == 'Bocadillo-Pequeño') or (parte.S.l == 'Bocadillo'):
                         bocayfiambrerasE[parte.S.l]+=1
                         usuariosBocyFE[parte.S.l].append(comensal)
+                    if (parte.S.d == 'Bocadillo-Ans') or (parte.S.d == 'BocadilloPeq-Ans'):
+                        bocayfiambrerasE[parte.S.d]+=1
+                        usuariosBocyFE[parte.S.d].append(comensal)
                 elif num_day == 5:
                     comidaE[parte.S.l]+=1
                     cenaE[parte.S.d]+=1
                     desayunoE[parte.D.b]+=1
                     mediamañanaE[parte.D.m]+=1
-                    if (parte.D.l == 'Fiambrera') or (parte.D.l == 'Bocadillo-Pequeño') or (parte.D.l == 'Bocadillo') or (parte.S.D == 'Bocadillo-Ans') or (parte.S.D == 'BocadilloPeq-Ans'):
+                    if (parte.D.l == 'Fiambrera') or (parte.D.l == 'Bocadillo-Pequeño') or (parte.D.l == 'Bocadillo'):
                         bocayfiambrerasE[parte.D.l]+=1
                         usuariosBocyFE[parte.D.l].append(comensal)
+                    if (parte.D.d == 'Bocadillo-Ans') or (parte.D.d == 'BocadilloPeq-Ans'):
+                        bocayfiambrerasE[parte.D.d]+=1
+                        usuariosBocyFE[parte.D.d].append(comensal)
                 elif num_day == 6:
                     comidaE[parte.D.l]+=1
                     cenaE[parte.D.d]+=1
                     desayunoE[parte.L.b]+=1
                     mediamañanaE[parte.L.m]+=1
-                    if (parte.L.l == 'Fiambrera') or (parte.L.l == 'Bocadillo-Pequeño') or (parte.L.l == 'Bocadillo') or (parte.S.L == 'Bocadillo-Ans') or (parte.S.L == 'BocadilloPeq-Ans'):
+                    if (parte.L.l == 'Fiambrera') or (parte.L.l == 'Bocadillo-Pequeño') or (parte.L.l == 'Bocadillo'):
                         bocayfiambrerasE[parte.L.l]+=1
                         usuariosBocyFE[parte.L.l].append(comensal)
+                    if (parte.L.d == 'Bocadillo-Ans') or (parte.L.d == 'BocadilloPeq-Ans'):
+                        bocayfiambrerasE[parte.L.d]+=1
+                        usuariosBocyFE[parte.L.d].append(comensal)
             elif parte.opciones == 'Blando':
                 tipo['blando']+=1
                 if num_day == 0:
@@ -708,57 +804,78 @@ def parte_to_pdf(request):
                     cenaB[parte.L.d]+=1
                     desayunoB[parte.M.b]+=1
                     mediamañanaB[parte.M.m]+=1
-                    if (parte.M.l == 'Fiambrera') or (parte.M.l == 'Bocadillo-Pequeño') or (parte.M.l == 'Bocadillo') or (parte.M.d == 'Bocadillo-Ans') or (parte.M.d == 'BocadilloPeq-Ans'):
+                    if (parte.M.l == 'Fiambrera') or (parte.M.l == 'Bocadillo-Pequeño') or (parte.M.l == 'Bocadillo'):
                         bocayfiambrerasB[parte.M.l]+=1
                         usuariosBocyFB[parte.M.l].append(comensal)
+                    if (parte.M.d == 'Bocadillo-Ans') or (parte.M.d == 'BocadilloPeq-Ans'):
+                        bocayfiambrerasB[parte.M.d]+=1
+                        usuariosBocyFB[parte.M.d].append(comensal)
                 elif num_day == 1:
                     comidaB[parte.M.l]+=1
                     cenaB[parte.M.d]+=1
                     desayunoB[parte.X.b]+=1
                     mediamañanaB[parte.X.m]+=1
-                    if (parte.X.l == 'Fiambrera') or (parte.X.l == 'Bocadillo-Pequeño') or (parte.X.l == 'Bocadillo') or (parte.X.d == 'Bocadillo-Ans') or (parte.X.d == 'BocadilloPeq-Ans'):
+                    if (parte.X.l == 'Fiambrera') or (parte.X.l == 'Bocadillo-Pequeño') or (parte.X.l == 'Bocadillo'):
                         bocayfiambrerasB[parte.X.l]+=1
                         usuariosBocyFB[parte.X.l].append(comensal)
+                    if (parte.X.d == 'Bocadillo-Ans') or (parte.X.d == 'BocadilloPeq-Ans'):
+                        bocayfiambrerasB[parte.X.d]+=1
+                        usuariosBocyFB[parte.X.d].append(comensal)
                 elif num_day == 2:
                     comidaB[parte.X.l]+=1
                     cenaB[parte.X.d]+=1
                     desayunoB[parte.J.b]+=1
                     mediamañanaB[parte.J.m]+=1
-                    if (parte.J.l == 'Fiambrera') or (parte.J.l == 'Bocadillo-Pequeño') or (parte.J.l == 'Bocadillo') or (parte.J.d == 'Bocadillo-Ans') or (parte.J.d == 'BocadilloPeq-Ans'):
+                    if (parte.J.l == 'Fiambrera') or (parte.J.l == 'Bocadillo-Pequeño') or (parte.J.l == 'Bocadillo'):
                         bocayfiambrerasB[parte.J.l]+=1
                         usuariosBocyFB[parte.J.l].append(comensal)
+                    if (parte.J.d == 'Bocadillo-Ans') or (parte.J.d == 'BocadilloPeq-Ans'):
+                        bocayfiambrerasB[parte.J.d]+=1
+                        usuariosBocyFB[parte.J.d].append(comensal)
                 elif num_day == 3:
                     comidaB[parte.J.l]+=1
                     cenaB[parte.J.d]+=1
                     desayunoB[parte.V.b]+=1
                     mediamañanaB[parte.V.m]+=1
-                    if (parte.V.l == 'Fiambrera') or (parte.V.l == 'Bocadillo-Pequeño') or (parte.V.l == 'Bocadillo') or (parte.V.d == 'Bocadillo-Ans') or (parte.V.d == 'BocadilloPeq-Ans'):
+                    if (parte.V.l == 'Fiambrera') or (parte.V.l == 'Bocadillo-Pequeño') or (parte.V.l == 'Bocadillo'):
                         bocayfiambrerasB[parte.V.l]+=1
                         usuariosBocyFB[parte.V.l].append(comensal)
+                    if (parte.V.d == 'Bocadillo-Ans') or (parte.V.d == 'BocadilloPeq-Ans'):
+                        bocayfiambrerasB[parte.V.d]+=1
+                        usuariosBocyFB[parte.V.d].append(comensal)
                 elif num_day == 4:
                     comidaB[parte.V.l]+=1
                     cenaB[parte.V.d]+=1
                     desayunoB[parte.S.b]+=1
                     mediamañanaB[parte.S.m]+=1
-                    if (parte.S.l == 'Fiambrera') or (parte.S.l == 'Bocadillo-Pequeño') or (parte.S.l == 'Bocadillo') or (parte.S.d == 'Bocadillo-Ans') or (parte.S.d == 'BocadilloPeq-Ans'):
+                    if (parte.S.l == 'Fiambrera') or (parte.S.l == 'Bocadillo-Pequeño') or (parte.S.l == 'Bocadillo'):
                         bocayfiambrerasB[parte.S.l]+=1
                         usuariosBocyFB[parte.S.l].append(comensal)
+                    if (parte.S.d == 'Bocadillo-Ans') or (parte.S.d == 'BocadilloPeq-Ans'):
+                        bocayfiambrerasB[parte.S.d]+=1
+                        usuariosBocyFB[parte.S.d].append(comensal)
                 elif num_day == 5:
                     comidaB[parte.S.l]+=1
                     cenaB[parte.S.d]+=1
                     desayunoB[parte.D.b]+=1
                     mediamañanaB[parte.D.m]+=1
-                    if (parte.D.l == 'Fiambrera') or (parte.D.l == 'Bocadillo-Pequeño') or (parte.D.l == 'Bocadillo') or (parte.S.D == 'Bocadillo-Ans') or (parte.S.D == 'BocadilloPeq-Ans'):
+                    if (parte.D.l == 'Fiambrera') or (parte.D.l == 'Bocadillo-Pequeño') or (parte.D.l == 'Bocadillo'):
                         bocayfiambrerasB[parte.D.l]+=1
                         usuariosBocyFB[parte.D.l].append(comensal)
+                    if (parte.D.d == 'Bocadillo-Ans') or (parte.D.d == 'BocadilloPeq-Ans'):
+                        bocayfiambrerasB[parte.D.d]+=1
+                        usuariosBocyFB[parte.D.d].append(comensal)
                 elif num_day == 6:
                     comidaB[parte.D.l]+=1
                     cenaB[parte.D.d]+=1
                     desayunoB[parte.L.b]+=1
                     mediamañanaB[parte.L.m]+=1
-                    if (parte.L.l == 'Fiambrera') or (parte.L.l == 'Bocadillo-Pequeño') or (parte.L.l == 'Bocadillo') or (parte.S.L == 'Bocadillo-Ans') or (parte.S.L == 'BocadilloPeq-Ans'):
+                    if (parte.L.l == 'Fiambrera') or (parte.L.l == 'Bocadillo-Pequeño') or (parte.L.l == 'Bocadillo'):
                         bocayfiambrerasB[parte.L.l]+=1
                         usuariosBocyFB[parte.L.l].append(comensal)
+                    if (parte.L.d == 'Bocadillo-Ans') or (parte.L.d == 'BocadilloPeq-Ans'):
+                        bocayfiambrerasB[parte.L.d]+=1
+                        usuariosBocyFB[parte.L.d].append(comensal)
         except Comensal.DoesNotExist:
             a = 1
 
