@@ -1,0 +1,112 @@
+
+{% extends "blog/base.html" %}
+{% block content %}
+    <h1>Administrador Parte</h1>
+    <h3>Página para modificar el parte de otro usuario</h3>
+    <form method="post" action="{% url 'blog-modificar' %}">{% csrf_token %}
+        <p>USUARIO:</p>
+        <select class="custom-select parte-select" id="inputGroupSelect04" name="selectuser" style="width: 200px;">
+            <option value={{ currentuser }} selected>{{ currentuser }}</option>
+            {% for usname in names %}
+                <option value={{ usname }}>{{ usname }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="btn btn-success" style="background-color:#9CB4B3; border:none" value="mostrar" name="mostrar">Mostrar Parte</button>
+        <hr/ style="width: 200px;">
+        {% if mostrar == True %}
+            <p>¿Tienes alguna necesidad especial?</p>
+            <select class="custom-select parte-select" id="inputGroupSelect04" name="opciones" style="width: 200px;">
+                <option value={{ opciones }} selected>{{ opciones }}</option>
+                <option value="Normal">Normal</option>
+                <option value="Dieta">Dieta</option>
+                <option value="Enfermo">Enfermo</option>
+                <option value="Blando">Blando</option>
+            </select>
+            <table>
+                <thead>
+                <tr>
+                    <th style="border-radius: 15px 0px 0px 0px;">DIA
+                    <th>DESAYUNO
+                    <th>COMIDA
+                    <th>CENA
+                    <th style="border-radius: 0px 15px 0px 0px;">Media mañana
+                </thead>
+                <tbody align="center">
+
+                {% for var, dia, etiqueta in variables %}
+                    {% with i=forloop.counter0 %}     
+                <tr>
+                    {% if dia == "Domingo" %}
+                        <td style="background-color: rgb(219, 219, 219); border-radius: 0px 0px 0px 15px;">{{ dia }}
+                    {% else %}
+                        <td style="background-color: rgb(219, 219, 219);">{{ dia }}
+                    {% endif %}
+                    <td><select class="custom-select parte-select" id="inputGroupSelect04" name={{ etiqueta.0 }}>
+                        <option value={{ var.0 }} selected>{{ var.0 }}</option>
+                        <option value="-">-</option>
+                        <option value="Normal">Normal</option>
+                        <option value="Bocadillo-Pequeño">Bocadillo-Pequeño</option>
+                        <option value="Bocadillo">Bocadillo</option>
+                        <option value="Cesta">Cesta</option>
+                        <option value="Fiambrera">Fiambrera</option>
+                    </select>
+                    <td><select class="custom-select parte-select" id="inputGroupSelect04" name={{ etiqueta.1 }}>
+                        <option value={{ var.1 }} selected>{{ var.1 }}</option>
+                        <option value="-">-</option>
+                        <option value="Normal">Normal</option>
+                        <option value="Bocadillo-Pequeño">Bocadillo-Pequeño</option>
+                        <option value="Bocadillo">Bocadillo</option>
+                        <option value="Cesta">Cesta</option>
+                        <option value="Fiambrera">Fiambrera</option>
+                        <option value="Comida-13:00">Comida-13:00</option>
+                        <option value="Comida-13:30">Comida-13:30</option>
+                        <option value="Comida-14:00">Comida-14:00</option>
+                    </select>           
+                    <td><select class="custom-select parte-select" id="inputGroupSelect04" name={{ etiqueta.2 }}>
+                        <option value={{ var.2 }} selected>{{ var.2 }}</option>
+                        <option value="-">-</option>
+                        <option value="Normal">Normal</option>
+                        <option value="Bocadillo-Pequeño">Bocadillo-Pequeño</option>
+                        <option value="Bocadillo">Bocadillo</option>
+                        <option value="Cesta">Cesta</option>
+                        <option value="Fiambrera">Fiambrera</option>
+                        <option value="Bocadillo-Ans">Bocadillo-Ans</option>
+                        <option value="BocadilloPeq-Ans">BocadilloPeq-Ans</option>
+                    </select>
+                    {% if dia == "Sábado" or dia == "Domingo"%}
+                        <td disabled><select class="custom-select parte-select" id="inputGroupSelect04" name={{ etiqueta.3 }}>
+                            <option value="-">-</option>
+                        </select>
+                    {% else %}
+                        <td><select class="custom-select parte-select" id="inputGroupSelect04" name={{ etiqueta.3 }}>
+                                <option value={{ var.3 }} selected>{{ var.3 }}</option>
+                                <option value="Si">Si</option>
+                                <option value="-">-</option>
+                            </select>
+                    {% endif %}
+                    {% endwith %}
+                {% endfor %}
+                </tbody>
+            </table>
+            <button type="submit" class="btn boton-parte" value="guardar" name="guardar">Guardar</button>
+        {% endif %}
+    </form>
+
+    <!--<script>
+        function cambiar() {
+            views.Modificar()
+        } 
+    </script>-->
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+{% endblock content %}
