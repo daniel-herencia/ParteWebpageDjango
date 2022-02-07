@@ -9,15 +9,17 @@ from .views import (
     UserPostListView,
 )
 from . import views
+from django.contrib.auth.decorators import login_required
+
 
 urlpatterns = [
     path('', views.Inicio, name='blog-inicio'),
-    path('blog/', PostListView.as_view(), name='blog-home'),
-    path('user/<str:username>', UserPostListView.as_view(), name='user-posts'),
-    path('post/<int:pk>/', PostDetailView.as_view(), name='post-detail'),
-    path('post/new/', PostCreateView.as_view(), name='post-create'),
-    path('post/<int:pk>/update/', PostUpdateView.as_view(), name='post-update'),
-    path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post-delete'),
+    path('blog/', login_required(PostListView.as_view()), name='blog-home'),
+    path('user/<str:username>', login_required(UserPostListView.as_view()), name='user-posts'),
+    path('post/<int:pk>/', login_required(PostDetailView.as_view()), name='post-detail'),
+    path('post/new/', login_required(PostCreateView.as_view()), name='post-create'),
+    path('post/<int:pk>/update/', login_required(PostUpdateView.as_view()), name='post-update'),
+    path('post/<int:pk>/delete/', login_required(PostDeleteView.as_view()), name='post-delete'),
     path('parte/', views.Parte, name='blog-parte'),
 #    path('deporte/', views.Deporte, name='blog-deporte'),
     path('deporte/', views.deportista, name='blog-deporte'),

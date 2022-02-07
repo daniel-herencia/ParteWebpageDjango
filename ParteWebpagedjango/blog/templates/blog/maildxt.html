@@ -1,0 +1,20 @@
+{% load inlinecss %}
+{% inlinecss "blog/email.css" %}
+<html>
+    <body>
+        Buenos días,
+        <br>
+        Tu respuesta actual es que esta semana <b style="color:#063970";>{{ context.answer }}</b>
+        <br>
+        ¿Quieres enviar otra respuesta?
+        <br>
+        Entra en el siguiente enlace: https://partebarcelona.pythonanywhere.com/deporte/
+        <br><br>
+        No conteste a este correo, se ha generado automáticamente.
+        <br>
+        Atentamente,
+        <br><br>
+        Equipo de DxT
+    </body>
+</html>
+{% endinlinecss %}
