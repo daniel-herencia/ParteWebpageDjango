@@ -36,7 +36,7 @@
                 {% for var, dia, etiqueta in variables %}
                     {% with i=forloop.counter0 %}     
                 <tr>
-                    {% if dia == "Domingo" %}
+                    {% if i == 6 %}
                         <td style="background-color: rgb(219, 219, 219); border-radius: 0px 0px 0px 15px;">{{ dia }}
                     {% else %}
                         <td style="background-color: rgb(219, 219, 219);">{{ dia }}
@@ -73,17 +73,17 @@
                         <option value="Bocadillo-Ans">Bocadillo-Ans</option>
                         <option value="BocadilloPeq-Ans">BocadilloPeq-Ans</option>
                     </select>
-                    {% if dia == "Sábado" or dia == "Domingo"%}
+                    <!--{% if dia == "Sábado" or dia == "Domingo"%}
                         <td disabled><select class="custom-select parte-select" id="inputGroupSelect04" name={{ etiqueta.3 }}>
                             <option value="-">-</option>
                         </select>
-                    {% else %}
-                        <td><select class="custom-select parte-select" id="inputGroupSelect04" name={{ etiqueta.3 }}>
-                                <option value={{ var.3 }} selected>{{ var.3 }}</option>
-                                <option value="Si">Si</option>
-                                <option value="-">-</option>
-                            </select>
-                    {% endif %}
+                    {% else %}-->
+                    <td><select class="custom-select parte-select" id="inputGroupSelect04" name={{ etiqueta.3 }}>
+                            <option value={{ var.3 }} selected>{{ var.3 }}</option>
+                            <option value="Si">Si</option>
+                            <option value="-">-</option>
+                        </select>
+                    <!--{% endif %}-->
                     {% endwith %}
                 {% endfor %}
                 </tbody>

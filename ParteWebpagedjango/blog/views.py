@@ -20,7 +20,7 @@ from django.core.mail import send_mail
 from django.utils.html import strip_tags
 from django_tex.shortcuts import render_to_pdf
 from datetime import date   #Para saber la fecha
-from datetime import datetime   #Para saber la fecha
+from datetime import datetime, timedelta   #Para saber la fecha
 
 #Email with dynamic content
 from django.core import mail
@@ -157,7 +157,21 @@ def Parte(request):
 
         answer.save() #guarda la nueva respuesta en la base de datos
 
+    numdias = ["","","","","","",""]
+    today = date.today()
+    for i in range (7):
+        num = today + timedelta(days=i)
+        num = num.strftime('%d/%m/%Y')
+        numdias[i] = str(num)
+    num_day = today.weekday()
     dias = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"]
+    j = 0
+    for i in range(num_day,7,1):
+        dias[i] = dias[i] + " (" + numdias[j] + ")"
+        j = j + 1
+    for i in range(0,num_day,1):
+        dias[i] = dias[i] + " (" + numdias[j] + ")"
+        j = j + 1
 #    num = [0, 1, 2, 3, 4, 5, 6]
 #    dias = {'0':"Lunes", '1':"Martes", '2':"Miercoles", '3':"Jueves", '4':"Viernes", '5':"Sábado", '6':"Domingo"}
     variables = [[],[],[],[],[],[],[]]
@@ -249,13 +263,27 @@ def Modificar(request):
         else:
             mostrar = False             
 
+        numdias = ["","","","","","",""]
+        today = date.today()
+        for i in range (7):
+            num = today + timedelta(days=i)
+            num = num.strftime('%d/%m/%Y')
+            numdias[i] = str(num)
+        num_day = today.weekday()
         dias = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"]
+        j = 0
+        for i in range(num_day,7,1):
+            dias[i] = dias[i] + " (" + numdias[j] + ")"
+            j = j + 1
+        for i in range(0,num_day,1):
+            dias[i] = dias[i] + " (" + numdias[j] + ")"
+            j = j + 1
         variables = [[],[],[],[],[],[],[]]
         for i in range(7):
             variables[i] = [vari[i], dias[i], etiquetas[i]]
         return render(request, 'blog/modificar.html', {'variables': variables, 'title': 'Modificar', 'opciones': ops, 'names': names, 'mostrar': mostrar, 'currentuser': user})
     else:
-        return render(request, 'blog/parte.html', {'title': 'Parte'})
+        return render(request, 'blog/inicio.html', {'title': 'Inicio'})
 
 def Inicio(request):
     context = {
@@ -277,35 +305,44 @@ def Extras(request):
                 destinatario = usuario.email
                 try:    #Para obtener la respuesta si la hay
                     answer = Deportista.objects.get(user=usuario.username).dxt
+                    if answer == 'S':
+                        answer = 'SI haces deporte.'
+                    else:
+                        answer = 'NO haces deporte.'
+                    subject = 'Correo semanal de DxT'
+                    context =  {'answer': answer}
+                    html_message = render_to_string('blog/maildxt.html', {'context': context})
+                    plain_message = strip_tags(html_message)
+                    #from_email = 'From <partebcn@gmail.com>'
+                    from_email = EMAIL_HOST_USER
+                    to = destinatario
+                    mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)
+                    #html = """<html>
+                    #            <body>
+                    #                    <h4>¡Buenos días!</h4>
+                    #                    <h4></h4>
+                    #                    <h4>Esta semana </h4><h3>""" + answer + """</h3><br>
+                    #                    <h4>¿Quieres enviar otra respuesta? Entra en el siguiente enlace: https://partebarcelona.pythonanywhere.com/deporte/</h4>
+                    #                    <h4>No contestar a este correo, se ha generado automáticamente.</h4>
+                    #                    <h4>Atentamente,</h4>
+                    #                    <h4></h4>
+                    #                    <h4>ParteProgrammingTeam</h4>
+                    #            </body>
+                    #            </html> """
+                    """
+                    mensaje = strip_tags(html)
+                    send_mail('Correo semanal de Deporte',
+                    mensaje,
+                    EMAIL_HOST_USER,
+                    [destinatario],
+                    fail_silently=False)
+                    """
+
                 except Deportista.DoesNotExist:
                     answer = 'N'
-
-                if answer == 'S':
-                    answer = 'SI haces deporte.'
-                else:
-                    answer = 'NO haces deporte.'
-                html = """<html>
-                            <body>
-                                    <h4>¡Buenos días!</h4>
-                                    <h4></h4>
-                                    <h4>Esta semana </h4><h3>""" + answer + """</h3><br>
-                                    <h4>¿Quieres enviar otra respuesta? Entra en el siguiente enlace: https://partebarcelona.pythonanywhere.com/deporte/</h4>
-                                    <h4>No contestar a este correo, se ha generado automáticamente.</h4>
-                                    <h4>Atentamente,</h4>
-                                    <h4></h4>
-                                    <h4>ParteProgrammingTeam</h4>
-                            </body>
-                            </html> """
-
-                mensaje = strip_tags(html)
-                send_mail('Correo semanal de Deporte',
-                mensaje,
-                EMAIL_HOST_USER,
-                [destinatario],
-                fail_silently=False)
         return render(request, 'blog/extras.html', {'title': 'Extras'})
     else:
-        return render(request, 'blog/parte.html', {'title': 'Parte'})
+        return render(request, 'blog/inicio.html', {'title': 'Inicio'})
 
 
 
@@ -986,26 +1023,15 @@ def Imprimir(request):
                 try:    #Para obtener la respuesta si la hay
                     variables = Comensal.objects.get(user=usuario.username)
                     tipo = variables.opciones
-                    #html = """ """
-                    
-                    #mensaje = strip_tags(html)
-                    #send_mail('Correo semanal del Parte',
-                    #mensaje,
-                    #EMAIL_HOST_USER,
-                    #[destinatario],
-                    #fail_silently=False)
-                    
                     subject = 'Correo semanal del Parte'
                     context =  {'variables': variables, 'tipo': tipo}
                     html_message = render_to_string('blog/mailparte.html', {'context': context})
                     plain_message = strip_tags(html_message)
-                    #from_email = 'From <partebcn@gmail.com>'
                     from_email = EMAIL_HOST_USER
                     to = destinatario
                     mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)
-
                 except Comensal.DoesNotExist:
                     hola = 'N'
         return render(request, 'blog/imprimir.html', {'title': 'Imprimir'})
     else:
-        return render(request, 'blog/parte.html', {'title': 'Parte'})
+        return render(request, 'blog/inicio.html', {'title': 'Inicio'})
