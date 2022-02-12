@@ -2,45 +2,105 @@
 {% extends "blog/base.html" %}
 {% block content %}
     <div class="row">
-        <div class="col-md-8">               
-              <h1>BIENVENIDO!!!</h1>
-              <p>Bienvenido a la nueva página del piso de Barcelona. Aquí encontrarás todo lo que necesitas para tu estancia.
-                De momento la página está en fase de pruebas, cualquier error que detectes repórtalo a los encargados. También 
-                se admiten sugerencias. Para empezar simplemente tienes que crearte un usuario y si quieres puedes añadir
-                una imagen de perfil. La parte de deporte estará operativa a partir del domingo día 23/01/2022.</p>
-            <div id="cf">
-                <img class="bottom" width="700" height="300px" src="media/background/init2.png">
-                <img class="top" width="700" src="media/background/init1.png">
+        {% if user.is_authenticated %}
+            <div class="col-md-8">               
+                <h1>BIENVENIDO!!!</h1>
+                <p>Bienvenido a la nueva página del piso de Barcelona. Aquí encontrarás todo lo que necesitas para tu estancia.
+                    De momento la página está en fase de pruebas, cualquier error que detectes repórtalo a los encargados. También 
+                    se admiten sugerencias. Para empezar simplemente tienes que crearte un usuario y si quieres puedes añadir
+                    una imagen de perfil. La parte de deporte estará operativa a partir del domingo día 23/01/2022.</p>
+                <div id="cf">
+                    <img class="bottom" width="700" height="300px" src="media/background/init2.png">
+                    <img class="top" width="700" src="media/background/init1.png">
+                </div>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <h3>Usuarios:</h3>
+                {% for use in users %}
+                    <img class="rounded-circle init-img" src="{{ use.profile.image.url }}">
+                <!--        <p>{{ user.username }} </p>-->
+                {% endfor %}
+                <br>
+                <br>
+                <br>
+                <svg viewBox="0 0 960 300">
+                    <symbol id="s-text">
+                    <text text-anchor="start" x="0%" y="60%">BARCELONA</text>
+                    <text text-anchor="start" x="2%" y="60%">BARCELONA</text>      
+                    </symbol>
+            
+                    <g class = "g-ants">
+                    <use xlink:href="#s-text" class="text-copy"></use>
+                    <use xlink:href="#s-text" class="text-copy"></use>
+                    <use xlink:href="#s-text" class="text-copy"></use>
+                    <use xlink:href="#s-text" class="text-copy"></use>
+                    <use xlink:href="#s-text" class="text-copy"></use>
+                    </g>
+                </svg>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <!--
+                <p>Empleado del mes:</p>
+                <br>
+                <img class="especial-imagen" src="../media/profile_pics/EmpleadoDelMes.jpg">-->
             </div>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <h3>Usuarios:</h3>
-            {% for use in users %}
-                <img class="rounded-circle init-img" src="{{ use.profile.image.url }}">
-            <!--        <p>{{ user.username }} </p>-->
-            {% endfor %}
-            <br>
-            <br>
+            <div class="col-md-4">
+                <div class="content-section">
+                <h3>Actualizaciones</h3>
+                <p class='text-muted'> <b>12/02/2022:</b>
+                    <ul class="list-group">
+                    <li class="list-group-item list-group-item-light">Día dxt variable por el admin</li>
+                    <li class="list-group-item list-group-item-light">Fecha correo dxt y parte</li>
+                    <li class="list-group-item list-group-item-light">Modificación parte cocina</li>
+                    <li class="list-group-item list-group-item-light">Control de seguirdad nuevos usuarios</li>
+                    <li class="list-group-item list-group-item-light">Página de inicio sin login</li>
+                    </ul>
+                </p>
+                </div>
+            </div>
+        {% else %}
+            <h1>Página Web del Piso de Barcelona. Inicie Sesión para acceder al contenido</h1>
             <br>
             <svg viewBox="0 0 960 300">
                 <symbol id="s-text">
                 <text text-anchor="start" x="0%" y="60%">BARCELONA</text>
                 <text text-anchor="start" x="2%" y="60%">BARCELONA</text>      
                 </symbol>
-        
                 <g class = "g-ants">
                 <use xlink:href="#s-text" class="text-copy"></use>
                 <use xlink:href="#s-text" class="text-copy"></use>
@@ -49,23 +109,40 @@
                 <use xlink:href="#s-text" class="text-copy"></use>
                 </g>
             </svg>
-            <!--
-            <p>Empleado del mes:</p>
             <br>
-            <img class="especial-imagen" src="../media/profile_pics/EmpleadoDelMes.jpg">-->
-        </div>
-        <div class="col-md-4">
-            <div class="content-section">
-            <h3>Novedades</h3>
-            <p class='text-muted'>Próximamente:
-                <ul class="list-group">
-                <li class="list-group-item list-group-item-light">Impresora</li>
-                <li class="list-group-item list-group-item-light">Anuncios</li>
-                <li class="list-group-item list-group-item-light">Calendario</li>
-                <li class="list-group-item list-group-item-light">...</li>
-                </ul>
-            </p>
+            <div id="cf2">
+                <img class="top" src="../media/Otras/init2.jpeg">
+                <img class="bottom" src="../media/Otras/init.jpeg">
             </div>
-        </div>
+            <br>
+            <!--<img src="../media/Otras/init.jpeg" class="init-image">-->
+            <div id="cf">
+                <img class="bottom" width="700" height="300px" src="media/background/init2.png">
+                <img class="top" width="700" src="media/background/init1.png">
+            </div>
+            <br>
+            <div style="width:100%; height:1000px;"></div>
+            <br>
+            <script>
+                $(window).scroll(function() {
+                    if ($(window).scrollTop() > 800) {
+                        $('.init-image').css("opacity", 0.4).fadeIn("5000");;
+                    }
+                    else{
+                        $('.init-image').css("opacity", 1).fadeIn("5000") ;
+                    }
+                });
+                /*$(window).scroll(function() {
+                  var scrollTop = $(this).scrollTop();
+                
+                  $('.header-overlay').css({
+                    opacity: function() {
+                      var elementHeight = $(this).height();
+                      return 1 - (elementHeight - scrollTop) / elementHeight;
+                    }
+                  });
+                });*/
+            </script>
+        {% endif %}
     </div>
 {% endblock content %}

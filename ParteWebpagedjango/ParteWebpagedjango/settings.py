@@ -155,6 +155,8 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = config("USER_MAIL")
 EMAIL_HOST_PASSWORD = config("MAIL_KEY")
 
+SECURITY_CODE = config("SECURITY_KEY")
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 

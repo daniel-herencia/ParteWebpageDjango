@@ -7,7 +7,7 @@
         <div class="container my-3">
             <h1>Deporte</h1>
             <div class="content-section">
-                    <h4>¿Haces deporte?</h4>
+                    <h4>¿Haces deporte el {{ dia }}?</h4>
                 <form method="post" action="{% url 'blog-deporte' %}">{% csrf_token %}
                     <div class="input-group">
                         {% if dxt == 'S' %}
