@@ -14,7 +14,7 @@ import sys
 sys.path.append("..")# Adds higher directory to python modules path.
 #from ..ParteWebpagedjango.settings import EMAIL_HOST_USER
 from ParteWebpagedjango.settings import EMAIL_HOST_USER
-from .models import Deportista, Post, Comensal, Dia1
+from .models import Deportista, Post, Comensal, Dia1, VariablesGlobales
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.utils.html import strip_tags
@@ -295,52 +295,86 @@ def Inicio(request):
 def Enlaces(request):
     return render(request, 'blog/enlaces.html', {'title': 'Enlaces'})
 
+#MAIL DE DEPORTE
 @login_required 
 def Extras(request):
     #current_user = request.user.username
     if  request.user.username == 'parteadmin':
-        if request.method=="POST": 
-            usuarios = User.objects.all()
-            for usuario in usuarios:
-                destinatario = usuario.email
-                try:    #Para obtener la respuesta si la hay
-                    answer = Deportista.objects.get(user=usuario.username).dxt
-                    if answer == 'S':
-                        answer = 'SI haces deporte.'
-                    else:
-                        answer = 'NO haces deporte.'
-                    subject = 'Correo semanal de DxT'
-                    context =  {'answer': answer}
-                    html_message = render_to_string('blog/maildxt.html', {'context': context})
-                    plain_message = strip_tags(html_message)
-                    #from_email = 'From <partebcn@gmail.com>'
-                    from_email = EMAIL_HOST_USER
-                    to = destinatario
-                    mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)
-                    #html = """<html>
-                    #            <body>
-                    #                    <h4>¡Buenos días!</h4>
-                    #                    <h4></h4>
-                    #                    <h4>Esta semana </h4><h3>""" + answer + """</h3><br>
-                    #                    <h4>¿Quieres enviar otra respuesta? Entra en el siguiente enlace: https://partebarcelona.pythonanywhere.com/deporte/</h4>
-                    #                    <h4>No contestar a este correo, se ha generado automáticamente.</h4>
-                    #                    <h4>Atentamente,</h4>
-                    #                    <h4></h4>
-                    #                    <h4>ParteProgrammingTeam</h4>
-                    #            </body>
-                    #            </html> """
-                    """
-                    mensaje = strip_tags(html)
-                    send_mail('Correo semanal de Deporte',
-                    mensaje,
-                    EMAIL_HOST_USER,
-                    [destinatario],
-                    fail_silently=False)
-                    """
+        #Para la fecha en el correo
+        numdias = ["","","","","","",""]
+        today = date.today()
+        for i in range (7):
+            num = today + timedelta(days=i)
+            num = num.strftime('%d/%m/%Y')
+            numdias[i] = str(num)
+        num_day = today.weekday()
+        dias = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"]
+        j = 0
+        for i in range(num_day,7,1):
+            dias[i] = dias[i] + " (" + numdias[j] + ")"
+            j = j + 1
+        for i in range(0,num_day,1):
+            dias[i] = dias[i] + " (" + numdias[j] + ")"
+            j = j + 1
 
-                except Deportista.DoesNotExist:
-                    answer = 'N'
-        return render(request, 'blog/extras.html', {'title': 'Extras'})
+        try:
+            variglobal = VariablesGlobales.objects.all()
+            diad = variglobal[0] 
+        except VariablesGlobales.DoesNotExist:
+            diad = VariablesGlobales(diadxt=6)
+            diad.save()
+        num = diad.diadxt
+        days = ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo']
+        if request.method=="POST": 
+            if request.POST.get("correo"):
+                usuarios = User.objects.all()
+                for usuario in usuarios:
+                    destinatario = usuario.email
+                    try:    #Para obtener la respuesta si la hay
+                        answer = Deportista.objects.get(user=usuario.username).dxt
+                        if answer == 'S':
+                            answer = 'SI haces deporte.'
+                        else:
+                            answer = 'NO haces deporte.'
+                        subject = 'Correo semanal de DxT'
+                        context =  {'answer': answer}
+                        html_message = render_to_string('blog/maildxt.html', {'context': context, 'diacorreo': dias[num]})
+                        plain_message = strip_tags(html_message)
+                        #from_email = 'From <partebcn@gmail.com>'
+                        from_email = EMAIL_HOST_USER
+                        to = destinatario
+                        mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)
+                        #html = """<html>
+                        #            <body>
+                        #                    <h4>¡Buenos días!</h4>
+                        #                    <h4></h4>
+                        #                    <h4>Esta semana </h4><h3>""" + answer + """</h3><br>
+                        #                    <h4>¿Quieres enviar otra respuesta? Entra en el siguiente enlace: https://partebarcelona.pythonanywhere.com/deporte/</h4>
+                        #                    <h4>No contestar a este correo, se ha generado automáticamente.</h4>
+                        #                    <h4>Atentamente,</h4>
+                        #                    <h4></h4>
+                        #                    <h4>ParteProgrammingTeam</h4>
+                        #            </body>
+                        #            </html> """
+                        """
+                        mensaje = strip_tags(html)
+                        send_mail('Correo semanal de Deporte',
+                        mensaje,
+                        EMAIL_HOST_USER,
+                        [destinatario],
+                        fail_silently=False)
+                        """
+                    except Deportista.DoesNotExist:
+                        answer = 'N'
+
+            elif request.POST.get("dianuevo"):
+                newday = request.POST.get('selectday','')
+                num = days.index(newday)
+                diad.diadxt = num
+        
+        diad.save()
+        currentday = days[num]
+        return render(request, 'blog/extras.html', {'title': 'Extras', 'days': days, 'currentday': currentday})
     else:
         return render(request, 'blog/inicio.html', {'title': 'Inicio'})
 
@@ -352,6 +386,23 @@ def Extras(request):
 @login_required 
 def deportista(request):
     user = None
+
+    numdias = ["","","","","","",""]
+    today = date.today()
+    for i in range (7):
+        num = today + timedelta(days=i)
+        num = num.strftime('%d/%m/%Y')
+        numdias[i] = str(num)
+    num_day = today.weekday()
+    dias = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"]
+    j = 0
+    for i in range(num_day,7,1):
+        dias[i] = dias[i] + " (" + numdias[j] + ")"
+        j = j + 1
+    for i in range(0,num_day,1):
+        dias[i] = dias[i] + " (" + numdias[j] + ")"
+        j = j + 1
+
     if request.user.is_authenticated:   #Este if no es necesario
         user = request.user.username #guarda el nombre de usuario
     try:    #Para obtener la respuesta anterior si la hay
@@ -371,7 +422,12 @@ def deportista(request):
         except Deportista.DoesNotExist:
             answer = Deportista(user=user, observaciones=observaciones, dxt=dxt)
         answer.save() #guarda la nueva respuesta en la base de datos
-    return render(request, 'blog/deporte.html', {'dxt': dxt, 'title': 'Deporte'})
+    try:
+        diad = VariablesGlobales.objects.get()
+        diadxt = diad.diadxt
+    except VariablesGlobales.DoesNotExist:
+        diadxt = 6
+    return render(request, 'blog/deporte.html', {'dxt': dxt, 'title': 'Deporte', 'dia': dias[diadxt]})
 
 @login_required
 def parte_to_pdf(request):
@@ -442,7 +498,9 @@ def parte_to_pdf(request):
         'BocadilloPeq-Ans': []
     }
     #DIETA
-    usuariosDieta = []
+    usuariosDietaB = []
+    usuariosDietaL = []
+    usuariosDietaD = []
     desayunoD = {
         'Normal': 0,
         'Bocadillo-Pequeño': 0,
@@ -677,7 +735,7 @@ def parte_to_pdf(request):
 
             elif parte.opciones == 'Dieta':
                 tipo['dieta']+=1
-                usuariosDieta.append(comensal)
+                #usuariosDieta.append(comensal)
                 if num_day == 0:
                     comidaD[parte.L.l]+=1
                     cenaD[parte.L.d]+=1
@@ -689,6 +747,12 @@ def parte_to_pdf(request):
                     if (parte.M.d == 'Bocadillo-Ans') or (parte.M.d == 'BocadilloPeq-Ans'):
                         bocayfiambrerasD[parte.M.d]+=1
                         usuariosBocyFD[parte.M.d].append(comensal)
+                    if (parte.L.l == 'Normal'):
+                        usuariosDietaL.append(comensal)
+                    if (parte.L.d == 'Normal'):
+                        usuariosDietaD.append(comensal)
+                    if (parte.M.b == 'Normal'):
+                        usuariosDietaB.append(comensal)
                 elif num_day == 1:
                     comidaD[parte.M.l]+=1
                     cenaD[parte.M.d]+=1
@@ -700,6 +764,12 @@ def parte_to_pdf(request):
                     if (parte.X.d == 'Bocadillo-Ans') or (parte.X.d == 'BocadilloPeq-Ans'):
                         bocayfiambrerasD[parte.X.d]+=1
                         usuariosBocyFD[parte.X.d].append(comensal)
+                    if (parte.M.l == 'Normal'):
+                        usuariosDietaL.append(comensal)
+                    if (parte.M.d == 'Normal'):
+                        usuariosDietaD.append(comensal)
+                    if (parte.X.b == 'Normal'):
+                        usuariosDietaB.append(comensal)
                 elif num_day == 2:
                     comidaD[parte.X.l]+=1
                     cenaD[parte.X.d]+=1
@@ -711,6 +781,12 @@ def parte_to_pdf(request):
                     if (parte.J.d == 'Bocadillo-Ans') or (parte.J.d == 'BocadilloPeq-Ans'):
                         bocayfiambrerasD[parte.J.d]+=1
                         usuariosBocyFD[parte.J.d].append(comensal)
+                    if (parte.X.l == 'Normal'):
+                        usuariosDietaL.append(comensal)
+                    if (parte.X.d == 'Normal'):
+                        usuariosDietaD.append(comensal)
+                    if (parte.J.b == 'Normal'):
+                        usuariosDietaB.append(comensal)
                 elif num_day == 3:
                     comidaD[parte.J.l]+=1
                     cenaD[parte.J.d]+=1
@@ -722,6 +798,12 @@ def parte_to_pdf(request):
                     if (parte.V.d == 'Bocadillo-Ans') or (parte.V.d == 'BocadilloPeq-Ans'):
                         bocayfiambrerasD[parte.V.d]+=1
                         usuariosBocyFD[parte.V.d].append(comensal)
+                    if (parte.J.l == 'Normal'):
+                        usuariosDietaL.append(comensal)
+                    if (parte.J.d == 'Normal'):
+                        usuariosDietaD.append(comensal)
+                    if (parte.V.b == 'Normal'):
+                        usuariosDietaB.append(comensal)
                 elif num_day == 4:
                     comidaD[parte.V.l]+=1
                     cenaD[parte.V.d]+=1
@@ -733,6 +815,12 @@ def parte_to_pdf(request):
                     if (parte.S.d == 'Bocadillo-Ans') or (parte.S.d == 'BocadilloPeq-Ans'):
                         bocayfiambrerasD[parte.S.d]+=1
                         usuariosBocyFD[parte.S.d].append(comensal)
+                    if (parte.V.l == 'Normal'):
+                        usuariosDietaL.append(comensal)
+                    if (parte.V.d == 'Normal'):
+                        usuariosDietaD.append(comensal)
+                    if (parte.S.b == 'Normal'):
+                        usuariosDietaB.append(comensal)
                 elif num_day == 5:
                     comidaD[parte.S.l]+=1
                     cenaD[parte.S.d]+=1
@@ -744,6 +832,12 @@ def parte_to_pdf(request):
                     if (parte.D.d == 'Bocadillo-Ans') or (parte.D.d == 'BocadilloPeq-Ans'):
                         bocayfiambrerasD[parte.D.d]+=1
                         usuariosBocyFD[parte.D.d].append(comensal)
+                    if (parte.S.l == 'Normal'):
+                        usuariosDietaL.append(comensal)
+                    if (parte.S.d == 'Normal'):
+                        usuariosDietaD.append(comensal)
+                    if (parte.D.b == 'Normal'):
+                        usuariosDietaB.append(comensal)
                 elif num_day == 6:
                     comidaD[parte.D.l]+=1
                     cenaD[parte.D.d]+=1
@@ -755,6 +849,12 @@ def parte_to_pdf(request):
                     if (parte.L.d == 'Bocadillo-Ans') or (parte.L.d == 'BocadilloPeq-Ans'):
                         bocayfiambrerasD[parte.L.d]+=1
                         usuariosBocyFD[parte.L.d].append(comensal)
+                    if (parte.D.l == 'Normal'):
+                        usuariosDietaL.append(comensal)
+                    if (parte.D.d == 'Normal'):
+                        usuariosDietaD.append(comensal)
+                    if (parte.L.b == 'Normal'):
+                        usuariosDietaB.append(comensal)
             elif parte.opciones == 'Enfermo':
                 tipo['enfermo']+=1
                 if num_day == 0:
@@ -923,13 +1023,13 @@ def parte_to_pdf(request):
     observaciones = ''
     if request.method=="POST":
         observaciones = request.POST.get('observaciones', '')
-    context = {'title': 'Parte en PDF', 'tipo': tipo, 'observaciones': observaciones, 'numerodia': today.day, 'mes': meses[today.month],
+    context = {'title': 'Parte en PDF', 'tipo': tipo, 'observaciones': observaciones, 'numerodia': today.day, 'mes': meses[today.month-1],
      'año': today.year, 'dia':dia,
      'comida': comida, 'cena': cena, 'desayuno': desayuno, 'mediamañana': mediamañana, 'bocayfiambreras': bocayfiambreras, 'usuariosBocyF': usuariosBocyF,
      'comidaD': comidaD, 'cenaD': cenaD, 'desayunoD': desayunoD, 'mediamañanaD': mediamañanaD, 'bocayfiambrerasD': bocayfiambrerasD, 'usuariosBocyFD': usuariosBocyFD,
      'comidaB': comidaB, 'cenaB': cenaB, 'desayunoB': desayunoB, 'mediamañanaB': mediamañanaB, 'bocayfiambrerasB': bocayfiambrerasB, 'usuariosBocyFB': usuariosBocyFB,
      'comidaE': comidaE, 'cenaE': cenaE, 'desayunoE': desayunoE, 'mediamañanaE': mediamañanaE, 'bocayfiambrerasE': bocayfiambrerasE, 'usuariosBocyFE': usuariosBocyFE,
-     'usuariosDieta': usuariosDieta}
+     'usuariosDietaB': usuariosDietaB, 'usuariosDietaL': usuariosDietaL, 'usuariosDietaD': usuariosDietaD}
 
     return render_to_pdf(request, template_name, context, filename='PartePDF.pdf')
 
@@ -1006,16 +1106,17 @@ def parte_to_pdf2(request):
         variables.append(var)
 
     #totales = contadores['Dieta'] + contadores['Enfermo'] + contadores['Blando'] + contadores['Normal']
-    context = {'title': 'Parte en PDF', 'variables': variables, 'numerodia': today.day, 'mes': meses[today.month],
+    context = {'title': 'Parte en PDF', 'variables': variables, 'numerodia': today.day, 'mes': meses[today.month-1],
      'enfermo': enfermo, 'blando': blando, 'contadores': contadores, 'totales': totales,
      'año': today.year, 'dia':dia}
 
     return render_to_pdf(request, template_name, context, filename='PartePDF2.pdf')
 
-
+#ADMINISTRADOR DEL PARTE (CONTIENE EL ENVÍO DE CORREOS RECORDATORIO PARTE)
 @login_required
 def Imprimir(request):
     if  request.user.username == 'parteadmin':
+        #Correo recordatorio parte
         if request.method=="POST": 
             usuarios = User.objects.all()
             for usuario in usuarios:
@@ -1023,8 +1124,26 @@ def Imprimir(request):
                 try:    #Para obtener la respuesta si la hay
                     variables = Comensal.objects.get(user=usuario.username)
                     tipo = variables.opciones
+
+                    #Para las fechas
+                    numdias = ["","","","","","",""]
+                    today = date.today()
+                    for i in range (7):
+                        num = today + timedelta(days=i)
+                        num = num.strftime('%d/%m/%Y')
+                        numdias[i] = str(num)
+                    num_day = today.weekday()
+                    dias = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"]
+                    j = 0
+                    for i in range(num_day,7,1):
+                        dias[i] = dias[i] + " (" + numdias[j] + ")"
+                        j = j + 1
+                    for i in range(0,num_day,1):
+                        dias[i] = dias[i] + " (" + numdias[j] + ")"
+                        j = j + 1
+
                     subject = 'Correo semanal del Parte'
-                    context =  {'variables': variables, 'tipo': tipo}
+                    context =  {'variables': variables, 'tipo': tipo, 'dias': dias}
                     html_message = render_to_string('blog/mailparte.html', {'context': context})
                     plain_message = strip_tags(html_message)
                     from_email = EMAIL_HOST_USER

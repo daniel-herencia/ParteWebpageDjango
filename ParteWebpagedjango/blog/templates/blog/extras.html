@@ -3,6 +3,17 @@
     <h1>Zona de Administrador Deporte</h1>
     <h3>Botones especiales:</h3>
     <form method="post" action="{% url 'blog-extras' %}">{% csrf_token %}
-        <button type="submit" class="btn btn-success" style="background-color:#9CB4B3; border:none">Correo dxt</button>
+        <button type="submit" class="btn btn-success" style="background-color:#9CB4B3; border:none" name ="correo" value ="correo">Correo dxt</button>
+        <br><br>
+        <hr/ style="width: 300px;"><br>
+        <h3>Día del Deporte:</h3><br>
+        <select class="custom-select parte-select" id="inputGroupSelect04" name="selectday" style="width: 200px;">
+            <option value={{ currentday }} selected>{{ currentday }}</option>
+            {% for day in days %}
+                <option value={{ day }}>{{ day }}</option>
+            {% endfor %}
+        </select>
+        <br><br>
+        <button type="submit" class="btn btn-success" style="background-color:#9CB4B3; border:none" value="dianuevo" name="dianuevo">Guardar día</button>
     </form>
 {% endblock content %}

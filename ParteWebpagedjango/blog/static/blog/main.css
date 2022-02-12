@@ -240,6 +240,7 @@ body {
   animation-duration: 2s;
 }
 
+
 .enlaces-overlay {
   position: absolute;
   top: 0;
@@ -268,6 +269,79 @@ body {
   transform: translate(-50%, -50%);
   text-align: center;
 }
+
+/*Foto página inicio sin login con transición desde blurring*/
+.init-image {
+  display: block;
+  /*width: 100%;*/
+  height: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  animation-name: blurringImage;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: 1;
+  animation-duration: 2s;
+  transition: .5s ease-in-out;
+}
+
+.init-image:hover {filter: blur(5px);}
+
+
+#cf2 {
+  margin: auto;
+  width: 40%;
+  /*border: 5px solid #5fc4dd;
+  text-align: center;
+  justify-content: center;*/
+  position: relative;
+  height:310px;
+  transition: .5s ease-in-out;
+}
+
+#cf2 img {
+  position:absolute;
+  display: block;
+  margin: 0 auto;
+  height: 100%;
+  animation-name: blurringImage;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: 1;
+  animation-duration: 2s;
+  transition: .5s ease-in-out;
+  -webkit-transition: opacity 1s ease-in-out;
+  -moz-transition: opacity 1s ease-in-out;
+  -o-transition: opacity 1s ease-in-out;
+  transition: opacity 1s ease-in-out;
+}
+/*  position:absolute;
+  left:0;*/
+  /*width: 100%;*/
+  /*height: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  animation-name: blurringImage;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: 1;
+  animation-duration: 2s;
+  transition: .5s ease-in-out;*/
+
+#cf2 img.top {
+  animation-name: cf3FadeInOut;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-duration: 10s;
+  animation-direction: alternate;
+  }
+
+#cf2 img.bottom {
+  animation-name: cf3FadeOutIn;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-duration: 10s;
+  animation-direction: alternate;
+  }
+
+#cf2:hover {filter: blur(5px);}
 
 /*Alinear imagenes enlaces.html*/
 .contenedor-imagenes {

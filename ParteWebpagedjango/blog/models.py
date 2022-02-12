@@ -4,8 +4,12 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 #from django.contrib.postgres.fields import ArrayField
 
+class VariablesGlobales(models.Model):
+    diadxt = models.IntegerField()
+    #i = models.IntegerField(default=1)
 
-
+    def __str__(self):
+        return "Dia dxt: " + self.diadxt
 
 class Post(models.Model):
     title = models.CharField(max_length=100)
