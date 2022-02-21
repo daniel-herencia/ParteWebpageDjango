@@ -1,0 +1,37 @@
+{% extends "blog/base.html" %}
+{% block content %}
+<div class="row" style="align-items: center;">
+    <div class="col-9">
+        <h1>Recursos para viajes en bus</h1>
+    </div>
+    <div class="col-3">
+        <a href="{% url 'blog-nuevorecurso' %}">
+            <button class="btn btn-success" style="background-color:#9CB4B3; border:none; dislpay: inline; float: right; font-size: 130%;">Nuevo Recurso</button>
+        </a>
+    </div>
+</div>
+<br>
+{% for directory, recurso in variables %}
+    <div class="row" style="align-items: center;">
+        <div class="col-md-auto">
+            <img class="init-img" src="{{ recurso.imagen.url }}" style="border-radius:10%; width:100px; height:100px;">
+        </div>
+        <div class="col">
+            <b style="color: rgb(66, 66, 66); font-size: 130%;">{{ recurso.titulo }}</b>
+            <br>
+            Descripción: {{ recurso.descripcion }} 
+        </div>
+        <div class="col-md-auto">
+            {{ recurso.fecha_creacion }}
+        </div>
+        <div class="col-md-auto">
+            <a href= {{ directory }} target="_blank">
+                <button class="btn btn-success" style="background-color:#9CB4B3; border:none; dislpay: inline; float: right;" name ="descargar" value ="descargar">Descargar</button>
+            </a>
+        </div>
+    </div>
+    <br>
+    <!--<hr style="border: 1px solid gray;">-->
+    <hr style="border: 0px;">
+{% endfor %}
+{% endblock content %}

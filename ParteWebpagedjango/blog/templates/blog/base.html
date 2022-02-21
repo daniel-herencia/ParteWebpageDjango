@@ -71,6 +71,8 @@
                   <a class="menuheader mr-4" href="{% url 'blog-parte' %}">Parte</a>
                   <a class="menuheader mr-4" href="{% url 'blog-deporte' %}">Deporte</a>
                   <a class="menuheader mr-4" href="{% url 'blog-enlaces' %}">Enlaces</a>
+                  <a class="menuheader mr-4" href="{% url 'blog-recursos' %}">Recursos</a>
+                  <!--<a class="menuheader mr-4" href="{% url 'blog-metaverso' %}">Metaverso</a>-->
                   <div class="dropdown">
                     <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <img class="rounded-circle article-img" src="{{ user.profile.image.url }}"></button>
                     <div class="dropdown-content">
@@ -102,7 +104,7 @@
     <main role="main" class="container">
       {% block content %}{% endblock %}
     </main>
-      <!--FUNCTION TO INCREASE OPACITY WHILE SCROLLING-->
+      <!--FUNCTION TO INCREASE OPACITY WHILE SCROLLING
       <script>
         $(window).scroll(function() {
           var scrollTop = $(this).scrollTop();
@@ -114,7 +116,7 @@
             }
           });
         });
-      </script>
+      </script>-->
 
       <!-- Optional JavaScript -->
       <!-- jQuery first, then Popper.js, then Bootstrap JS -->

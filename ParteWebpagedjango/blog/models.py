@@ -1,7 +1,10 @@
+from tabnanny import verbose
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
+from PIL import Image
+
 #from django.contrib.postgres.fields import ArrayField
 
 class VariablesGlobales(models.Model):
@@ -67,6 +70,32 @@ class Comensal(models.Model):
     def __str__(self):
         return self.user
 
+class Recurso(models.Model):
+    id = models.AutoField(primary_key = True)
+    titulo = models.CharField('Nombre', max_length = 255, blank = False, null = False)
+    #fecha_publicacion = models.DateField('Fecha de publicación', blank = False, null = False)
+    descripcion = models.TextField('Descripcion', null = True, blank = True)
+    imagen = models.ImageField('Imagen', upload_to = 'FotosRecursos/', max_length = 255, null = True, blank = True)
+    recurso = models.FileField('Archivo', upload_to = "recursos/", blank = True, null = True)
+    fecha_creacion = models.DateField('Fecha de creación', auto_now = True, auto_now_add = False)
+
+    class Meta:
+        verbose_name = 'Recurso'
+        verbose_name_plural = 'Recursos'
+        ordering = ['fecha_creacion']
+
+    def __str__(self):
+        return self.titulo
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        img = Image.open(self.imagen.path)
+
+        if img.height > 300 or img.width > 300:
+            output_size = (300, 300)
+            img.thumbnail(output_size)
+            img.save(self.imagen.path)
 
 #class Contact(models.Model):
 #    msg_id = models.AutoField(primary_key=True)

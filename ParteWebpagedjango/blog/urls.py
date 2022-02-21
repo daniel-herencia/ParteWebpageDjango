@@ -10,6 +10,8 @@ from .views import (
 )
 from . import views
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
+from django.views.static import serve
 
 
 urlpatterns = [
@@ -28,8 +30,18 @@ urlpatterns = [
     path('imprimir/', views.Imprimir, name='blog-imprimir'),
     path('partepdf/', views.parte_to_pdf, name='parte_to_pdf'),
     path('partepdf2/', views.parte_to_pdf2, name='parte_to_pdf2'),
-    path('modificar/', views.Modificar, name='blog-modificar')
+    path('modificar/', views.Modificar, name='blog-modificar'),
+    path('metaverso/', views.Metaverso, name='blog-metaverso'),
+    path('recursos/', views.Recursos, name='blog-recursos'),
+    path('nuevo_recurso/', views.NuevoRecurso, name='blog-nuevorecurso')
 #    path("contact/", views.contact, name="blog-contact"),
 
 ]
+"""
+urlpatterns += [
+    re_path(r'^media/(?P<path>.*)$', serve, {
+        'document_root': settings.MEDIA_ROOT,
+    })
+]
+"""
 #<app>/<model>_<viewtype>.html

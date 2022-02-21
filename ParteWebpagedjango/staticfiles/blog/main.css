@@ -4,7 +4,7 @@
 
 body {
     background: #F1F1F1;
-    background: url(/media/background/back.png) no-repeat center center fixed;
+    /*background: url(/media/background/back.png) no-repeat center center fixed;*/
     background-size: cover;
     color: #333333;
     margin-top: 5rem;
@@ -288,38 +288,44 @@ body {
 
 
 #cf2 {
-  position:relative;
-  height: 100px;
-  margin:0 auto;
+  margin: auto;
+  width: 40%;
+  /*border: 5px solid #5fc4dd;
+  text-align: center;
+  justify-content: center;*/
+  position: relative;
+  height:310px;
+  transition: .5s ease-in-out;
 }
 
-#cf2 .init-image {
-  /*
+#cf2 img {
   position:absolute;
-  left:0;
+  display: block;
+  margin: 0 auto;
+  height: 100%;
+  animation-name: blurringImage;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: 1;
+  animation-duration: 2s;
+  transition: .5s ease-in-out;
   -webkit-transition: opacity 1s ease-in-out;
   -moz-transition: opacity 1s ease-in-out;
   -o-transition: opacity 1s ease-in-out;
   transition: opacity 1s ease-in-out;
-  */
-  position:absolute;
-  left:0;
+}
+/*  position:absolute;
+  left:0;*/
   /*width: 100%;*/
-  height: 100px;
+  /*height: 100px;
   margin-left: auto;
   margin-right: auto;
   animation-name: blurringImage;
   animation-timing-function: ease-in-out;
   animation-iteration-count: 1;
   animation-duration: 2s;
-  transition: .5s ease-in-out;
-}
+  transition: .5s ease-in-out;*/
 
-#cf2 .init-image.top:hover {filter: blur(5px);}
-
-#cf2 .init-image.bottom:hover {filter: blur(5px);}
-
-#cf2 .init-image.top {
+#cf2 img.top {
   animation-name: cf3FadeInOut;
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
@@ -327,14 +333,15 @@ body {
   animation-direction: alternate;
   }
 
-  #cf2 img.bottom {
-    animation-name: cf3FadeOutIn;
-    animation-timing-function: ease-in-out;
-    animation-iteration-count: infinite;
-    animation-duration: 10s;
-    animation-direction: alternate;
-    }
+#cf2 img.bottom {
+  animation-name: cf3FadeOutIn;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-duration: 10s;
+  animation-direction: alternate;
+  }
 
+#cf2:hover {filter: blur(5px);}
 
 /*Alinear imagenes enlaces.html*/
 .contenedor-imagenes {
@@ -710,10 +717,250 @@ clip-path: polygon(
 }
 }
 
-
-
-
 /*OTROS EFECTOS DE IMAGEN*/
 .imagengris:hover {filter: grayscale(80%);}
 
 .imagenborrosa:hover {filter: blur(5px);}
+
+
+/*METAVERSO*/
+
+ul.new {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.new li {
+  list-style: none;
+  margin: 0 15px;
+}
+
+.new li a {
+  position: relative; 
+  display: block;
+  width: 60px;
+  height: 60px;
+  text-align: center;
+  line-height: 63px;
+  background: #333;
+  border-radius: 50%;
+  font-size: 30px;
+  color: #666;
+  transition: .5s;
+}
+
+.new li a::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: #ffee10;
+  transition: .5s;
+  transform: scale(.9);
+  z-index: -1;
+}
+
+.new li a:hover::before {
+  transform: scale(1.1);
+  box-shadow: 0 0 15px #ffee10;
+}
+
+.new li a:hover {
+  color: #ffee10;
+  box-shadow: 0 0 5px #ffee10;
+  text-shadow: 0 0 5px #ffee10;
+}
+
+
+/*CASTILLO METAVERSO*/
+#MonValley #BrightDoor {
+  transition: all 0.3s ease-in-out;
+  opacity:0;
+}
+
+#MonValley:hover #BrightDoor {
+  opacity:1;
+  
+}
+#MonValley #Step1 {
+  transition: all .65s ease-in-out;
+  transform: translate(0px, 132px);
+}
+#MonValley:hover #Step1 {
+  transform: translate(0px, 0px);
+}
+
+#MonValley #Step2 {
+  transition: all .6s ease-in-out;
+  transform: translate(0px, 132px);
+}
+#MonValley:hover #Step2 {
+  transform: translate(0px, 0px);
+}
+#MonValley #Step3 {
+  transition: all .55s ease-in-out;
+  transform: translate(0px, 132px);
+}
+#MonValley:hover #Step3 {
+  transform: translate(0px, 0px);
+}
+#MonValley #Step4 {
+  transition: all .5s ease-in-out;
+  transform: translate(0px, 132px);
+}
+#MonValley:hover #Step4 {
+  transform: translate(0px, 0px);
+}
+#MonValley #Step5 {
+  transition: all .45s ease-in-out;
+  transform: translate(0px, 132px);
+}
+#MonValley:hover #Step5 {
+  transform: translate(0px, 0px);
+}
+#MonValley #Step6 {
+  transition: all .4s ease-in-out;
+  transform: translate(0px, 132px);
+}
+#MonValley:hover #Step6 {
+  transform: translate(0px, 0px);
+}
+#MonValley #Step7 {
+  transition: all .35s ease-in-out;
+  transform: translate(0px, 132px);
+}
+#MonValley:hover #Step7 {
+  transform: translate(0px, 0px);
+}
+#MonValley #Step8 {
+  transition: all .3s ease-in-out;
+  transform: translate(0px, 132px);
+}
+#MonValley:hover #Step8 {
+  transform: translate(0px, 0px);
+}
+#MonValley #Step9 {
+  transition: all .25s ease-in-out;
+  transform: translate(0px, 132px);
+}
+#MonValley:hover #Step9 {
+  transform: translate(0px, 0px);
+}
+#MonValley #Step10 {
+  transition: all .2s ease-in-out;
+  transform: translate(0px, 132px);
+}
+#MonValley:hover #Step10 {
+  transform: translate(0px, 0px);
+}
+#MonValley #Step11 {
+  transition: all .15s ease-in-out;
+  transform: translate(0px, 132px);
+}
+#MonValley:hover #Step11 {
+  transform: translate(0px, 0px);
+}
+#MonValley #Step12 {
+  transition: all .1s ease-in-out;
+  transform: translate(0px, 132px);
+}
+#MonValley:hover #Step12 {
+  transform: translate(0px, 0px);
+}
+#MonValley #Step13 {
+  transition: all .05s ease-in-out;
+  transform: translate(0px, 132px);
+}
+#MonValley:hover #Step13 {
+  transform: translate(0px, 0px);
+}
+
+/*AMAZING IMAGE EFFECT METAVERSE*/
+
+.tileContainer{
+  border:10px solid black;
+  display:inline-block;
+  position:relative;
+  width:1024px;
+  height:768px;
+  overflow:hidden;
+  box-sizing:border-box;
+}
+
+
+.tile{
+  position:relative;
+  vertical-align:top;
+  display:inline-block;
+  border-right:1px solid rgba(0, 0, 0, 0.5);
+  border-bottom:1px solid rgba(0, 0, 0, 0.5);  
+  box-sizing:border-box;
+}
+
+.tile:after{
+  content:"";
+  background-color:#cc1c32;
+  width:6px;
+  height:6px;
+  position:absolute;
+  top:100%;
+  right:0px;
+  transform:translate(50%, -50%);
+  z-index:2;
+  line-height:1;
+}
+
+/*-- no grid --*/
+
+.noGrid .tile{
+  border-right:0px solid rgba(0, 0, 0, 0.5);
+  border-bottom:0px solid rgba(0, 0, 0, 0.5);
+}
+
+.noGrid .tile:after{
+  content:none;
+}
+
+
+
+
+
+
+/*PRUEBA DE JS */
+
+
+.placeholder{
+  display:inline-block;
+  position:relative;
+  width:600px;
+  height:600px;
+  overflow:hidden;
+  box-sizing:border-box;
+  margin-top:100px;
+}
+
+.gridContainer{
+  width:100%;
+  height:100%;
+}
+
+.gridTile
+{
+  position:absolute;
+  top:0px;
+  left:0px;
+  width:100%;
+  height:100%;
+  background-size:cover;
+  background-repeat:no-repeat;
+  background-origin:center;
+}
+

@@ -1,7 +1,6 @@
 {% extends "blog/base.html" %}
 {% block content %}
     <h1>Parte</h1>
-    <h3>Página en funcionamiento a partir del 07/02/2022</h3>
     <form method="post" action="{% url 'blog-parte' %}">{% csrf_token %}
         <p>¿Tienes alguna necesidad especial?</p>
         <select class="custom-select parte-select" id="inputGroupSelect04" name="opciones" style="width: 200px;">
@@ -81,7 +80,12 @@
             {% endfor %}
             </tbody>
         </table>
-        <button type="submit" class="btn boton-parte">Guardar</button>
+        {% if user.username == 'invitado' %}
+            <p>Bienvenido admin</p>
+            <button class="btn boton-parte" onclick="noAutorizado()">Guardar</button>
+        {% else %}
+            <button type="submit" class="btn boton-parte">Guardar</button>
+        {% endif %}
     </form>
     <br>
     <p>* 'Bocadillo-Ans' y 'BocadilloPeq-Ans' son bocadillos de cena que se preparan el día anterior</p>
@@ -98,4 +102,9 @@
     <br>
     <br>
     <br>
+    <script>
+        function noAutorizado() {
+            window.alert("No estás autorizado para modificar el parte de comidas");
+        } 
+    </script>
 {% endblock content %}
