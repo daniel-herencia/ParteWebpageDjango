@@ -14,7 +14,7 @@ import sys
 sys.path.append("..")# Adds higher directory to python modules path.
 #from ..ParteWebpagedjango.settings import EMAIL_HOST_USER
 from ParteWebpagedjango.settings import EMAIL_HOST_USER
-from .models import Deportista, Post, Comensal, Dia1, VariablesGlobales
+from .models import Deportista, Post, Comensal, Dia1, VariablesGlobales, Recurso
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.utils.html import strip_tags
@@ -25,6 +25,10 @@ from datetime import datetime, timedelta   #Para saber la fecha
 #Email with dynamic content
 from django.core import mail
 from django.template.loader import render_to_string
+
+#Para almacenar archivos
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
 
 
 #Logic of html files
@@ -101,7 +105,7 @@ def Parte(request):
     ['respuestaSb','respuestaSl','respuestaSd','respuestaSm'],
     ['respuestaDb','respuestaDl','respuestaDd','respuestaDm'],
     ]
-    if request.user.is_authenticated:   #Este if no es necesario
+    if request.user.is_authenticated and request.user.username != 'invitado':   #Este if no es necesario
         user = request.user.username #guarda el nombre de usuario
     try:    #Para obtener la respuesta anterior si la hay
         answer = Comensal.objects.get(user=user)    #query para sacar la respuesta anterior
@@ -122,7 +126,7 @@ def Parte(request):
         vari[4] = ['-','-','-','-']
         vari[5] = ['-','-','-','-']
         vari[6] = ['-','-','-','-']
-    if request.method=="POST":
+    if request.method=="POST" and request.user.username != 'invitado':
         for i in range(7):
             vari[i]=[request.POST.get(etiquetas[i][0],''),request.POST.get(etiquetas[i][1],''),request.POST.get(etiquetas[i][2],''),request.POST.get(etiquetas[i][3],'')]
         ops = request.POST.get('opciones','')
@@ -318,8 +322,7 @@ def Extras(request):
             j = j + 1
 
         try:
-            variglobal = VariablesGlobales.objects.all()
-            diad = variglobal[0] 
+            diad = VariablesGlobales.objects.get()
         except VariablesGlobales.DoesNotExist:
             diad = VariablesGlobales(diadxt=6)
             diad.save()
@@ -403,7 +406,7 @@ def deportista(request):
         dias[i] = dias[i] + " (" + numdias[j] + ")"
         j = j + 1
 
-    if request.user.is_authenticated:   #Este if no es necesario
+    if request.user.is_authenticated and request.user.username != 'invitado':   #Este if no es necesario
         user = request.user.username #guarda el nombre de usuario
     try:    #Para obtener la respuesta anterior si la hay
         answer = Deportista.objects.get(user=user)    #query para sacar la respuesta anterior
@@ -411,7 +414,7 @@ def deportista(request):
     except Deportista.DoesNotExist:
         dxt='O'
     #Si se ha enviado una respuesta nueva:
-    if request.method=="POST":  
+    if request.method=="POST" and request.user.username != 'invitado':  
         observaciones = request.POST.get('observaciones', '')
         dxt = request.POST.get('respuesta','')
         #Si por algun motivo hubiera dos respuestas de un mismo usuario seguramente petaria
@@ -1115,7 +1118,7 @@ def parte_to_pdf2(request):
 #ADMINISTRADOR DEL PARTE (CONTIENE EL ENVÍO DE CORREOS RECORDATORIO PARTE)
 @login_required
 def Imprimir(request):
-    if  request.user.username == 'parteadmin':
+    if request.user.username == 'parteadmin':
         #Correo recordatorio parte
         if request.method=="POST": 
             usuarios = User.objects.all()
@@ -1154,3 +1157,64 @@ def Imprimir(request):
         return render(request, 'blog/imprimir.html', {'title': 'Imprimir'})
     else:
         return render(request, 'blog/inicio.html', {'title': 'Inicio'})
+
+@login_required
+def Metaverso(request):
+    return render(request, 'blog/metaverso.html', {'title': 'Metaverso'})
+
+@login_required
+def Recursos(request):
+    recursos = Recurso.objects.all()
+    directory = []
+    variables = []
+    for recurso in recursos:
+        directory = "../media/" + str(recurso.recurso)
+        variables.append([directory,recurso])
+    return render(request, 'blog/recursos.html', {'title': 'Recursos', 'variables': variables})
+
+@login_required
+def NuevoRecurso(request):
+    error = ""
+    if request.method == 'POST':
+        titulo = ""
+        descripcion = ""
+        try:
+            if request.FILES['myfile']:
+                archivo = request.FILES['myfile']
+                try:
+                    imagen = request.FILES['preview']
+                except:
+                    error = "Introduzca una imagen de vista previa (puedes hacer una captura de cualquier parte del archivo)"
+                try:
+                    titulo = request.POST.get('nombre', '')
+                    if titulo == "":
+                        error = "Introduzca un título"
+                except:
+                    error = "Introduzca un título"
+                try:
+                    descripcion = request.POST.get('descripcion', '')
+                    if descripcion == "":
+                        error = "Introduzca una descripción"
+                except:
+                    error = "Introduzca una descripción"
+                #fs = FileSystemStorage()
+                #filename = fs.save(myfile.name, myfile)
+                #uploaded_file_url = fs.url(archivo)
+                if error == "":
+                    nuevo = Recurso(titulo=titulo,descripcion=descripcion,imagen=imagen,recurso=archivo)
+                    nuevo.save() #guarda la nueva respuesta en la base de datos
+                #return render(request, 'blog/recursos.html', {'title': 'Recursos', 'uploaded_file_url' : uploaded_file_url})
+        except:
+            error = "Archivo no subido"
+        if error != "":
+            return render(request, 'blog/recursonuevo.html', {'title': 'Nuevo Recurso', 'error': error, 'titulo': titulo, 'descripcion': descripcion})
+        else:
+            recursos = Recurso.objects.all()
+            directory = []
+            variables = []
+            for recurso in recursos:
+                directory = "../media/" + str(recurso.recurso)
+                variables.append([directory,recurso])
+            return render(request, 'blog/recursos.html', {'title': 'Recursos', 'variables': variables})
+    else:
+        return render(request, 'blog/recursonuevo.html', {'title': 'Nuevo Recurso', 'error': error})
