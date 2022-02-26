@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'ParteWebpagedjango',
-    'javascript_settings',
+    #'javascript_settings',
     'django_tex',
     'django_inlinecss',
 ]

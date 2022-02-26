@@ -225,6 +225,36 @@ body {
 }
 
 
+@keyframes transparentImage {
+  0% {
+    filter: opacity(50%);
+}
+25% {
+  filter: opacity(50%);
+}
+75% {
+  filter: opacity(100%);
+}
+100% {
+  filter: opacity(100%);
+}
+}
+
+@keyframes sepiaImage {
+  0% {
+    filter: sepia(50%);
+}
+25% {
+  filter: sepia(50%);
+}
+75% {
+  filter: sepia(0%);
+}
+100% {
+  filter: sepia(0%);
+}
+}
+
 .enlaces-container {
   position: relative;
   margin-right: 10px;
@@ -232,14 +262,15 @@ body {
 
 .enlaces-image {
   display: block;
-  width: 100%;
+/*  width: 100%;*/
+  width: 200px;
   height: 200px;
   animation-name: grayImage;
   animation-timing-function: ease-in-out;
   animation-iteration-count: 1;
   animation-duration: 2s;
+  border-radius: 15px;
 }
-
 
 .enlaces-overlay {
   position: absolute;
@@ -252,6 +283,7 @@ body {
   opacity: 0;
   transition: .5s ease;
   background-color: #777777;
+  border-radius: 15px;
 }
 
 .enlaces-container:hover .enlaces-overlay {
@@ -346,6 +378,8 @@ body {
 /*Alinear imagenes enlaces.html*/
 .contenedor-imagenes {
   display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /*Imagenes mostradas en la página de inicio*/
