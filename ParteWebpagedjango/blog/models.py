@@ -28,12 +28,14 @@ class Post(models.Model):
 
 class Deportista(models.Model):
     msg_id = models.AutoField(primary_key=True,default=None)
-    user = models.CharField(max_length=100, default="")
+    #user = models.CharField(max_length=100, default="")
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    #user = models.OneToOneField(User, on_delete=models.CASCADE)
     observaciones = models.CharField(max_length=150, default="")
     dxt = models.CharField(max_length=1, default="N")
 
     def __str__(self):
-        texto = self.user + " : " + self.dxt
+        texto = self.user.username + " : " + self.dxt
         return texto 
 
 class Dia1(models.Model):
@@ -50,7 +52,8 @@ class Dia1(models.Model):
 #L,M,X,J,V,S,D => días ; b,l,d,m => breakfast,lunch,dinner,mediamañana
 class Comensal(models.Model):
     msg_id1 = models.AutoField(primary_key=True, default=None)
-    user = models.CharField(max_length=100, default="")
+    #user = models.CharField(max_length=100, default="")
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     opciones = models.CharField(max_length=25, default="")
 #    Lb = models.CharField(max_length=100, default="")
 #    Ll = models.CharField(max_length=100, default="")
@@ -68,7 +71,7 @@ class Comensal(models.Model):
 #    D = ArrayField(models.CharField(max_length=25, default="-"),size=4)
 
     def __str__(self):
-        return self.user
+        return self.user.username
 
 class Recurso(models.Model):
     id = models.AutoField(primary_key = True)

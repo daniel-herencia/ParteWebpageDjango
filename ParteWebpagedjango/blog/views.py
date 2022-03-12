@@ -106,7 +106,7 @@ def Parte(request):
     ['respuestaDb','respuestaDl','respuestaDd','respuestaDm'],
     ]
     if request.user.is_authenticated and request.user.username != 'invitado':   #Este if no es necesario
-        user = request.user.username #guarda el nombre de usuario
+        user = request.user #guarda el usuario
     try:    #Para obtener la respuesta anterior si la hay
         answer = Comensal.objects.get(user=user)    #query para sacar la respuesta anterior
         ops = answer.opciones
@@ -211,7 +211,7 @@ def Modificar(request):
             if request.POST.get("mostrar"):
                 user = request.POST.get('selectuser','')
                 try:    #Para obtener la respuesta anterior si la hay
-                    answer = Comensal.objects.get(user=user)    #query para sacar la respuesta anterior
+                    answer = Comensal.objects.get(user=User.objects.get(username=user))    #query para sacar la respuesta anterior
                     ops = answer.opciones
                     vari[0] = [answer.L.b,answer.L.l,answer.L.d,answer.L.m]
                     vari[1] = [answer.M.b,answer.M.l,answer.M.d,answer.M.m]
@@ -250,7 +250,7 @@ def Modificar(request):
                 S.save()
                 D.save()
                 try:
-                    answer = Comensal.objects.get(user=user)    #query para sacar la respuesta anterior
+                    answer = Comensal.objects.get(user=User.objects.get(username=user))    #query para sacar la respuesta anterior
                     answer.opciones = ops
                     answer.L = L
                     answer.M = M
@@ -261,7 +261,7 @@ def Modificar(request):
                     answer.D = D
 
                 except Comensal.DoesNotExist:
-                    answer = Comensal(user=user,opciones=ops,L=L,M=M,X=X,J=J,V=V,S=S,D=S)
+                    answer = Comensal(user=User.objects.get(username=user),opciones=ops,L=L,M=M,X=X,J=J,V=V,S=S,D=S)
 
                 answer.save() #guarda la nueva respuesta en la base de datos
         else:
@@ -407,7 +407,8 @@ def deportista(request):
         j = j + 1
 
     if request.user.is_authenticated and request.user.username != 'invitado':   #Este if no es necesario
-        user = request.user.username #guarda el nombre de usuario
+        #user = request.user.username #guarda el nombre de usuario
+        user = request.user
     try:    #Para obtener la respuesta anterior si la hay
         answer = Deportista.objects.get(user=user)    #query para sacar la respuesta anterior
         dxt=answer.dxt
@@ -655,8 +656,9 @@ def parte_to_pdf(request):
 
     for com in Comensal.objects.all():
         try:
-            comensal = com.user
-            parte = Comensal.objects.get(user=comensal)
+            comensal1 = com.user    #Usuario
+            comensal = comensal1.username   #Nombre
+            parte = Comensal.objects.get(user=comensal1)
             if parte.opciones == 'Normal':
                 if num_day == 0:
                     comida[parte.L.l]+=1
@@ -754,6 +756,10 @@ def parte_to_pdf(request):
                         usuariosDietaL.append(comensal)
                     if (parte.L.d == 'Normal'):
                         usuariosDietaD.append(comensal)
+                    elif (parte.L.d == 'Bocadillo-Pequeño'):
+                        usuariosBocyFD['BocCenaPeq'].append(comensal)
+                    elif (parte.L.d == 'Bocadillo'):
+                        usuariosBocyFD['BocCena'].append(comensal)
                     if (parte.M.b == 'Normal'):
                         usuariosDietaB.append(comensal)
                 elif num_day == 1:
@@ -771,6 +777,10 @@ def parte_to_pdf(request):
                         usuariosDietaL.append(comensal)
                     if (parte.M.d == 'Normal'):
                         usuariosDietaD.append(comensal)
+                    elif (parte.M.d == 'Bocadillo-Pequeño'):
+                        usuariosBocyFD['BocCenaPeq'].append(comensal)
+                    elif (parte.M.d == 'Bocadillo'):
+                        usuariosBocyFD['BocCena'].append(comensal)
                     if (parte.X.b == 'Normal'):
                         usuariosDietaB.append(comensal)
                 elif num_day == 2:
@@ -788,6 +798,10 @@ def parte_to_pdf(request):
                         usuariosDietaL.append(comensal)
                     if (parte.X.d == 'Normal'):
                         usuariosDietaD.append(comensal)
+                    elif (parte.X.d == 'Bocadillo-Pequeño'):
+                        usuariosBocyFD['BocCenaPeq'].append(comensal)
+                    elif (parte.X.d == 'Bocadillo'):
+                        usuariosBocyFD['BocCena'].append(comensal)
                     if (parte.J.b == 'Normal'):
                         usuariosDietaB.append(comensal)
                 elif num_day == 3:
@@ -805,6 +819,10 @@ def parte_to_pdf(request):
                         usuariosDietaL.append(comensal)
                     if (parte.J.d == 'Normal'):
                         usuariosDietaD.append(comensal)
+                    elif (parte.J.d == 'Bocadillo-Pequeño'):
+                        usuariosBocyFD['BocCenaPeq'].append(comensal)
+                    elif (parte.J.d == 'Bocadillo'):
+                        usuariosBocyFD['BocCena'].append(comensal)
                     if (parte.V.b == 'Normal'):
                         usuariosDietaB.append(comensal)
                 elif num_day == 4:
@@ -822,6 +840,10 @@ def parte_to_pdf(request):
                         usuariosDietaL.append(comensal)
                     if (parte.V.d == 'Normal'):
                         usuariosDietaD.append(comensal)
+                    elif (parte.V.d == 'Bocadillo-Pequeño'):
+                        usuariosBocyFD['BocCenaPeq'].append(comensal)
+                    elif (parte.V.d == 'Bocadillo'):
+                        usuariosBocyFD['BocCena'].append(comensal)
                     if (parte.S.b == 'Normal'):
                         usuariosDietaB.append(comensal)
                 elif num_day == 5:
@@ -839,6 +861,10 @@ def parte_to_pdf(request):
                         usuariosDietaL.append(comensal)
                     if (parte.S.d == 'Normal'):
                         usuariosDietaD.append(comensal)
+                    elif (parte.S.d == 'Bocadillo-Pequeño'):
+                        usuariosBocyFD['BocCenaPeq'].append(comensal)
+                    elif (parte.S.d == 'Bocadillo'):
+                        usuariosBocyFD['BocCena'].append(comensal)
                     if (parte.D.b == 'Normal'):
                         usuariosDietaB.append(comensal)
                 elif num_day == 6:
@@ -856,6 +882,10 @@ def parte_to_pdf(request):
                         usuariosDietaL.append(comensal)
                     if (parte.D.d == 'Normal'):
                         usuariosDietaD.append(comensal)
+                    elif (parte.D.d == 'Bocadillo-Pequeño'):
+                        usuariosBocyFD['BocCenaPeq'].append(comensal)
+                    elif (parte.D.d == 'Bocadillo'):
+                        usuariosBocyFD['BocCena'].append(comensal)
                     if (parte.L.b == 'Normal'):
                         usuariosDietaB.append(comensal)
             elif parte.opciones == 'Enfermo':
@@ -1058,7 +1088,7 @@ def parte_to_pdf2(request):
 
 
     for com in Comensal.objects.all():
-        usuario = com.user
+        usuario = com.user.username
         tipo = com.opciones
         if tipo == 'Enfermo':
             enfermo = True
@@ -1125,7 +1155,7 @@ def Imprimir(request):
             for usuario in usuarios:
                 destinatario = usuario.email
                 try:    #Para obtener la respuesta si la hay
-                    variables = Comensal.objects.get(user=usuario.username)
+                    variables = Comensal.objects.get(user=usuario)
                     tipo = variables.opciones
 
                     #Para las fechas
