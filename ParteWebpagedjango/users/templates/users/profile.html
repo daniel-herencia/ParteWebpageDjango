@@ -16,9 +16,7 @@
           {{ p_form|crispy }}
         </fieldset>
         <h3>No tienes permiso para modificar este perfil. Los cambios que realizes no se guardarán</h3>
-      {% else %}
-        <h3>Zona deshabilitada hasta que se solucione un problema. Disculpen las molestias</h3>
-        
+      {% else %}       
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <fieldset class="form-group">

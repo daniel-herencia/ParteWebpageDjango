@@ -33,7 +33,9 @@ urlpatterns = [
     path('modificar/', views.Modificar, name='blog-modificar'),
     path('metaverso/', views.Metaverso, name='blog-metaverso'),
     path('recursos/', views.Recursos, name='blog-recursos'),
-    path('nuevo_recurso/', views.NuevoRecurso, name='blog-nuevorecurso')
+    path('nuevo_recurso/', views.NuevoRecurso, name='blog-nuevorecurso'),
+    path('impresora/', views.Impresora, name='blog-impresora')
+
 #    path("contact/", views.contact, name="blog-contact"),
 
 ]

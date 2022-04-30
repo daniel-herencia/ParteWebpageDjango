@@ -10,9 +10,10 @@ from PIL import Image
 class VariablesGlobales(models.Model):
     diadxt = models.IntegerField()
     #i = models.IntegerField(default=1)
-
+    diaparte = models.IntegerField(default=6)
     def __str__(self):
         return "Dia dxt: " + self.diadxt
+
 
 class Post(models.Model):
     title = models.CharField(max_length=100)
@@ -36,7 +37,7 @@ class Deportista(models.Model):
 
     def __str__(self):
         texto = self.user.username + " : " + self.dxt
-        return texto 
+        return texto
 
 class Dia1(models.Model):
     msg_id2 = models.AutoField(primary_key=True, default=None)
@@ -47,7 +48,7 @@ class Dia1(models.Model):
 
     def __str__(self):
         texto = self.b + " | " + self.l + " | " + self.d + " | " + self.m
-        return texto   #Se podria poner un string con las 4 respuestas 
+        return texto   #Se podria poner un string con las 4 respuestas
 
 #L,M,X,J,V,S,D => días ; b,l,d,m => breakfast,lunch,dinner,mediamañana
 class Comensal(models.Model):
@@ -66,7 +67,7 @@ class Comensal(models.Model):
     V = models.ForeignKey(Dia1, on_delete=models.CASCADE, related_name='V')
     S = models.ForeignKey(Dia1, on_delete=models.CASCADE, related_name='S')
     D = models.ForeignKey(Dia1, on_delete=models.CASCADE, related_name='D')
-    
+
 #    D = models.ForeignKey(Dia, on_delete=models.CASCADE)
 #    D = ArrayField(models.CharField(max_length=25, default="-"),size=4)
 
