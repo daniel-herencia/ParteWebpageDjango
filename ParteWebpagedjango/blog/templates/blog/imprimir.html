@@ -13,9 +13,18 @@
     <br>
     <button type="button" class="btn btn-success" onclick="export_to_pdf2()" style="background-color:#9CB4B3; border:none">Descargar Parte Comedor</button>
     <br>
-    <hr/>
+    <br>
     <form method="post" action="{% url 'blog-imprimir' %}">{% csrf_token %}
-        <button type="submit" class="btn btn-success" style="background-color:#9CB4B3; border:none">Correo Parte</button>
+        <select class="custom-select parte-select" id="inputGroupSelect04" name="selectday" style="width: 200px;">
+            <option value={{ currentday }} selected>{{ currentday }}</option>
+            {% for day in days %}
+                <option value={{ day }}>{{ day }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="btn btn-success" style="background-color:#9CB4B3; border:none" value="dianuevo" name="dianuevo">Guardar día</button>
+        <br><br>
+        <hr/>
+        <button type="submit" class="btn btn-success" style="background-color:#9CB4B3; border:none" value="correo" name="correo">Correo Parte</button>
     </form>
  <!--   <a class="float-right btn btn-primary" onclick="export_to_pdf()">Descargar Parte</a>
     <a target="_blank" class="fcc-btn" href='blog-imprimir'>Imprimir Parte</a>  

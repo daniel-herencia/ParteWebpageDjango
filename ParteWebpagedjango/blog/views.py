@@ -334,7 +334,7 @@ def Extras(request):
                 for usuario in usuarios:
                     destinatario = usuario.email
                     try:    #Para obtener la respuesta si la hay
-                        answer = Deportista.objects.get(user=usuario.username).dxt
+                        answer = Deportista.objects.get(user=usuario).dxt
                         if answer == 'S':
                             answer = 'SI haces deporte.'
                         else:
@@ -433,13 +433,69 @@ def deportista(request):
         diadxt = 6
     return render(request, 'blog/deporte.html', {'dxt': dxt, 'title': 'Deporte', 'dia': dias[diadxt]})
 
+
+@login_required 
+def Impresora(request):
+    user = None
+
+    numdias = ["","","","","","",""]
+    today = date.today()
+    for i in range (7):
+        num = today + timedelta(days=i)
+        num = num.strftime('%d/%m/%Y')
+        numdias[i] = str(num)
+    num_day = today.weekday()
+    dias = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"]
+    j = 0
+    for i in range(num_day,7,1):
+        dias[i] = dias[i] + " (" + numdias[j] + ")"
+        j = j + 1
+    for i in range(0,num_day,1):
+        dias[i] = dias[i] + " (" + numdias[j] + ")"
+        j = j + 1
+
+    if request.user.is_authenticated and request.user.username != 'invitado':   #Este if no es necesario
+        #user = request.user.username #guarda el nombre de usuario
+        user = request.user
+    try:    #Para obtener la respuesta anterior si la hay
+        answer = Deportista.objects.get(user=user)    #query para sacar la respuesta anterior
+        dxt=answer.dxt
+    except Deportista.DoesNotExist:
+        dxt='O'
+    #Si se ha enviado una respuesta nueva:
+    if request.method=="POST" and request.user.username != 'invitado':  
+        observaciones = request.POST.get('observaciones', '')
+        dxt = request.POST.get('respuesta','')
+        #Si por algun motivo hubiera dos respuestas de un mismo usuario seguramente petaria
+        try:
+            answer = Deportista.objects.get(user=user)    #query para sacar la respuesta anterior
+            answer.observaciones=observaciones
+            answer.dxt=dxt
+        except Deportista.DoesNotExist:
+            answer = Deportista(user=user, observaciones=observaciones, dxt=dxt)
+        answer.save() #guarda la nueva respuesta en la base de datos
+    try:
+        diad = VariablesGlobales.objects.get()
+        diadxt = diad.diadxt
+    except VariablesGlobales.DoesNotExist:
+        diadxt = 6
+    return render(request, 'blog/impresora.html', {'dxt': dxt, 'title': 'Deporte', 'dia': dias[diadxt]})
+
+
+
 @login_required
 def parte_to_pdf(request):
     template_name = 'blog/tex/test.tex'
     today = date.today()
     dias = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"]
     meses = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"]
-    num_day = today.weekday()
+    try:
+        diap = VariablesGlobales.objects.get()
+    except VariablesGlobales.DoesNotExist:
+        diap = VariablesGlobales(diadxt=6,diaparte=6)
+        diap.save()
+    num_day = diap.diaparte
+    #num_day = today.weekday()
     dia = dias[num_day]
     tipo = {
 		'enfermo': 0,
@@ -550,7 +606,8 @@ def parte_to_pdf(request):
         'Bocadillo': [],
         'Fiambrera': [],
         'Bocadillo-Ans': [],
-        'BocadilloPeq-Ans': []
+        'BocadilloPeq-Ans': [],
+        'BocCenaPeq': []
     }
     #ENFERMOS
     desayunoE = {
@@ -1053,15 +1110,36 @@ def parte_to_pdf(request):
     #letra = 'L'
     #comida[parte.L.l]+=1
     #observaciones = comida[parte.L.l]
+
+
+    vector = [comida, cena, desayuno, mediamañana, bocayfiambreras, comidaD, cenaD, desayunoD, mediamañanaD, bocayfiambrerasD, comidaB, cenaB, desayunoB, mediamañanaB, bocayfiambrerasB, comidaE, cenaE, desayunoE, mediamañanaE, bocayfiambrerasE]
+    contador1 = 0
+    for diccionario in vector:
+        keys1 = diccionario.keys()
+        for key in keys1:
+            if diccionario[key] == 0:
+                diccionario[key] = ""
+        vector[contador1]=diccionario
+        contador1 = contador1 + 1
+
+
     observaciones = ''
     if request.method=="POST":
         observaciones = request.POST.get('observaciones', '')
+    #context = {'title': 'Parte en PDF', 'tipo': tipo, 'observaciones': observaciones, 'numerodia': today.day, 'mes': meses[today.month-1],
+    # 'año': today.year, 'dia':dia,
+    # 'comida': comida, 'cena': cena, 'desayuno': desayuno, 'mediamañana': mediamañana, 'bocayfiambreras': bocayfiambreras, 'usuariosBocyF': usuariosBocyF,
+    # 'comidaD': comidaD, 'cenaD': cenaD, 'desayunoD': desayunoD, 'mediamañanaD': mediamañanaD, 'bocayfiambrerasD': bocayfiambrerasD, 'usuariosBocyFD': usuariosBocyFD,
+    # 'comidaB': comidaB, 'cenaB': cenaB, 'desayunoB': desayunoB, 'mediamañanaB': mediamañanaB, 'bocayfiambrerasB': bocayfiambrerasB, 'usuariosBocyFB': usuariosBocyFB,
+    # 'comidaE': comidaE, 'cenaE': cenaE, 'desayunoE': desayunoE, 'mediamañanaE': mediamañanaE, 'bocayfiambrerasE': bocayfiambrerasE, 'usuariosBocyFE': usuariosBocyFE,
+    # 'usuariosDietaB': usuariosDietaB, 'usuariosDietaL': usuariosDietaL, 'usuariosDietaD': usuariosDietaD}
+
     context = {'title': 'Parte en PDF', 'tipo': tipo, 'observaciones': observaciones, 'numerodia': today.day, 'mes': meses[today.month-1],
      'año': today.year, 'dia':dia,
-     'comida': comida, 'cena': cena, 'desayuno': desayuno, 'mediamañana': mediamañana, 'bocayfiambreras': bocayfiambreras, 'usuariosBocyF': usuariosBocyF,
-     'comidaD': comidaD, 'cenaD': cenaD, 'desayunoD': desayunoD, 'mediamañanaD': mediamañanaD, 'bocayfiambrerasD': bocayfiambrerasD, 'usuariosBocyFD': usuariosBocyFD,
-     'comidaB': comidaB, 'cenaB': cenaB, 'desayunoB': desayunoB, 'mediamañanaB': mediamañanaB, 'bocayfiambrerasB': bocayfiambrerasB, 'usuariosBocyFB': usuariosBocyFB,
-     'comidaE': comidaE, 'cenaE': cenaE, 'desayunoE': desayunoE, 'mediamañanaE': mediamañanaE, 'bocayfiambrerasE': bocayfiambrerasE, 'usuariosBocyFE': usuariosBocyFE,
+     'comida': vector[0], 'cena': vector[1], 'desayuno': vector[2], 'mediamañana': vector[3], 'bocayfiambreras': vector[4], 'usuariosBocyF': usuariosBocyF,
+     'comidaD': vector[5], 'cenaD': vector[6], 'desayunoD': vector[7], 'mediamañanaD': vector[8], 'bocayfiambrerasD': vector[9], 'usuariosBocyFD': usuariosBocyFD,
+     'comidaB': vector[10], 'cenaB': vector[11], 'desayunoB': vector[12], 'mediamañanaB': vector[13], 'bocayfiambrerasB': vector[14], 'usuariosBocyFB': usuariosBocyFB,
+     'comidaE': vector[15], 'cenaE': vector[16], 'desayunoE': vector[17], 'mediamañanaE': vector[18], 'bocayfiambrerasE': vector[19], 'usuariosBocyFE': usuariosBocyFE,
      'usuariosDietaB': usuariosDietaB, 'usuariosDietaL': usuariosDietaL, 'usuariosDietaD': usuariosDietaD}
 
     return render_to_pdf(request, template_name, context, filename='PartePDF.pdf')
@@ -1075,7 +1153,13 @@ def parte_to_pdf2(request):
     today = date.today()
     dias = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"]
     meses = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"]
-    num_day = today.weekday()
+    try:
+        diap = VariablesGlobales.objects.get()
+    except VariablesGlobales.DoesNotExist:
+        diap = VariablesGlobales(diadxt=6,diaparte=6)
+        diap.save()
+    num_day = diap.diaparte
+    #num_day = today.weekday()
     dia = dias[num_day]
     variables = []
     contadores = { 'Dieta': [0, 0, 0, 0, 0],
@@ -1149,42 +1233,60 @@ def parte_to_pdf2(request):
 @login_required
 def Imprimir(request):
     if request.user.username == 'parteadmin':
+        #Fecha variable del parte a imprimir
+        try:
+            diap = VariablesGlobales.objects.get()
+        except VariablesGlobales.DoesNotExist:
+            diap = VariablesGlobales(diadxt=6,diaparte=6)
+            diap.save()
+        num = diap.diaparte
+        days = ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo']
+
+
         #Correo recordatorio parte
-        if request.method=="POST": 
-            usuarios = User.objects.all()
-            for usuario in usuarios:
-                destinatario = usuario.email
-                try:    #Para obtener la respuesta si la hay
-                    variables = Comensal.objects.get(user=usuario)
-                    tipo = variables.opciones
+        if request.method=="POST":
+            if request.POST.get("correo"):
+                usuarios = User.objects.all()
+                for usuario in usuarios:
+                    destinatario = usuario.email
+                    try:    #Para obtener la respuesta si la hay
+                        variables = Comensal.objects.get(user=usuario)
+                        tipo = variables.opciones
 
-                    #Para las fechas
-                    numdias = ["","","","","","",""]
-                    today = date.today()
-                    for i in range (7):
-                        num = today + timedelta(days=i)
-                        num = num.strftime('%d/%m/%Y')
-                        numdias[i] = str(num)
-                    num_day = today.weekday()
-                    dias = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"]
-                    j = 0
-                    for i in range(num_day,7,1):
-                        dias[i] = dias[i] + " (" + numdias[j] + ")"
-                        j = j + 1
-                    for i in range(0,num_day,1):
-                        dias[i] = dias[i] + " (" + numdias[j] + ")"
-                        j = j + 1
+                        #Para las fechas
+                        numdias = ["","","","","","",""]
+                        today = date.today()
+                        for i in range (7):
+                            num = today + timedelta(days=i)
+                            num = num.strftime('%d/%m/%Y')
+                            numdias[i] = str(num)
+                        num_day = today.weekday()
+                        dias = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"]
+                        j = 0
+                        for i in range(num_day,7,1):
+                            dias[i] = dias[i] + " (" + numdias[j] + ")"
+                            j = j + 1
+                        for i in range(0,num_day,1):
+                            dias[i] = dias[i] + " (" + numdias[j] + ")"
+                            j = j + 1
 
-                    subject = 'Correo semanal del Parte'
-                    context =  {'variables': variables, 'tipo': tipo, 'dias': dias}
-                    html_message = render_to_string('blog/mailparte.html', {'context': context})
-                    plain_message = strip_tags(html_message)
-                    from_email = EMAIL_HOST_USER
-                    to = destinatario
-                    mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)
-                except Comensal.DoesNotExist:
-                    hola = 'N'
-        return render(request, 'blog/imprimir.html', {'title': 'Imprimir'})
+                        subject = 'Correo semanal del Parte'
+                        context =  {'variables': variables, 'tipo': tipo, 'dias': dias}
+                        html_message = render_to_string('blog/mailparte.html', {'context': context})
+                        plain_message = strip_tags(html_message)
+                        from_email = EMAIL_HOST_USER
+                        to = destinatario
+                        mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)
+                    except Comensal.DoesNotExist:
+                        hola = 'N'
+
+            elif request.POST.get("dianuevo"):
+                newday = request.POST.get('selectday','')
+                num = days.index(newday)
+                diap.diaparte = num
+        diap.save()
+        currentday = days[num]
+        return render(request, 'blog/imprimir.html', {'title': 'Imprimir', 'days': days, 'currentday': currentday})
     else:
         return render(request, 'blog/inicio.html', {'title': 'Inicio'})
 
