@@ -3,50 +3,158 @@
 
 {% block content %}
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-7.5">
         <div class="container my-3">
             <h1>IMPRESORA</h1>
-            <div class="content-section">
-                    <h4>¿Haces deporte el {{ dia }}?</h4>
-                <form method="post" action="{% url 'blog-deporte' %}">{% csrf_token %}
-                    <div class="input-group">
-                        {% if dxt == 'S' %}
-                            <select class="custom-select" id="inputGroupSelect04" name='respuesta'>
-                                <option selected value="S">Sí, hago deporte</option>
-                                <option value="N">No hago deporte</option>
-                            </select>
-                        {% elif dxt == 'N'%}
-                            <select class="custom-select" id="inputGroupSelect04" name='respuesta'>
-                                <option value="S">Sí, hago deporte</option>
-                                <option selected value="N">No hago deporte</option>
-                            </select>
-                        {% else %}
-                            <select class="custom-select" id="inputGroupSelect04" name='respuesta'>
-                                <option selected>-- Selecciona una opción --</option>
-                                <option value="S">Sí, hago deporte</option>
-                                <option value="N">No hago deporte</option>
-                            </select>
-                        {% endif %}
-                    </div>
-                    <br>
-                    <div class="form-group">
-                        <label for="name">Observaciones:</label>
-                        <input type="text" class="form-control" id="name" name='observaciones' placeholder="Escribe aquí si tienes algo importante a tener en cuenta">
-                    </div>
-                    <hr/>
-                    {% if user.username == 'invitado' %}
-                        <button class="btn btn-success" onclick="noAutorizado()">Guardar</button>
-                    {% else %}
-                        <button type="submit" class="btn btn-success">Guardar</button>
-                    {% endif %}
-                </form>
-            </div>
+            <br>
+            <center><h4>IMPRESIONES NUEVAS</h4></center>
+            <form method="post" action="{% url 'blog-deporte' %}">{% csrf_token %}
+                <table>
+                    <thead>
+                    <tr>
+                        <th style="border-radius: 15px 0px 0px 0px;">TIPO
+                        <th>TEXTO
+                        <th>IMAGEN
+                        <th>DENSO
+                        <th style="border-radius: 0px 15px 0px 0px;">TOTAL
+                    </thead>
+                    <tbody align="center">   
+                    <tr>
+                        <td style="background-color: rgb(219, 219, 219);">BLANCO Y NEGRO
+                        <td><input type="number" id="tentacles" name="tentacles"
+                                   min="0" max="1000">
+                        <td><input type="number" id="tentacles" name="tentacles"
+                            min="0" max="1000">       
+                        <td><input type="number" id="tentacles" name="tentacles"
+                            min="0" max="1000">
+                        <td>100 ₿
+                    <tr>
+                        <td style="background-color: rgb(219, 219, 219); border-radius: 0px 0px 0px 15px;">COLOR
+                        <td><input type="number" id="tentacles" name="tentacles"
+                            min="0" max="1000">
+                        <td><input type="number" id="tentacles" name="tentacles"
+                            min="0" max="1000">          
+                        <td><input type="number" id="tentacles" name="tentacles"
+                            min="0" max="1000">
+                        <td>200 €
+                    </tbody>
+                </table>
+                {% if user.username == 'invitado' %}
+                <center><button class="btn boton-parte" onclick="noAutorizado()">Guardar</button></center>
+                {% else %}
+                <center><button class="btn boton-parte" onclick="noAutorizado()">Guardar</button></center>
+                {% endif %}
+            </form>
+            <br><br>
+            <h3>Saldo disponible: </h3><h3 style="color:#FF0000";>- 10₿</h3>
+            <br><br>
+            <center><h4>IMPRESIONES TOTALES</h4></center>
+                <table>
+                    <thead>
+                    <tr>
+                        <th style="border-radius: 15px 0px 0px 0px;">TIPO
+                        <th>TEXTO
+                        <th>IMAGEN
+                        <th>DENSO
+                        <th style="border-radius: 0px 15px 0px 0px;">TOTAL
+                    </thead>
+                    <tbody align="center">   
+                    <tr>
+                        <td style="background-color: rgb(219, 219, 219);">BLANCO Y NEGRO
+                        <td>1
+                        <td>2     
+                        <td>3
+                        <td>100 $
+                    <tr>
+                        <td style="background-color: rgb(219, 219, 219); border-radius: 0px 0px 0px 15px;">COLOR
+                        <td>4
+                        <td>5         
+                        <td>6
+                        <td>200 ₽
+                    </tbody>
+                </table>
+            <br>
+        </div>
+    </div>
+    <div class="col-md-4.5">
+        <div class="content-section">
+            <h3>PRECIOS</h3>
+            <style type="text/css">
+                .tg  {border-collapse:collapse;border-spacing:0;}
+                .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+                  overflow:hidden;padding:10px 5px;word-break:normal;}
+                .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+                  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+                .tg .tg-7un6{background-color:#ffffff;color:#000000;text-align:center;vertical-align:top}
+                .tg .tg-v0zy{background-color:#efefef;color:#000000;font-weight:bold;text-align:center;vertical-align:top}
+                .tg .tg-iqt0{background-color:#e2e4ff;color:#330001;font-weight:bold;text-align:center;vertical-align:top}
+                .tg .tg-qh0q{background-color:#c0c0c0;color:#000000;font-weight:bold;text-align:center;vertical-align:top}
+                .tg .tg-ve1c{background-color:#ffcc67;color:#000000;font-weight:bold;text-align:center;vertical-align:top}
+                .tg .tg-zzvt{background-color:#9aff99;color:#000000;font-weight:bold;text-align:center;vertical-align:top}
+                .tg .tg-ygii{background-color:#daf7fc;color:#000000;font-weight:bold;text-align:center;vertical-align:top}
+                .tg .tg-qrr9{background-color:#ffccc9;color:#000000;font-weight:bold;text-align:center;vertical-align:top}
+                .tg .tg-00a0{background-color:#96fffb;color:#000000;font-weight:bold;text-align:center;vertical-align:top}
+                .tg .tg-el71{background-color:#cbcefb;color:#330001;font-weight:bold;text-align:center;vertical-align:top}
+                </style>
+                <table class="tg">
+                <thead>
+                  <tr>
+                    <th class="tg-ygii" colspan="6">IMPRESORA</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="tg-qh0q" colspan="3">BLANCO Y NEGRO</td>
+                    <td class="tg-ve1c" colspan="3">COLOR</td>
+                  </tr>
+                  <tr>
+                    <td class="tg-v0zy">Texto</td>
+                    <td class="tg-v0zy">Imagen</td>
+                    <td class="tg-v0zy">Denso</td>
+                    <td class="tg-qrr9">Texto</td>
+                    <td class="tg-zzvt">Imagen</td>
+                    <td class="tg-00a0">Denso</td>
+                  </tr>
+                  <tr>
+                    <td class="tg-7un6">0,03 €</td>
+                    <td class="tg-7un6">0,06 €</td>
+                    <td class="tg-7un6">0,09 €</td>
+                    <td class="tg-7un6">0,06 €</td>
+                    <td class="tg-7un6">0,12 €</td>
+                    <td class="tg-7un6">0,18 €</td>
+                  </tr>
+                  <tr>
+                    <td class="tg-el71" colspan="6">ENCUADERNADORA</td>
+                  </tr>
+                  <tr>
+                    <td class="tg-iqt0" colspan="2">TAPA</td>
+                    <td class="tg-iqt0" colspan="4">ESPIRAL</td>
+                  </tr>
+                  <tr>
+                    <td class="tg-7un6">N</td>
+                    <td class="tg-7un6">TR</td>
+                    <td class="tg-7un6">ø6</td>
+                    <td class="tg-7un6">ø10</td>
+                    <td class="tg-7un6">ø14</td>
+                    <td class="tg-7un6">ø20</td>
+                  </tr>
+                  <tr>
+                    <td class="tg-7un6">0,4 €</td>
+                    <td class="tg-7un6">0,4 €</td>
+                    <td class="tg-7un6">0,15 €</td>
+                    <td class="tg-7un6">0,2 €</td>
+                    <td class="tg-7un6">0,25 €</td>
+                    <td class="tg-7un6">0,3 €</td>
+                  </tr>
+                </tbody>
+                </table>
+                <button class="btn boton-parte">Convertir a ₿</button>   
         </div>
     </div>
 </div>
 <script>
     function noAutorizado() {
-        window.alert("No estás autorizado para apuntarte al deporte");
+        window.alert("Página en fase de pruebas, estos cambios no se guardaran");
     } 
 </script>
 
