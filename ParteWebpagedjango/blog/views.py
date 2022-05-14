@@ -438,48 +438,7 @@ def deportista(request):
 def Impresora(request):
     user = None
 
-    numdias = ["","","","","","",""]
-    today = date.today()
-    for i in range (7):
-        num = today + timedelta(days=i)
-        num = num.strftime('%d/%m/%Y')
-        numdias[i] = str(num)
-    num_day = today.weekday()
-    dias = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"]
-    j = 0
-    for i in range(num_day,7,1):
-        dias[i] = dias[i] + " (" + numdias[j] + ")"
-        j = j + 1
-    for i in range(0,num_day,1):
-        dias[i] = dias[i] + " (" + numdias[j] + ")"
-        j = j + 1
-
-    if request.user.is_authenticated and request.user.username != 'invitado':   #Este if no es necesario
-        #user = request.user.username #guarda el nombre de usuario
-        user = request.user
-    try:    #Para obtener la respuesta anterior si la hay
-        answer = Deportista.objects.get(user=user)    #query para sacar la respuesta anterior
-        dxt=answer.dxt
-    except Deportista.DoesNotExist:
-        dxt='O'
-    #Si se ha enviado una respuesta nueva:
-    if request.method=="POST" and request.user.username != 'invitado':  
-        observaciones = request.POST.get('observaciones', '')
-        dxt = request.POST.get('respuesta','')
-        #Si por algun motivo hubiera dos respuestas de un mismo usuario seguramente petaria
-        try:
-            answer = Deportista.objects.get(user=user)    #query para sacar la respuesta anterior
-            answer.observaciones=observaciones
-            answer.dxt=dxt
-        except Deportista.DoesNotExist:
-            answer = Deportista(user=user, observaciones=observaciones, dxt=dxt)
-        answer.save() #guarda la nueva respuesta en la base de datos
-    try:
-        diad = VariablesGlobales.objects.get()
-        diadxt = diad.diadxt
-    except VariablesGlobales.DoesNotExist:
-        diadxt = 6
-    return render(request, 'blog/impresora.html', {'dxt': dxt, 'title': 'Deporte', 'dia': dias[diadxt]})
+    return render(request, 'blog/impresora.html', {'title': 'Impresora'})
 
 
 
@@ -495,6 +454,10 @@ def parte_to_pdf(request):
         diap = VariablesGlobales(diadxt=6,diaparte=6)
         diap.save()
     num_day = diap.diaparte
+    diferencia = num_day-today.weekday()
+    if diferencia < 0:
+        diferencia = 7 + diferencia
+    today = today + timedelta(days=diferencia)
     #num_day = today.weekday()
     dia = dias[num_day]
     tipo = {
@@ -1159,6 +1122,10 @@ def parte_to_pdf2(request):
         diap = VariablesGlobales(diadxt=6,diaparte=6)
         diap.save()
     num_day = diap.diaparte
+    diferencia = num_day-today.weekday()
+    if diferencia < 0:
+        diferencia = 7 + diferencia
+    today = today + timedelta(days=diferencia)
     #num_day = today.weekday()
     dia = dias[num_day]
     variables = []
