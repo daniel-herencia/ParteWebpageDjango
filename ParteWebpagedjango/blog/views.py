@@ -14,14 +14,14 @@ import sys
 sys.path.append("..")# Adds higher directory to python modules path.
 #from ..ParteWebpagedjango.settings import EMAIL_HOST_USER
 from ParteWebpagedjango.settings import EMAIL_HOST_USER
-from .models import Deportista, Post, Comensal, Dia1, VariablesGlobales, Recurso
+from .models import Deportista, Post, Comensal, Dia1, VariablesGlobales, Recurso, Impresor
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.utils.html import strip_tags
 from django_tex.shortcuts import render_to_pdf
 from datetime import date   #Para saber la fecha
 from datetime import datetime, timedelta   #Para saber la fecha
-
+import decimal
 #Email with dynamic content
 from django.core import mail
 from django.template.loader import render_to_string
@@ -437,8 +437,87 @@ def deportista(request):
 @login_required 
 def Impresora(request):
     user = None
+    if request.user.is_authenticated and request.user.username != 'invitado':
+        user = request.user
+    try:    #Para obtener la respuesta anterior si la hay
+        answer = Impresor.objects.get(user=user)    #query para sacar la respuesta anterior
+        precios = VariablesGlobales.objects.get()
+        precio_tblanco = precios.precio_tblanco
+        precio_tcolor = precios.precio_tcolor
+        precio_iblanco = precios.precio_iblanco
+        precio_icolor = precios.precio_icolor
+        precio_dblanco = precios.precio_dblanco
+        precio_dcolor = precios.precio_dcolor
+        saldo = answer.saldo
+        texto_blanco = answer.texto_blanco
+        texto_color = answer.texto_color
+        imagen_blanco = answer.imagen_blanco
+        imagen_color = answer.imagen_color
+        denso_blanco = answer.denso_blanco
+        denso_color = answer.denso_color
+    except Impresor.DoesNotExist:
+        saldo = 0
+        texto_blanco = 0
+        texto_color = 0
+        imagen_blanco = 0
+        imagen_color = 0
+        denso_blanco = 0
+        denso_color = 0
 
-    return render(request, 'blog/impresora.html', {'title': 'Impresora'})
+    #Si se ha enviado una respuesta nueva:
+    if request.method=="POST" and request.user.username != 'invitado':  
+        texto_blanco = request.POST.get('tblanco1')
+        if texto_blanco == '':
+            texto_blanco = 0
+        texto_blanco = int(texto_blanco)
+        texto_color = request.POST.get('tcolor1')
+        if texto_color == '':
+            texto_color = 0
+        texto_color = int(texto_color)
+        imagen_blanco = request.POST.get('iblanco1')
+        if imagen_blanco == '':
+            imagen_blanco = 0
+        imagen_blanco = int(imagen_blanco)
+        imagen_color = request.POST.get('icolor1')
+        if imagen_color == '':
+            imagen_color = 0
+        imagen_color = int(imagen_color)
+        denso_blanco = request.POST.get('dblanco1')
+        if denso_blanco == '':
+            denso_blanco = 0
+        denso_blanco = int(denso_blanco)
+        denso_color = request.POST.get('dcolor1')
+        if denso_color == '':
+            denso_color = 0
+        denso_color = int(denso_color)
+
+        try:
+            answer = Impresor.objects.get(user=user)    #query para sacar la respuesta anterior
+            saldo = answer.saldo - precio_tblanco*texto_blanco - precio_iblanco*imagen_blanco - precio_dblanco*denso_blanco
+            - precio_tcolor*texto_color - precio_icolor*imagen_color - precio_dcolor*denso_color
+            answer.saldo = saldo
+            texto_blanco = answer.texto_blanco + abs(texto_blanco)
+            texto_color = answer.texto_color + abs(texto_color)
+            imagen_blanco = answer.imagen_blanco + abs(imagen_blanco)
+            imagen_color = answer.imagen_color + abs(imagen_color)
+            denso_blanco = answer.denso_blanco + abs(denso_blanco)
+            denso_color = answer.denso_color + abs(denso_color)
+            answer.texto_blanco = texto_blanco
+            answer.texto_color = texto_color
+            answer.imagen_blanco = imagen_blanco
+            answer.imagen_color = imagen_color
+            answer.denso_blanco = denso_blanco
+            answer.denso_color = denso_color
+        except Impresor.DoesNotExist:
+            answer = Impresor(user=user, saldo=saldo, texto_blanco = texto_blanco, texto_color = texto_color, imagen_blanco = imagen_blanco,
+            imagen_color = imagen_color, denso_blanco = denso_blanco, denso_color = denso_color)
+        answer.save() #guarda la nueva respuesta en la base de datos
+
+    total_blanco = texto_blanco*precio_tblanco + imagen_blanco*precio_iblanco + denso_blanco*precio_dblanco
+    total_color = texto_color*precio_tcolor + imagen_color*precio_icolor + denso_color*precio_dcolor 
+    return render(request, 'blog/impresora.html', {'title': 'Impresora', 'tblanco': texto_blanco, 'tcolor': texto_color, 'iblanco': imagen_blanco,
+    'icolor': imagen_color, 'dblanco': denso_blanco, 'dcolor': denso_color, 'saldo': saldo, 'totblanco': total_blanco, 'totcolor': total_color,
+    'ptb': precio_tblanco, 'ptc': precio_tcolor, 'pib': precio_iblanco, 'pic': precio_icolor, 'pdb': precio_dblanco, 'pdc': precio_dcolor})
 
 
 
