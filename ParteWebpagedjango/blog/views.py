@@ -440,7 +440,6 @@ def Impresora(request):
     if request.user.is_authenticated and request.user.username != 'invitado':
         user = request.user
     try:    #Para obtener la respuesta anterior si la hay
-        answer = Impresor.objects.get(user=user)    #query para sacar la respuesta anterior
         precios = VariablesGlobales.objects.get()
         precio_tblanco = precios.precio_tblanco
         precio_tcolor = precios.precio_tcolor
@@ -448,6 +447,7 @@ def Impresora(request):
         precio_icolor = precios.precio_icolor
         precio_dblanco = precios.precio_dblanco
         precio_dcolor = precios.precio_dcolor
+        answer = Impresor.objects.get(user=user)    #query para sacar la respuesta anterior
         saldo = answer.saldo
         texto_blanco = answer.texto_blanco
         texto_color = answer.texto_color
@@ -463,6 +463,8 @@ def Impresora(request):
         imagen_color = 0
         denso_blanco = 0
         denso_color = 0
+        total_blanco = 0
+        total_color = 0
 
     #Si se ha enviado una respuesta nueva:
     if request.method=="POST" and request.user.username != 'invitado':  
@@ -512,9 +514,8 @@ def Impresora(request):
             answer = Impresor(user=user, saldo=saldo, texto_blanco = texto_blanco, texto_color = texto_color, imagen_blanco = imagen_blanco,
             imagen_color = imagen_color, denso_blanco = denso_blanco, denso_color = denso_color)
         answer.save() #guarda la nueva respuesta en la base de datos
-
-    total_blanco = texto_blanco*precio_tblanco + imagen_blanco*precio_iblanco + denso_blanco*precio_dblanco
-    total_color = texto_color*precio_tcolor + imagen_color*precio_icolor + denso_color*precio_dcolor 
+        total_blanco = texto_blanco*precio_tblanco + imagen_blanco*precio_iblanco + denso_blanco*precio_dblanco
+        total_color = texto_color*precio_tcolor + imagen_color*precio_icolor + denso_color*precio_dcolor 
     return render(request, 'blog/impresora.html', {'title': 'Impresora', 'tblanco': texto_blanco, 'tcolor': texto_color, 'iblanco': imagen_blanco,
     'icolor': imagen_color, 'dblanco': denso_blanco, 'dcolor': denso_color, 'saldo': saldo, 'totblanco': total_blanco, 'totcolor': total_color,
     'ptb': precio_tblanco, 'ptc': precio_tcolor, 'pib': precio_iblanco, 'pic': precio_icolor, 'pdb': precio_dblanco, 'pdc': precio_dcolor})
