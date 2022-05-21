@@ -11,8 +11,14 @@ class VariablesGlobales(models.Model):
     diadxt = models.IntegerField()
     #i = models.IntegerField(default=1)
     diaparte = models.IntegerField(default=6)
+    precio_tblanco = models.DecimalField(max_digits=5,decimal_places=2,default=0.03)
+    precio_iblanco = models.DecimalField(max_digits=5,decimal_places=2,default=0.06)
+    precio_dblanco = models.DecimalField(max_digits=5,decimal_places=2,default=0.09)
+    precio_tcolor = models.DecimalField(max_digits=5,decimal_places=2,default=0.06)
+    precio_icolor = models.DecimalField(max_digits=5,decimal_places=2,default=0.12)
+    precio_dcolor = models.DecimalField(max_digits=5,decimal_places=2,default=0.18)
     def __str__(self):
-        return "Dia dxt: " + self.diadxt
+        return "Dia DXT - Dia Parte - Precios Impresora"
 
 
 class Post(models.Model):
@@ -26,6 +32,21 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse('post-detail', kwargs={'pk': self.pk})
+
+class Impresor(models.Model):
+    msg_id3 = models.AutoField(primary_key=True,default=None)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    saldo = models.DecimalField(max_digits=5,decimal_places=2,default=0)
+    texto_blanco = models.PositiveIntegerField(default=0)
+    texto_color = models.PositiveIntegerField(default=0)
+    imagen_blanco = models.PositiveIntegerField(default=0)
+    imagen_color = models.PositiveIntegerField(default=0)
+    denso_blanco = models.PositiveIntegerField(default=0)
+    denso_color = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        texto = self.user.username + " : " + str(self.saldo)
+        return texto
 
 class Deportista(models.Model):
     msg_id = models.AutoField(primary_key=True,default=None)
