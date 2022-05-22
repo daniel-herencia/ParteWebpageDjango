@@ -437,6 +437,8 @@ def deportista(request):
 @login_required 
 def Impresora(request):
     user = None
+    total_blanco = 0
+    total_color = 0 
     if request.user.is_authenticated and request.user.username != 'invitado':
         user = request.user
     try:    #Para obtener la respuesta anterior si la hay
@@ -463,8 +465,6 @@ def Impresora(request):
         imagen_color = 0
         denso_blanco = 0
         denso_color = 0
-        total_blanco = 0
-        total_color = 0
 
     #Si se ha enviado una respuesta nueva:
     if request.method=="POST" and request.user.username != 'invitado':  
