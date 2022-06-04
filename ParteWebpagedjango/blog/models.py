@@ -17,6 +17,11 @@ class VariablesGlobales(models.Model):
     precio_tcolor = models.DecimalField(max_digits=5,decimal_places=2,default=0.06)
     precio_icolor = models.DecimalField(max_digits=5,decimal_places=2,default=0.12)
     precio_dcolor = models.DecimalField(max_digits=5,decimal_places=2,default=0.18)
+    precio_e6 = models.DecimalField(max_digits=5,decimal_places=2,default=0.15)
+    precio_e10 = models.DecimalField(max_digits=5,decimal_places=2,default=0.20)
+    precio_e14 = models.DecimalField(max_digits=5,decimal_places=2,default=0.25)
+    precio_e20 = models.DecimalField(max_digits=5,decimal_places=2,default=0.30)
+    precio_tapa = models.DecimalField(max_digits=5,decimal_places=2,default=0.4)
     def __str__(self):
         return "Dia DXT - Dia Parte - Precios Impresora"
 
@@ -43,6 +48,11 @@ class Impresor(models.Model):
     imagen_color = models.PositiveIntegerField(default=0)
     denso_blanco = models.PositiveIntegerField(default=0)
     denso_color = models.PositiveIntegerField(default=0)
+    e6 = models.PositiveIntegerField(default=0)
+    e10 = models.PositiveIntegerField(default=0)
+    e14 = models.PositiveIntegerField(default=0)
+    e20 = models.PositiveIntegerField(default=0)
+    tapas = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         texto = self.user.username + " : " + str(self.saldo)

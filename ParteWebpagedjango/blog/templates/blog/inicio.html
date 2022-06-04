@@ -20,6 +20,8 @@
                     <img class="rounded-circle init-img" src="{{ use.profile.image.url }}">
                 <!--        <p>{{ user.username }} </p>-->
                 {% endfor %}
+                <a href="{% url 'blog-animation' %}">
+                <img class="rounded-circle init-img" src="media/imagen-no-disponible.jpg"></a>
                 <!--<svg viewBox="0 0 960 300">-->
                 <svg viewBox="0 0 100vw 25%">
                     <symbol id="s-text">
@@ -48,11 +50,12 @@
             <div class="col-md-4">
                 <div class="content-section">
                 <h3>Actualizaciones</h3>
-                <p class='text-muted'> <b>22/05/2022:</b>
+                <p class='text-muted'> <b>04/06/2022:</b>
                     <ul class="list-group">
-                        <li class="list-group-item list-group-item-light">Impresora versión beta 😜</li>
-                        <li class="list-group-item list-group-item-light">La parte de copias en color todavía no funciona</li>
-                        <li class="list-group-item list-group-item-light">De momento se utilizará la página de impresora antigua, pero podéis ir haciendo pruebas y reportar los errores al administrador</li>    
+                        <li class="list-group-item list-group-item-light">Impresora acabada 🖨️​</li>
+                        <li class="list-group-item list-group-item-light">Encuadernadora fase de pruebas 📒​</li>
+                        <a href="{% url 'blog-metaverso' %}" style="text-decoration: none;">
+                        <li class="list-group-item list-group-item-light">3 Easter Eggs ¿Sabrás encontrarlos? 🧐​</li></a>  
                     </ul>
                 </p><!--
                 <h3>Próximamente</h3>
@@ -103,14 +106,6 @@
             <div style="width:100%; height:1000px;"></div>
             <br>
             <script>
-                $(window).scroll(function() {
-                    if ($(window).scrollTop() > 800) {
-                        $('.init-image').css("opacity", 0.4).fadeIn("5000");;
-                    }
-                    else{
-                        $('.init-image').css("opacity", 1).fadeIn("5000") ;
-                    }
-                });
                 /*$(window).scroll(function() {
                   var scrollTop = $(this).scrollTop();
                 

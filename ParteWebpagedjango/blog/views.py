@@ -433,6 +433,89 @@ def deportista(request):
         diadxt = 6
     return render(request, 'blog/deporte.html', {'dxt': dxt, 'title': 'Deporte', 'dia': dias[diadxt]})
 
+@login_required
+def Animation(request):
+    return render(request, 'blog/animation.html', {'title': 'Animation'})
+
+@login_required
+def Encuadernadora(request):
+    user = None
+    tapa1 = 0
+    if request.user.is_authenticated and request.user.username != 'invitado':
+        user = request.user
+    try:    #Para obtener la respuesta anterior si la hay
+        precios = VariablesGlobales.objects.get()
+        precio_e6 = precios.precio_e6
+        precio_e10 = precios.precio_e10
+        precio_e14 = precios.precio_e14
+        precio_e20 = precios.precio_e20
+        precio_tapa = precios.precio_tapa
+        answer = Impresor.objects.get(user=user)    #query para sacar la respuesta anterior
+        saldo = answer.saldo
+        e6 = answer.e6
+        e10 = answer.e10
+        e14 = answer.e14
+        e20 = answer.e20
+        tapas = answer.tapas
+    except Impresor.DoesNotExist:
+        saldo = 0
+        texto_blanco = 0
+        texto_color = 0
+        imagen_blanco = 0
+        imagen_color = 0
+        denso_blanco = 0
+        denso_color = 0
+        e6 = 0
+        e10 = 0
+        e14 = 0
+        e20 = 0
+        tapas = 0
+    
+    #Si se ha enviado una respuesta nueva:
+    if request.method=="POST" and request.user.username != 'invitado':  
+        e6 = request.POST.get('e6')
+        if e6 == '':
+            e6 = 0
+        e6 = int(e6)
+        e10 = request.POST.get('e10')
+        if e10 == '':
+            e10 = 0
+        e10 = int(e10)
+        e14 = request.POST.get('e14')
+        if e14 == '':
+            e14 = 0
+        e14 = int(e14)
+        e20 = request.POST.get('e20')
+        if e20 == '':
+            e20 = 0
+        e20 = int(e20)
+
+        tapa = request.POST.get('tapa','')
+        if (tapa == 'S'):
+            tapa1 = 1
+
+        try:
+            answer = Impresor.objects.get(user=user)    #query para sacar la respuesta anterior
+            saldo = answer.saldo - precio_e6*e6 - precio_e10*e10 - precio_e14*e14 \
+            - precio_e20*e20 - precio_tapa*tapa1
+            answer.saldo = saldo
+            e6 = answer.e6 + abs(e6)
+            e10 = answer.e10 + abs(e10)
+            e14 = answer.e14 + abs(e14)
+            e20 = answer.e20 + abs(e20)
+            tapa1 = answer.tapas + abs(tapa1)
+            answer.e6 = e6
+            answer.e10 = e10
+            answer.e14 = e14
+            answer.e20 = e20
+            answer.tapas = tapa1
+        except Impresor.DoesNotExist:
+            answer = Impresor(user=user, saldo=saldo, texto_blanco = texto_blanco, texto_color = texto_color, imagen_blanco = imagen_blanco,
+            imagen_color = imagen_color, denso_blanco = denso_blanco, denso_color = denso_color, e6=e6, e10=e10, e14=e14, e20=e20, tapas=tapas)
+        answer.save() #guarda la nueva respuesta en la base de datos
+
+    return render(request, 'blog/encuadernadora.html', {'title': 'Encuadernadora', 'precio_e6': precio_e6, 'precio_e10': precio_e10, 'precio_e14': precio_e14,
+     'precio_e20': precio_e20, 'e6': e6, 'e10': e10, 'e14': e14, 'e20': e20, 'tapas': tapa1, 'precio_tapa': precio_tapa, 'saldo': saldo})
 
 @login_required 
 def Impresora(request):
@@ -465,6 +548,11 @@ def Impresora(request):
         imagen_color = 0
         denso_blanco = 0
         denso_color = 0
+        e6 = 0
+        e10 = 0
+        e14 = 0
+        e20 = 0
+        tapas = 0
 
     #Si se ha enviado una respuesta nueva:
     if request.method=="POST" and request.user.username != 'invitado':  
@@ -495,7 +583,7 @@ def Impresora(request):
 
         try:
             answer = Impresor.objects.get(user=user)    #query para sacar la respuesta anterior
-            saldo = answer.saldo - precio_tblanco*texto_blanco - precio_iblanco*imagen_blanco - precio_dblanco*denso_blanco
+            saldo = answer.saldo - precio_tblanco*texto_blanco - precio_iblanco*imagen_blanco - precio_dblanco*denso_blanco \
             - precio_tcolor*texto_color - precio_icolor*imagen_color - precio_dcolor*denso_color
             answer.saldo = saldo
             texto_blanco = answer.texto_blanco + abs(texto_blanco)
@@ -512,14 +600,13 @@ def Impresora(request):
             answer.denso_color = denso_color
         except Impresor.DoesNotExist:
             answer = Impresor(user=user, saldo=saldo, texto_blanco = texto_blanco, texto_color = texto_color, imagen_blanco = imagen_blanco,
-            imagen_color = imagen_color, denso_blanco = denso_blanco, denso_color = denso_color)
+            imagen_color = imagen_color, denso_blanco = denso_blanco, denso_color = denso_color, e6=e6, e10=e10, e14=e14, e20=20, tapas=tapas)
         answer.save() #guarda la nueva respuesta en la base de datos
         total_blanco = texto_blanco*precio_tblanco + imagen_blanco*precio_iblanco + denso_blanco*precio_dblanco
         total_color = texto_color*precio_tcolor + imagen_color*precio_icolor + denso_color*precio_dcolor 
     return render(request, 'blog/impresora.html', {'title': 'Impresora', 'tblanco': texto_blanco, 'tcolor': texto_color, 'iblanco': imagen_blanco,
     'icolor': imagen_color, 'dblanco': denso_blanco, 'dcolor': denso_color, 'saldo': saldo, 'totblanco': total_blanco, 'totcolor': total_color,
     'ptb': precio_tblanco, 'ptc': precio_tcolor, 'pib': precio_iblanco, 'pic': precio_icolor, 'pdb': precio_dblanco, 'pdc': precio_dcolor})
-
 
 
 @login_required

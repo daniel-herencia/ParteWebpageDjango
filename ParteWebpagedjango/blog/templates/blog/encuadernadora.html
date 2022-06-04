@@ -1,0 +1,113 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-7.5">
+        <div class="container my-3">
+            <h1>ENCUADERNADORA</h1>
+            <br>
+            <center>
+            <div class="col-6">
+              <div class="content-section">
+                <h3>Saldo disponible: </h3>
+                {% if saldo > 0 %}
+                  <h3 style="color:#008000";>{{ saldo }} €</h3>
+                {% else %}
+                <h3 style="color:#FF0000";>{{ saldo }} €</h3>
+                {% endif %}
+              </div>
+            </div>
+            </center>
+            <form method="post" action="{% url 'blog-encuadernadora' %}">{% csrf_token %}
+                <table>
+                    <thead>
+                    <tr>
+                        <th style="border-radius: 10px 0px 0px 0px; font-weight: normal;">ENCUADERNADORA
+                        <th style="font-weight: normal;">ø6
+                        <th style="font-weight: normal;">ø10
+                        <th style="font-weight: normal;">ø14
+                        <th style="border-radius: 0px 10px 0px 0px; font-weight: normal;">ø20
+                    </thead>
+                    <tbody align="center">   
+                    <tr>
+                        <td style="background-color: rgb(219, 219, 219);">ESPIRAL
+                        <td><input type="number" id="e6" name="e6"
+                            min="0" max="1000">
+                        <td><input type="number" id="e10" name="e10"
+                            min="0" max="1000">       
+                        <td><input type="number" id="e14" name="e14"
+                            min="0" max="1000">
+                        <td><input type="number" id="e20" name="e20"
+                            min="0" max="1000">
+                    <tr>
+                        <td style="background-color: rgb(219, 219, 219); border-radius: 0px 0px 0px 10px;">HISTORIAL
+                        <td>{{ e6 }}
+                        <td>{{ e10 }}     
+                        <td>{{ e14 }}
+                        <td style="border-radius: 0px 0px 10px 0px;">{{ e20 }}
+                    </tbody>
+                </table>
+                <center>
+                    <h4>¿Tapa? (Historial: {{ tapas }})</h4>
+                    <select class="custom-select" style="width: 20%;" id="tapa" name='tapa' style="size=20%">
+                        <option selected value="N">No</option>
+                        <option value="S">Sí</option>
+                    </select>
+                </center>
+                <br>
+                {% if user.username == 'invitado' %}
+                  <center><button class="btn boton-parte" onclick="noAutorizado()">Guardar</button></center>
+                {% else %}
+                  <center><button type="submit" class="btn boton-parte">Guardar</button></center>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+    <div class="col-md-4.5">
+        <div class="content-section">
+            <center><h3>PRECIOS</h3></center>
+            <style type="text/css">
+                <style type="text/css">
+                    .tg  {border-collapse:collapse;border-spacing:0;}
+                    .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+                      overflow:hidden;padding:10px 5px;word-break:normal;}
+                    .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+                      font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+                    .tg .tg-cdmd{background-color:#e2e4ff;border-color:inherit;color:#330001;font-weight:bold;text-align:center;vertical-align:top}
+                    .tg .tg-5dqu{background-color:#cbcefb;border-color:inherit;color:#330001;font-weight:bold;text-align:center;vertical-align:top}
+                    .tg .tg-af47{background-color:#ffffff;border-color:inherit;color:#000000;text-align:center;vertical-align:top}
+                    </style>
+                    <table class="tg">
+                    <thead>
+                      <tr>
+                        <th class="tg-5dqu" colspan="6">ENCUADERNADORA</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="tg-cdmd" colspan="2">TAPA</td>
+                        <td class="tg-cdmd" colspan="4">ESPIRAL</td>
+                      </tr>
+                      <tr>
+                        <td class="tg-af47">N</td>
+                        <td class="tg-af47">TR</td>
+                        <td class="tg-af47">ø6</td>
+                        <td class="tg-af47">ø10</td>
+                        <td class="tg-af47">ø14</td>
+                        <td class="tg-af47">ø20</td>
+                      </tr>
+                      <tr>
+                        <td class="tg-af47">{{ precio_tapa }} €</td>
+                        <td class="tg-af47">{{ precio_tapa }} €</td>
+                        <td class="tg-af47">{{ precio_e6 }} €</td>
+                        <td class="tg-af47">{{ precio_e10 }} €</td>
+                        <td class="tg-af47">{{ precio_e14 }} €</td>
+                        <td class="tg-af47">{{ precio_e20 }} €</td>
+                      </tr>
+                    </tbody>
+                    </table>
+                    
+            </div>
+        </div>
+    </div>
+{% endblock %}

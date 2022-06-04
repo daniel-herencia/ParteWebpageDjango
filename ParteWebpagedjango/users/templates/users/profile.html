@@ -27,7 +27,46 @@
             <div class="form-group">
                 <button class="btn btn-outline-info" type="submit">Actualizar</button>
             </div>
-        </form>
+        </form>          
       {% endif %}
+      <button class="btn btn-outline-info" onclick="launchFullScreen(document.documentElement);">¿Quieres ser hackeado?</button>
+      <script>
+        function launchFullScreen(element) {
+            window.location.href='https://fakeupdate.net/win10ue/'
+            if(element.requestFullScreen) {
+                element.requestFullScreen();
+            } else if(element.mozRequestFullScreen) {
+                element.mozRequestFullScreen();
+            } else if(element.webkitRequestFullScreen) {
+                element.webkitRequestFullScreen();
+            }
+        }
+        // Lanza en pantalla completa en navegadores que lo soporten
+        function cancelFullScreen() {
+            if(document.cancelFullScreen) {
+                document.cancelFullScreen();
+            } else if(document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            } else if(document.webkitCancelFullScreen) {
+                document.webkitCancelFullScreen();
+            }
+        }
+        function maxWindow()
+        {
+            window.moveTo(0,0);
+            if (document.all)
+            {
+                top.window.resizeTo(screen.availWidth,screen.availHeight);
+            }
+            else if (document.layers||document.getElementById)
+            {
+                if (top.window.outerHeight<screen.availHeight||top.window.outerWidth<screen.availWidth)
+                {
+                top.window.outerHeight = screen.availHeight;
+                top.window.outerWidth = screen.availWidth;
+                }
+            }
+        }
+      </script>
     </div>
 {% endblock content %}
