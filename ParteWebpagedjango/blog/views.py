@@ -600,7 +600,7 @@ def Impresora(request):
             answer.denso_color = denso_color
         except Impresor.DoesNotExist:
             answer = Impresor(user=user, saldo=saldo, texto_blanco = texto_blanco, texto_color = texto_color, imagen_blanco = imagen_blanco,
-            imagen_color = imagen_color, denso_blanco = denso_blanco, denso_color = denso_color, e6=e6, e10=e10, e14=e14, e20=20, tapas=tapas)
+            imagen_color = imagen_color, denso_blanco = denso_blanco, denso_color = denso_color, e6=e6, e10=e10, e14=e14, e20=e20, tapas=tapas)
         answer.save() #guarda la nueva respuesta en la base de datos
         total_blanco = texto_blanco*precio_tblanco + imagen_blanco*precio_iblanco + denso_blanco*precio_dblanco
         total_color = texto_color*precio_tcolor + imagen_color*precio_icolor + denso_color*precio_dcolor 
@@ -1409,6 +1409,7 @@ def Imprimir(request):
                         html_message = render_to_string('blog/mailparte.html', {'context': context})
                         plain_message = strip_tags(html_message)
                         from_email = EMAIL_HOST_USER
+                        #from_email = 'noreply@partebcn.com'
                         to = destinatario
                         mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)
                     except Comensal.DoesNotExist:

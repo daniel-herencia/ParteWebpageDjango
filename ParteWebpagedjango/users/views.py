@@ -4,6 +4,8 @@ from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 from ParteWebpagedjango.settings import SECURITY_CODE, EMAIL_HOST_USER
 from django.core.mail import send_mail
 from django.utils.html import strip_tags
+from django.core.exceptions import PermissionDenied # Avoid accessing via url to register
+
 
 
 def codigoseguridad(request):
@@ -37,16 +39,19 @@ def codigoseguridad(request):
         return render(request, 'users/codigoseguridad.html')
 
 def register(request):
-    if request.method == 'POST':
-        form = UserRegisterForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            return redirect('login')
-    else:
-        form = UserRegisterForm()
-    return render(request, 'users/register.html', {'form': form})
-
+    # SOLO SE PUEDE ACCEDER DESPUÉS DE HABER INTRODUCIDO EL CÓDIGO DE SEGURIDAD (POR REDIRECCIÓN, NO POR URL)
+    if (request.META.get('HTTP_REFERER') == 'http://localhost:8000/codigoseguridad/' or request.META.get('HTTP_REFERER') == 'http://localhost:8000/register/' or request.META.get('HTTP_REFERER') == 'https://partebarcelona.pythonanywhere.com/codigoseguridad/' or request.META.get('HTTP_REFERER') == 'https://partebarcelona.pythonanywhere.com/register/'):
+    #if request.META.get('HTTP_REFERER') == 'http://localhost:8000/codigoseguridad/':
+        if request.method == 'POST':
+            form = UserRegisterForm(request.POST)
+            if form.is_valid():
+                form.save()
+                username = form.cleaned_data.get('username')
+                return redirect('login')
+        else:
+            form = UserRegisterForm()
+        return render(request, 'users/register.html', {'form': form})
+    return redirect('codigoseguridad') # redirected to security code
 
 @login_required     #To avoid not login users to enter in a profile directly with the link
 def profile(request):
