@@ -1308,10 +1308,6 @@ def parte_to_pdf2(request):
     for com in Comensal.objects.all():
         usuario = com.user.username
         tipo = com.opciones
-        if tipo == 'Enfermo':
-            enfermo = True
-        if tipo == 'Blando':
-            blando = True
 
         if num_day == 0:
             dia1 = com.L
@@ -1352,6 +1348,15 @@ def parte_to_pdf2(request):
         if dia2.d == 'Normal':
             contadores[tipo][4] = contadores[tipo][4] + 1
             totales[4] += 1
+
+        if ((dia1.l == '-') and (dia1.d == '-') and (dia2.b == '-') and (dia2.l == '-') and (dia2.d == '-')):
+            tipo = 'Normal'
+        
+        if tipo == 'Enfermo':
+            enfermo = True
+        elif tipo == 'Blando':
+            blando = True
+        
 
         var = [usuario, dia1, dia2, tipo]
         variables.append(var)

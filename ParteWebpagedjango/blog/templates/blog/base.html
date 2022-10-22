@@ -72,7 +72,31 @@
                   <a class="menuheader mr-4" href="{% url 'blog-deporte' %}">Deporte</a>
                   <a class="menuheader mr-4" href="{% url 'blog-enlaces' %}">Enlaces</a>
                   <a class="menuheader mr-4" href="{% url 'blog-recursos' %}">Recursos</a>
-                  <a class="menuheader mr-4" href="{% url 'blog-impresora' %}">Impresora</a>
+                  <!-- <a class="menuheader mr-4" href="{% url 'blog-impresora' %}">Impresora</a>-->
+                  <!--<div class="dropdown">
+                    <button type="button" class="mr-4 btn btn-secondary dropdown-toggle menuheader" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Imprimir</button>
+                    <div class="dropdown-content">
+                      <a href="{% url 'blog-impresora' %}">Impresora</a>
+                      <a href="{% url 'blog-encuadernadora' %}">Encuadernadora</a>
+                    </div>
+                  </div>-->
+                  <div class="dropdown">
+                    <button type="button" class="mr-4 btn btn-secondary2 dropdown-toggle menuheader" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Imprimir</button>
+                    <div class="dropdown-content2">
+                      <a href="{% url 'blog-impresora' %}">Impresora</a></li>
+                      <a href="{% url 'blog-encuadernadora' %}">Encuadernadora</a></li>
+                    </div>
+                  </div>
+                  <!--
+                  <ul class="menu cf">
+                    <li>
+                      <a>Imprimir</a>
+                      <ul class="submenu">
+                        <li><a href="{% url 'blog-impresora' %}">Impresora</a></li>
+                        <li><a href="{% url 'blog-encuadernadora' %}">Encuadernadora</a></li>
+                      </ul>	
+                    </li>
+                  </ul>-->
                   <!--<a class="menuheader mr-4" href="{% url 'blog-metaverso' %}">Metaverso</a>-->
                   <div class="dropdown">
                     <button type="button" class="mr-4 btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <img class="rounded-circle article-img" src="{{ user.profile.image.url }}"></button>

@@ -55,6 +55,22 @@ body {
     display: inline-block;
   }
 
+  .btn-secondary2{
+    margin-left: -20px;
+    background-color: #9CB4B3;
+    box-shadow: none;
+    border: none;
+    color: white;
+    padding: 5px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-secondary:hover{
+    background-color: #9CB4B3;
+    box-shadow: none;
+  }
   /*Cuando pasas el ratón por encima del botón de usuario en la navigation bar*/
   .btn-secondary:hover{
     background-color: #97c9c6;
@@ -96,7 +112,8 @@ body {
 
   .menuheader:hover{
     color: #ececec;
-    font-size: 140%;
+    /*background: #3ab3b8;*/
+    /*font-size: 140%;*/ /*Para que salte*/
     box-shadow: inset 0 -3px 0 0 rgb(255, 255, 255);
     box-shadow: none;
     text-decoration:none;
@@ -170,7 +187,17 @@ body {
   display: none;
   position: absolute;
   background-color: #f1f1f1;
-  min-width: 160px;
+  min-width: 150px;
+  box-shadow: 0px 7% 10% 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content2 {
+  display: none;
+  position: absolute;
+  margin-top: 1rem;
+  background-color: #f1f1f1;
+  min-width: 150px;
   box-shadow: 0px 7% 10% 0px rgba(0,0,0,0.2);
   z-index: 1;
 }
@@ -183,14 +210,28 @@ body {
   display: block;
 }
 
+.dropdown-content2 a {
+  color: black;
+  padding: 7% 10%;
+  text-decoration: none;
+  display: block;
+}
+
 /* Change color of dropdown links on hover */
 .dropdown-content a:hover {background-color: #ddd;}
 
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {display: block;}
 
+/* Change color of dropdown links on hover */
+.dropdown-content2 a:hover {background-color: #ddd;}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content2 {display: block;}
+
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {background-color: #3e8e41;}
+
 
 
 
@@ -795,6 +836,142 @@ input[type=number]::-webkit-outer-spin-button {
 
 .imagenborrosa:hover {filter: blur(5px);}
 
+
+
+/* SPECIAL DROPDOWN IMPRESORA */
+
+
+/* Mini reset, no margins, paddings or bullets *//*
+.menu,
+.submenu {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: #ffffff;
+
+}*/
+
+/* Main level *//*
+.menu {			
+  width: 800px;
+  height: 100px;
+  width: -moz-fit-content;
+  width: -webkit-fit-content;
+  width: fit-content;
+  color: #ffffff;
+
+}
+
+.menu > li {
+  float: left;
+  position: relative;
+  transform: skewX(25deg);
+}
+
+.menu a {
+  font-family: 'fuente-header2';
+  display:inline-block;
+  padding-top: 3vh; 
+  font-size: 130%;
+  color: #ffffff;
+}
+
+.menu li:hover {
+  color: #ececec;
+}		
+
+.menu > li > a {
+  transform: skewX(-25deg);
+  display: inline-block;
+}
+
+.submenu {
+  position: absolute;
+  width: 170px;
+  left: 50%; margin-left: -70px;
+  transform: skewX(-25deg);
+  transform-origin: left top;
+}
+
+.submenu li {
+  background-color: #f1f1f1;
+  position: relative;
+  overflow: hidden;		
+}						
+
+.submenu li:hover{
+  background-color: #ddd;
+}
+
+.submenu > li > a {
+  padding: 1em 2em;
+  font-size: 100%;
+  color: #000000;
+  text-decoration: none;
+}
+
+.submenu > li::after {
+  content: '';
+  position: absolute;
+  top: -125%;
+  height: 100%;
+  width: 100%;			
+}		*/
+
+/* Odd stuff *//*
+.submenu > li:nth-child(odd){
+  transform: skewX(-25deg) translateX(0);
+}
+
+.submenu > li:nth-child(odd) > a {
+  transform: skewX(25deg);
+}
+
+.submenu > li:nth-child(odd)::after {
+  right: -50%;
+  transform: skewX(-25deg) rotate(3deg);
+}				*/
+
+/* Even stuff *//*
+.submenu > li:nth-child(even){
+  transform: skewX(25deg) translateX(0);
+}
+
+.submenu > li:nth-child(even) > a {
+  transform: skewX(-25deg);
+}
+
+.submenu > li:nth-child(even)::after {
+  left: -50%;
+  transform: skewX(25deg) rotate(3deg);
+}*/
+
+/* Show dropdown *//*
+.submenu,
+.submenu li {
+  opacity: 0;
+  visibility: hidden;			
+}
+
+.submenu li {
+  transition: .2s ease transform;
+}
+
+.menu > li:hover .submenu,
+.menu > li:hover .submenu li {
+  opacity: 1;
+  visibility: visible;
+}		
+
+.menu > li:hover .submenu li:nth-child(even){
+  transform: skewX(25deg) translateX(15px);			
+}
+
+.menu > li:hover .submenu li:nth-child(odd){
+  transform: skewX(-25deg) translateX(-15px);			
+}
+
+*/
 
 /*METAVERSO*/
 /*

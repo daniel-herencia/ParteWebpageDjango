@@ -6,20 +6,6 @@
     <div class="col-md-7.5">
         <div class="container my-3">
             <h1>IMPRESORA</h1>
-            <br>
-            <center>
-            <div class="col-6">
-              <div class="content-section">
-                <h3>Saldo disponible: </h3>
-                {% if saldo > 0 %}
-                  <h3 style="color:#008000";>{{ saldo }} €</h3>
-                {% else %}
-                <h3 style="color:#FF0000";>{{ saldo }} €</h3>
-                {% endif %}
-              </div>
-            </div>
-            </center>
-            <br>
             <center><h4>IMPRESIONES NUEVAS</h4></center>
             <form method="post" action="{% url 'blog-impresora' %}">{% csrf_token %}
                 <table>
@@ -59,8 +45,8 @@
                   <center><button type="submit" class="btn boton-parte">Guardar</button></center>
                 {% endif %}
             </form>
-            <br><br>
-            <center><h4>IMPRESIONES TOTALES</h4></center>
+            <br>
+            <center><h4>IMPRESIONES TOTALES</h4>
                 <table>
                     <thead>
                     <tr>
@@ -84,13 +70,13 @@
                         <td>{{ dcolor }}
                         <td>{{ totcolor }} €
                     </tbody>
-                </table>
-            <br>
+                </table></center>
         </div>
     </div>
     <div class="col-md-4.5">
+      <br><br>
         <div class="content-section">
-            <h3>PRECIOS</h3>
+            <center><h3>PRECIOS</h3></center>
             <style type="text/css">
               .tg  {border-collapse:collapse;border-spacing:0;}
               .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
@@ -142,6 +128,19 @@
               <br>
               <center><button onclick="launchFullScreen2(document.documentElement);" class="btn boton-parte"> Donar a Russia </button></center>-->              
         </div>
+        <br>
+        <center>
+        <div class="col-10">
+          <div class="content-section">
+            <h3>Saldo disponible: </h3>
+            {% if saldo > 0 %}
+              <h3 style="color:#008000";>{{ saldo }} €</h3>
+            {% else %}
+            <h3 style="color:#FF0000";>{{ saldo }} €</h3>
+            {% endif %}
+          </div>
+        </div>
+        </center>
     </div>
 </div>
 <script>

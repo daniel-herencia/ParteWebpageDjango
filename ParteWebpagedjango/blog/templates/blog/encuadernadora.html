@@ -6,18 +6,6 @@
         <div class="container my-3">
             <h1>ENCUADERNADORA</h1>
             <br>
-            <center>
-            <div class="col-6">
-              <div class="content-section">
-                <h3>Saldo disponible: </h3>
-                {% if saldo > 0 %}
-                  <h3 style="color:#008000";>{{ saldo }} €</h3>
-                {% else %}
-                <h3 style="color:#FF0000";>{{ saldo }} €</h3>
-                {% endif %}
-              </div>
-            </div>
-            </center>
             <form method="post" action="{% url 'blog-encuadernadora' %}">{% csrf_token %}
                 <table>
                     <thead>
@@ -64,6 +52,7 @@
         </div>
     </div>
     <div class="col-md-4.5">
+      <br><br>
         <div class="content-section">
             <center><h3>PRECIOS</h3></center>
             <style type="text/css">
@@ -108,6 +97,18 @@
                     </table>
                     
             </div>
+            <center>
+              <div class="col-10">
+                <div class="content-section">
+                  <h3>Saldo disponible: </h3>
+                  {% if saldo > 0 %}
+                    <h3 style="color:#008000";>{{ saldo }} €</h3>
+                  {% else %}
+                  <h3 style="color:#FF0000";>{{ saldo }} €</h3>
+                  {% endif %}
+                </div>
+              </div>
+              </center>
         </div>
     </div>
 {% endblock %}
