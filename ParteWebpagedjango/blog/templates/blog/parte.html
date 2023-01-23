@@ -9,7 +9,12 @@
             <option value="Dieta">Dieta</option>
             <option value="Enfermo">Enfermo</option>
             <option value="Blando">Blando</option>
-        </select>
+        </select>&nbsp;&nbsp;
+        {% if user.username == 'invitado' %}
+            <button class="btn boton-parte" value="tachar" name="tachar" onclick="noAutorizado()">Tachar todo</button>
+        {% else %}
+            <button type="submit" class="btn boton-parte" value="tachar" name="tachar">Tachar todo</button>
+        {% endif %}
         <table>
             <thead>
             <tr>

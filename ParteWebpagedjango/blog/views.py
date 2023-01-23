@@ -127,8 +127,18 @@ def Parte(request):
         vari[5] = ['-','-','-','-']
         vari[6] = ['-','-','-','-']
     if request.method=="POST" and request.user.username != 'invitado':
-        for i in range(7):
-            vari[i]=[request.POST.get(etiquetas[i][0],''),request.POST.get(etiquetas[i][1],''),request.POST.get(etiquetas[i][2],''),request.POST.get(etiquetas[i][3],'')]
+        if request.POST.get("tachar"):
+            vari[0] = ['-','-','-','-']
+            vari[1] = ['-','-','-','-']
+            vari[2] = ['-','-','-','-']
+            vari[3] = ['-','-','-','-']
+            vari[4] = ['-','-','-','-']
+            vari[5] = ['-','-','-','-']
+            vari[6] = ['-','-','-','-']
+        else:
+            for i in range(7):
+                vari[i]=[request.POST.get(etiquetas[i][0],''),request.POST.get(etiquetas[i][1],''),request.POST.get(etiquetas[i][2],''),request.POST.get(etiquetas[i][3],'')]
+        
         ops = request.POST.get('opciones','')
         
         L = Dia1(b=vari[0][0],l=vari[0][1],d=vari[0][2],m=vari[0][3])
@@ -229,10 +239,20 @@ def Modificar(request):
                     vari[4] = ['-','-','-','-']
                     vari[5] = ['-','-','-','-']
                     vari[6] = ['-','-','-','-']
-            elif request.POST.get("guardar"):
+            else: #elif request.POST.get("guardar"):
                 user = request.POST.get('selectuser','')
-                for i in range(7):
-                    vari[i]=[request.POST.get(etiquetas[i][0],''),request.POST.get(etiquetas[i][1],''),request.POST.get(etiquetas[i][2],''),request.POST.get(etiquetas[i][3],'')]
+                if request.POST.get("tachar"):
+                    vari[0] = ['-','-','-','-']
+                    vari[1] = ['-','-','-','-']
+                    vari[2] = ['-','-','-','-']
+                    vari[3] = ['-','-','-','-']
+                    vari[4] = ['-','-','-','-']
+                    vari[5] = ['-','-','-','-']
+                    vari[6] = ['-','-','-','-']
+                else:
+                    for i in range(7):
+                        vari[i]=[request.POST.get(etiquetas[i][0],''),request.POST.get(etiquetas[i][1],''),request.POST.get(etiquetas[i][2],''),request.POST.get(etiquetas[i][3],'')]
+                
                 ops = request.POST.get('opciones','')
                 
                 L = Dia1(b=vari[0][0],l=vari[0][1],d=vari[0][2],m=vari[0][3])
@@ -293,7 +313,7 @@ def Inicio(request):
     context = {
         'users': User.objects.all()
     }
-    return render(request, 'blog/inicio.html', context)
+    return render(request, 'blog/inicio2.html', context)
 
 @login_required 
 def Enlaces(request):
