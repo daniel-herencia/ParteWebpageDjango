@@ -313,7 +313,7 @@ def Inicio(request):
     context = {
         'users': User.objects.all()
     }
-    return render(request, 'blog/inicio2.html', context)
+    return render(request, 'blog/inicio3.html', context)
 
 @login_required 
 def Enlaces(request):

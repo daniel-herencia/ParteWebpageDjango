@@ -1,0 +1,101 @@
+
+{% extends "blog/base.html" %}
+{% block content %}
+    {% if user.is_authenticated %}
+        <div class="row">
+            <div class="col-md-8">               
+                <h1>BIENVENIDO!!!</h1>
+                <p>Bienvenido a la nueva página del piso de Barcelona. Aquí encontrarás todo lo que necesitas para tu estancia.
+                    Cualquier error que detectes en la página web, repórtalo a los encargados. También 
+                    se admiten sugerencias. Para empezar simplemente tienes que crearte un usuario y si quieres puedes añadir
+                    una foto de perfil.</p>
+                <div id="cf">
+                    <img class="bottom" width="100%" height="auto" src="media/background/init2.png">
+                    <img class="top" width="100%" height="auto" src="media/background/init1.png">
+                </div>
+                <br>
+                <p class="bottom-three"></p>
+                <h3>Usuarios:</h3>
+                {% for use in users %}
+                    <img class="rounded-circle init-img" src="{{ use.profile.image.url }}">
+                <!--        <p>{{ user.username }} </p>-->
+                {% endfor %}
+                <a href="{% url 'blog-animation' %}">
+                <img class="rounded-circle init-img" src="media/imagen-no-disponible.jpg"></a>
+                <!--<svg viewBox="0 0 960 300">-->
+                <!-- LETRAS DE BARCELONA QUE SE MUEVEN -->
+                <!--<svg viewBox="0 0 100vw 25%">
+                    <symbol id="s-text">
+                    <text text-anchor="start" x="0%" y="60%">BARCELONA</text>
+                    <text text-anchor="start" x="2%" y="60%">BARCELONA</text>      
+                    </symbol>
+            
+                    <g class = "g-ants">
+                    <use xlink:href="#s-text" class="text-copy"></use>
+                    <use xlink:href="#s-text" class="text-copy"></use>
+                    <use xlink:href="#s-text" class="text-copy"></use>
+                    <use xlink:href="#s-text" class="text-copy"></use>
+                    <use xlink:href="#s-text" class="text-copy"></use>
+                    </g>
+                </svg>-->
+                <br>
+                <p class="bottom-three"></p>
+                <br>
+                <p class="bottom-three"></p>
+                <br>
+                <!--
+                <p>Empleado del mes:</p>
+                <br>
+                <img class="especial-imagen" src="../media/profile_pics/EmpleadoDelMes.jpg">-->
+            </div>
+            <div class="col-md-4">
+                <div class="content-section">
+                <h3>Actualizaciones</h3>
+                <p class='text-muted'> <b>22/10/2022:</b>
+                    <ul class="list-group">
+                        <li class="list-group-item list-group-item-light">Impresora acabada 🖨️​</li>
+                        <li class="list-group-item list-group-item-light">Encuadernadora acabada 📒​</li>
+                        <li class="list-group-item list-group-item-light">Nuevo desplegable 🔽​</li>
+                        <li class="list-group-item list-group-item-light">Nuevo parte comedor 🍽️​</li>
+                        <li class="list-group-item list-group-item-light">Enlaces corregidos y nuevo enlace 🌐​</li>
+                        <a href="{% url 'blog-metaverso' %}" style="text-decoration: none;">
+                        <li class="list-group-item list-group-item-light">3 Easter Eggs ¿Sabrás encontrarlos? 🧐​</li></a>  
+                    </ul>
+                </p><!--
+                <h3>Próximamente</h3>
+                <p class='text-muted'> 
+                    <ul class="list-group">
+                        <li class="list-group-item list-group-item-light">Página web impresora</li>
+                        <li class="list-group-item list-group-item-light">Pagos de impresora con criptomonedas</li>
+                        <li class="list-group-item list-group-item-light">Donaciones: 0xc1D5a637C8B1e677c42aF7ad<br>891aA6e36Ff1E716</li>
+                    </ul>
+                </p>-->
+                </div>
+            </div>
+        </div>
+    {% else %}
+      </main>
+        <div class="video_section">
+            <video class="w-100" autoplay loop muted>
+            <source src="/media/Videos/init.mp4" type="video/mp4" />
+            </video>
+            <div class="img_over_video" style="text-align: center;">
+            <img src="/media/Logo/apple-icon-180x180.png">
+            <h2>PISO BARCELONA</h2>
+            <h3>REFLEXIÓN  |  ESTUDIO  |  DEPORTE  |  AMISTAD  |  VIDA</h3>
+            <a href="#about" class="img_over_video_button scrollto">Empezar</a>
+            <h6>Solo Se Ve Bien Con El Corazón... <br>Lo Esencial Es Invisible A Los Ojos</h6>
+            </div>
+        </div>
+        
+        
+        <div class="divider_section" style="">
+            <div class="botom_divider" style=""></div>
+        </div>
+        <div class="divider_section" style="">
+            <div class="top_divider" style=""></div>
+        </div>
+        <main role="main" class="container">
+    {% endif %}
+
+{% endblock content %}

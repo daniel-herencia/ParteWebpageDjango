@@ -18,8 +18,15 @@ body {
     font-family: 'fuente-titulo';
   }
 
-  h2, h3, h4, h5, h6 {
+  h2, h3, h4, h5 {
     color: #444444;
+  }
+  h6 {
+    font-family: 'Nothing You Could Do', sans-serif;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 2em;
+    color: #a5f7fd;
   }
   
   ul {
@@ -838,6 +845,195 @@ input[type=number]::-webkit-outer-spin-button {
 
 
 
+
+
+/* INIT PAGE VIDEO SECTION */
+
+
+/* CONTENEDOR VIDEO */
+
+.video_section {
+  margin-top: 0px;
+  background-size: cover;
+  height: 550px;
+}
+
+.video_section video {
+  height: 550px;
+  width: cover;
+  object-fit: cover;
+  
+}
+
+/* Si la pantalla es menor de 767 px, se muestra una foto en lugar de un video */
+@media (max-width: 767px) {
+  .video_section {
+    background-image: url("/media/Videos/no_video.jpg");
+    height: 500px;
+    background-position: center;
+    resize: vertical horizontal;
+  }
+  .video_section video {
+    display: none;
+  }
+}
+
+.img_over_video {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.img_over_video img {
+  width: 100px;
+  height: auto;
+  margin-bottom: 5%;
+}
+
+.img_over_video h2 {
+  font-family: 'Josefin Sans',Helvetica,Arial,Lucida,sans-serif;
+  font-weight: 700;
+  font-size: 36px;
+  color: #ffffff!important;
+  letter-spacing: 20px;
+  text-align: center;
+}
+
+.img_over_video h3 {
+  font-family: 'Josefin Sans',Helvetica,Arial,Lucida,sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 16px;
+  color: #66ede6!important;
+  letter-spacing: 1px;
+  line-height: 1.4em;
+  margin-bottom: 5%;
+}
+
+.img_over_video h6 {
+  font-size: 24px;
+  color: #ffffff!important;
+  margin-top: 5%;
+}
+
+@media (max-width: 767px){
+.img_over_video {
+  top: 50%;
+}
+.img_over_video h2 {
+    font-size: 20px;
+    letter-spacing: 16px;
+}
+}
+
+@media (max-width: 980px){
+.img_over_video {
+  top: 35%;
+}
+.img_over_video img {
+  width: 100px;
+}
+.img_over_video h2 {
+  font-size: 26px;
+}
+.img_over_video h3 {
+    /*font-size: 14px;*/
+    display: none;
+}
+.img_over_video h6 {
+  /*font-size: 16px;*/
+  display: none;
+}
+}
+
+
+.img_over_video_button {
+  color: #ffffff!important;
+  border-width: 0px!important;
+  border-color: rgba(0,0,0,0);
+  border-radius: 4px;
+  letter-spacing: 5px;
+  font-size: 14px;
+  font-family: 'Roboto',Helvetica,Arial,Lucida,sans-serif!important;
+  font-weight: 700!important;
+  text-transform: uppercase!important;
+  background-color: #ff0080;
+  padding-top: 17px!important;
+  padding-right: 34px!important;
+  padding-bottom: 17px!important;
+  padding-left: 34px!important;
+  
+  line-height: 1.7em!important;
+  background-size: cover;
+  background-position: 50%;
+  background-repeat: no-repeat;
+  border: 2px solid;
+  -webkit-transition: all .2s;
+  transition: all .2s;
+}
+/*
+@media (max-width: 991px) {
+  .video_section {
+    background-image: url("../img/hero-bg.jpg");
+  }
+  .video_section video {
+    display: none;
+  }
+}
+@media (max-width: 574px) {
+  .video_section {
+    background-image: url("../img/hero-bg.jpg");
+  }
+  .video_section video {
+    display: none;
+  }
+}
+*/
+
+/* TOP AND BOTTOM DIVIDERS*/
+
+.divider_section {
+  /*padding-top: 75px;
+  margin-top: 28px;
+  padding: 4% 0;*/
+  position: relative;
+  background-color: #fff;
+  background-position: 50%;
+  background-size: 100%;
+  background-size: cover;
+}
+
+.botom_divider {
+  background-image: url('/media/dividers/bottom_divider.svg');
+  background-size: 100% 90px;
+  bottom: 0;
+  height: 90px;
+  z-index: 1;
+  margin-bottom: -1px;
+  display: block;
+  position: absolute;
+  pointer-events: none;
+  width: 100%;
+}
+
+.top_divider {
+  background-image: url('/media/dividers/top_divider.svg');
+  background-size: 100% 100px;
+  top: 0;
+  height: 100px;
+  z-index: 1;
+  margin-top: -1px;
+  display: block;
+  position: absolute;
+  pointer-events: none;
+  width: 100%;
+}
+
+
+
+
+
 /* SPECIAL DROPDOWN IMPRESORA */
 
 
@@ -1032,6 +1228,7 @@ ul.new {
 
 /*CASTILLO METAVERSO*/
 
+/*
 #MonValley #BrightDoor {
   transition: all 0.3s ease-in-out;
   opacity:0;
@@ -1133,6 +1330,7 @@ ul.new {
 #MonValley:hover #Step13 {
   transform: translate(0px, 0px);
 }
+*/
 
 /*AMAZING IMAGE EFFECT METAVERSE*/
 /*
