@@ -757,7 +757,8 @@ def parte_to_pdf(request):
         'Fiambrera': [],
         'Bocadillo-Ans': [],
         'BocadilloPeq-Ans': [],
-        'BocCenaPeq': []
+        'BocCenaPeq': [],
+        'BocCena': []
     }
     #ENFERMOS
     desayunoE = {
