@@ -65,9 +65,10 @@ class Deportista(models.Model):
     #user = models.OneToOneField(User, on_delete=models.CASCADE)
     observaciones = models.CharField(max_length=150, default="")
     dxt = models.CharField(max_length=1, default="N")
+    tipo = models.CharField(max_length=1, default="B")
 
     def __str__(self):
-        texto = self.user.username + " : " + self.dxt
+        texto = self.user.username + " : " + self.dxt + " - " + self.tipo
         return texto
 
 class Dia1(models.Model):

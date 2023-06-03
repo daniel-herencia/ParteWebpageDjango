@@ -432,26 +432,30 @@ def deportista(request):
     try:    #Para obtener la respuesta anterior si la hay
         answer = Deportista.objects.get(user=user)    #query para sacar la respuesta anterior
         dxt=answer.dxt
+        tipo=answer.tipo
     except Deportista.DoesNotExist:
         dxt='O'
+        tipo='O'
     #Si se ha enviado una respuesta nueva:
     if request.method=="POST" and request.user.username != 'invitado':  
         observaciones = request.POST.get('observaciones', '')
         dxt = request.POST.get('respuesta','')
+        tipo = request.POST.get('tipo','')
         #Si por algun motivo hubiera dos respuestas de un mismo usuario seguramente petaria
         try:
             answer = Deportista.objects.get(user=user)    #query para sacar la respuesta anterior
             answer.observaciones=observaciones
             answer.dxt=dxt
+            answer.tipo=tipo
         except Deportista.DoesNotExist:
-            answer = Deportista(user=user, observaciones=observaciones, dxt=dxt)
+            answer = Deportista(user=user, observaciones=observaciones, dxt=dxt, tipo=tipo)
         answer.save() #guarda la nueva respuesta en la base de datos
     try:
         diad = VariablesGlobales.objects.get()
         diadxt = diad.diadxt
     except VariablesGlobales.DoesNotExist:
         diadxt = 6
-    return render(request, 'blog/deporte.html', {'dxt': dxt, 'title': 'Deporte', 'dia': dias[diadxt]})
+    return render(request, 'blog/deporte.html', {'dxt': dxt, 'title': 'Deporte', 'dia': dias[diadxt], 'tipo': tipo})
 
 @login_required
 def Animation(request):

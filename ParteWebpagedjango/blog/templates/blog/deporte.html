@@ -29,6 +29,26 @@
                         {% endif %}
                     </div>
                     <br>
+                    <div class="input-group">
+                        {% if tipo == 'B' %}
+                            <select class="custom-select" id="inputGroupSelect04" name='tipo'>
+                                <option selected value="B">Baloncesto</option>
+                                <option value="F">Fútbol</option>
+                            </select>
+                        {% elif tipo == 'F'%}
+                            <select class="custom-select" id="inputGroupSelect04" name='tipo'>
+                                <option value="B">Baloncesto</option>
+                                <option selected value="F">Fútbol</option>
+                            </select>
+                        {% else %}
+                            <select class="custom-select" id="inputGroupSelect04" name='tipo'>
+                                <option selected>-- Selecciona un deporte --</option>
+                                <option value="B">Baloncesto</option>
+                                <option value="F">Fútbol</option>
+                            </select>
+                        {% endif %}
+                    </div>
+                    <br>
                     <div class="form-group">
                         <label for="name">Observaciones:</label>
                         <input type="text" class="form-control" id="name" name='observaciones' placeholder="Escribe aquí si tienes algo importante a tener en cuenta">
