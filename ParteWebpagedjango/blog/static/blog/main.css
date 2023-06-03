@@ -7,8 +7,18 @@ body {
     background: url(/media/background/back.png) no-repeat center center fixed;
     background-size: cover;
     color: #333333;
-    /*margin-top: 12vh;*/
+    margin-top: 12vh;
+    /*padding-top: 18vh; *//*Margen superior*/
+    /*margin: 0;*/
+    /*padding: 0;*/
+  }
+
+  .special-content {
+    /* Styles specific to the special content body for the video*/
+    margin-top: -12vh; /*Margen superior*/
     padding-top: 18vh; /*Margen superior*/
+    /*margin: 0;*/
+    /*padding: 0;*/
   }
   
   /*<h1> del html*/
@@ -854,6 +864,7 @@ input[type=number]::-webkit-outer-spin-button {
 
 .video_section {
   margin-top: 0px;
+  padding-top: 0px;
   background-size: cover;
   height: 550px;
 }
@@ -868,6 +879,8 @@ input[type=number]::-webkit-outer-spin-button {
 /* Si la pantalla es menor de 767 px, se muestra una foto en lugar de un video */
 @media (max-width: 767px) {
   .video_section {
+    margin-top: 0px;
+    padding-top: 0px;
     background-image: url("/media/Videos/no_video.jpg");
     height: 500px;
     background-position: center;

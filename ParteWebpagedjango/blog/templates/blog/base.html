@@ -47,6 +47,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
 </head>
+
 <body>
     <!-- Upper part of the webpage (tab selection) -->
     <header class="site-header">
@@ -130,10 +131,14 @@
             <!--<div class='header-overlay'> </div>-->
         </nav>
       </header>
-
-    <!-- Sidebar of the webpage -->
     <main role="main" class="container">
-      {% block content %}{% endblock %}
+      {% if not user.is_authenticated %}
+        {% block content2 %}{% endblock content2 %}
+      {% else %}
+        <div class="special-content">
+          {% block content %}{% endblock content %}
+        </div>
+      {% endif %}
     </main>
       <!--FUNCTION TO INCREASE OPACITY WHILE SCROLLING
       <script>

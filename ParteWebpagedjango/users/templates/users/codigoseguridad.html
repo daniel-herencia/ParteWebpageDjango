@@ -1,31 +1,33 @@
 {% extends "blog/base.html" %}
-{% block content %}
-    <div class="content-section">
-        <form method="POST">
-            {% csrf_token %}
-            <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Introduce el código de seguridad</legend>
+{% block content2 %}
+    <div class="special-content">
+        <div class="content-section">
+            <form method="POST">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">Introduce el código de seguridad</legend>
+                    <div class="form-group">
+                        <label for="name">Código:</label>
+                        <input type="text" class="form-control" id="codigo" name='codigo' placeholder="Ej: 0123456789">
+                    </div>
+                </fieldset>
                 <div class="form-group">
-                    <label for="name">Código:</label>
-                    <input type="text" class="form-control" id="codigo" name='codigo' placeholder="Ej: 0123456789">
+                    <label for="name">Nombre completo:</label>
+                    <input type="text" class="form-control" id="nombre" name='nombre' placeholder="Ej: José Soto Chuliá">
                 </div>
-            </fieldset>
-            <div class="form-group">
-                <label for="name">Nombre completo:</label>
-                <input type="text" class="form-control" id="nombre" name='nombre' placeholder="Ej: José Soto Chuliá">
+                <div class="form-group">
+                    <button class="btn btn-outline-info" type="submit">Enviar</button>
+                </div>
+            </form>
+            <div class="border-top pt-3">
+                <small class="text-muted">
+                    ¿Ya Tienes Una Cuenta? <a class="ml-2" href="{% url 'login' %}">Iniciar Sesión</a>
+                </small>
+                <br>
+                <small class="text-muted">
+                    ¿No sabes el código? Contacta con los encargados
+                </small>
             </div>
-            <div class="form-group">
-                <button class="btn btn-outline-info" type="submit">Enviar</button>
-            </div>
-        </form>
-        <div class="border-top pt-3">
-            <small class="text-muted">
-                ¿Ya Tienes Una Cuenta? <a class="ml-2" href="{% url 'login' %}">Iniciar Sesión</a>
-            </small>
-            <br>
-            <small class="text-muted">
-                 ¿No sabes el código? Contacta con los encargados
-            </small>
         </div>
     </div>
-{% endblock content %}
+{% endblock content2 %}

@@ -1,25 +1,27 @@
 {% extends "blog/base.html" %}
 {% load crispy_forms_tags %}
-{% block content %}
-    <div class="content-section">
-        <form method="POST">
-            {% csrf_token %}
-            <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Iniciar Sesión</legend>
-                {{ form|crispy }}
-            </fieldset>
-            <div class="form-group">
-                <button class="btn btn-outline-info" type="submit">Iniciar Sesión</button>
-                <small class="text-muted ml-2">
-                    <!--<a href="#">Has Olvidado La Contraseña?</a>-->
-                    <a href="{% url 'password_reset' %}">¿Has Olvidado La Contraseña?</a>
-                </small>    
+{% block content2 %}
+    <div class="special-content">
+        <div class="content-section">
+            <form method="POST">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">Iniciar Sesión</legend>
+                    {{ form|crispy }}
+                </fieldset>
+                <div class="form-group">
+                    <button class="btn btn-outline-info" type="submit">Iniciar Sesión</button>
+                    <small class="text-muted ml-2">
+                        <!--<a href="#">Has Olvidado La Contraseña?</a>-->
+                        <a href="{% url 'password_reset' %}">¿Has Olvidado La Contraseña?</a>
+                    </small>    
+                </div>
+            </form>
+            <div class="border-top pt-3">
+                <small class="text-muted">
+                    ¿Necesitas Una Cuenta? <a class="ml-2" href="{% url 'codigoseguridad' %}">Registrarse Ahora</a>
+                </small>
             </div>
-        </form>
-        <div class="border-top pt-3">
-            <small class="text-muted">
-                ¿Necesitas Una Cuenta? <a class="ml-2" href="{% url 'codigoseguridad' %}">Registrarse Ahora</a>
-            </small>
         </div>
     </div>
-{% endblock content %}
+{% endblock content2 %}

@@ -7,8 +7,18 @@ body {
     background: url(/media/background/back.png) no-repeat center center fixed;
     background-size: cover;
     color: #333333;
-    /*margin-top: 12vh;*/
+    margin-top: 12vh;
+    /*padding-top: 18vh; *//*Margen superior*/
+    /*margin: 0;*/
+    /*padding: 0;*/
+  }
+
+  .special-content {
+    /* Styles specific to the special content body for the video*/
+    margin-top: 0vh; /*Margen superior*/
     padding-top: 18vh; /*Margen superior*/
+    /*margin: 0;*/
+    /*padding: 0;*/
   }
   
   /*<h1> del html*/
@@ -18,8 +28,15 @@ body {
     font-family: 'fuente-titulo';
   }
 
-  h2, h3, h4, h5, h6 {
+  h2, h3, h4, h5 {
     color: #444444;
+  }
+  h6 {
+    font-family: 'Nothing You Could Do', sans-serif;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 2em;
+    color: #a5f7fd;
   }
   
   ul {
@@ -846,14 +863,25 @@ input[type=number]::-webkit-outer-spin-button {
 /* CONTENEDOR VIDEO */
 
 .video_section {
-  margin-top: 60px;
+  margin-top: 0px;
+  padding-top: 0px;
   background-size: cover;
+  height: 550px;
+}
+
+.video_section video {
+  height: 550px;
+  width: cover;
+  object-fit: cover;
+  
 }
 
 /* Si la pantalla es menor de 767 px, se muestra una foto en lugar de un video */
 @media (max-width: 767px) {
   .video_section {
-    background-image: url("../img/no_video.jpg");
+    margin-top: 0px;
+    padding-top: 0px;
+    background-image: url("/media/Videos/no_video.jpg");
     height: 500px;
     background-position: center;
     resize: vertical horizontal;
@@ -871,7 +899,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .img_over_video img {
-  width: 300px;
+  width: 100px;
   height: auto;
   margin-bottom: 5%;
 }
@@ -917,7 +945,7 @@ input[type=number]::-webkit-outer-spin-button {
   top: 35%;
 }
 .img_over_video img {
-  width: 250px;
+  width: 100px;
 }
 .img_over_video h2 {
   font-size: 26px;

@@ -1417,9 +1417,9 @@ def Imprimir(request):
                         numdias = ["","","","","","",""]
                         today = date.today()
                         for i in range (7):
-                            num = today + timedelta(days=i)
-                            num = num.strftime('%d/%m/%Y')
-                            numdias[i] = str(num)
+                            num1 = today + timedelta(days=i)
+                            num1 = num.strftime('%d/%m/%Y')
+                            numdias[i] = str(num1)
                         num_day = today.weekday()
                         dias = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"]
                         j = 0

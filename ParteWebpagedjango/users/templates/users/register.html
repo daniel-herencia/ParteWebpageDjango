@@ -1,22 +1,24 @@
 
 {% extends "blog/base.html" %}
 {% load crispy_forms_tags %}
-{% block content %}
-    <div class="content-section">
-        <form method="POST">
-            {% csrf_token %}
-            <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Únete Hoy</legend>
-                {{ form|crispy }}
-            </fieldset>
-            <div class="form-group">
-                <button class="btn btn-outline-info" type="submit">Registrarse</button>
+{% block content2 %}
+    <div class="special-content">
+        <div class="content-section">
+            <form method="POST">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">Únete Hoy</legend>
+                    {{ form|crispy }}
+                </fieldset>
+                <div class="form-group">
+                    <button class="btn btn-outline-info" type="submit">Registrarse</button>
+                </div>
+            </form>
+            <div class="border-top pt-3">
+                <small class="text-muted">
+                    ¿Ya Tienes Una Cuenta? <a class="ml-2" href="{% url 'login' %}">Iniciar Sesión</a>
+                </small>
             </div>
-        </form>
-        <div class="border-top pt-3">
-            <small class="text-muted">
-                ¿Ya Tienes Una Cuenta? <a class="ml-2" href="{% url 'login' %}">Iniciar Sesión</a>
-            </small>
         </div>
     </div>
-{% endblock content %}
+{% endblock content2 %}

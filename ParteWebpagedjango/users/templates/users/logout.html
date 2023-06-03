@@ -1,16 +1,18 @@
 
 {% extends "blog/base.html" %}
-{% block content %}
-    <section>
-        <div class="salida">
-        <h2>¡Adiós!</h2>
-        <h2>¡Adiós!</h2>
+{% block content2 %}
+    <div class="special-content">
+        <section>
+            <div class="salida">
+            <h2>¡Adiós!</h2>
+            <h2>¡Adiós!</h2>
+            </div>
+        </section>
+        <h2>Te has desconectado correctamente</h2>
+        <div class="border-top pt-3">
+            <small class="text-muted">
+                <a href="{% url 'login' %}">Iniciar Sesión Otra Vez</a>
+            </small>
         </div>
-    </section>
-    <h2>Te has desconectado correctamente</h2>
-    <div class="border-top pt-3">
-        <small class="text-muted">
-            <a href="{% url 'login' %}">Iniciar Sesión Otra Vez</a>
-        </small>
     </div>
-{% endblock content %}
+{% endblock content2 %}
