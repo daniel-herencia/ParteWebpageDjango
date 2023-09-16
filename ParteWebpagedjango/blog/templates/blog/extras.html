@@ -1,19 +1,43 @@
 {% extends "blog/base.html" %}
 {% block content %}
-    <h1>Zona de Administrador Deporte</h1>
-    <h3>Botones especiales:</h3>
-    <form method="post" action="{% url 'blog-extras' %}">{% csrf_token %}
-        <button type="submit" class="btn btn-success" style="background-color:#9CB4B3; border:none" name ="correo" value ="correo">Correo dxt</button>
-        <br><br>
-        <hr/ style="width: 300px;"><br>
-        <h3>Día del Deporte:</h3><br>
-        <select class="custom-select parte-select" id="inputGroupSelect04" name="selectday" style="width: 200px;">
-            <option value={{ currentday }} selected>{{ currentday }}</option>
-            {% for day in days %}
-                <option value={{ day }}>{{ day }}</option>
-            {% endfor %}
-        </select>
-        <br><br>
-        <button type="submit" class="btn btn-success" style="background-color:#9CB4B3; border:none" value="dianuevo" name="dianuevo">Guardar día</button>
-    </form>
+    <h1>Zona de Administrador Deporte</h1><br>
+    <div style="display: flex;">
+        <div style="flex: 1;">
+            <h3>Botones especiales:</h3><br>
+            <form method="post" action="{% url 'blog-extras' %}">{% csrf_token %}
+                <button type="submit" class="btn btn-success" style="background-color:#9CB4B3; border:none" name ="correo" value ="correo">Correo dxt</button>
+                <br><br>
+            </form>
+        </div>
+        <div style="flex: 1;">
+            <form method="post" action="{% url 'blog-extras' %}">{% csrf_token %}
+                <h3>Día del Deporte:</h3><br>
+                <select class="custom-select parte-select" id="inputGroupSelect04" name="selectday" style="width: 200px;">
+                    <option value={{ currentday }} selected>{{ currentday }}</option>
+                    {% for day in days %}
+                        <option value={{ day }}>{{ day }}</option>
+                    {% endfor %}
+                </select>
+                <br><br>
+                <button type="submit" class="btn btn-success" style="background-color:#9CB4B3; border:none" value="dianuevo" name="dianuevo">Guardar día</button>
+            </form>
+        </div>
+    </div>
+    <br>
+    <!--<hr/ style="width: 300px;"><br>-->
+    <h3>Básquet: </h3>
+    {% for jugador in basket %}
+        {{ jugador }}<h>, <h>
+    {% endfor %}
+    <br><br><h3>Fútbol: </h3>
+    {% for jugador in futbol %}
+        {{ jugador }}<h>, <h>
+    {% endfor %}
+    <br><br><h3>No hacen deporte: </h3>
+    {% for jugador in nada %}
+        {{ jugador }}<h>, <h>
+    {% endfor %}
+    <br>
+
+
 {% endblock content %}

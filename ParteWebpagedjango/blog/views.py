@@ -323,7 +323,8 @@ def Enlaces(request):
 @login_required 
 def Extras(request):
     #current_user = request.user.username
-    if  request.user.username == 'parteadmin':
+    #if  request.user.username == 'parteadmin':
+    if  request.user.username == 'parteadmin' or request.user.username == 'DxT':
         #Para la fecha en el correo
         numdias = ["","","","","","",""]
         today = date.today()
@@ -395,9 +396,29 @@ def Extras(request):
                 num = days.index(newday)
                 diad.diadxt = num
         
+        # Lista de usuarios dxt
+        usuarios = User.objects.all()
+        futbol = []
+        basket = []
+        nada = []
+        for usuario in usuarios:
+            try:    #Para obtener la respuesta si la hay
+                answer = Deportista.objects.get(user=usuario).dxt
+                if answer == 'S':
+                    tipo = Deportista.objects.get(user=usuario).tipo
+                    if tipo == 'F':
+                        futbol.append(usuario.username)
+                    else:
+                        basket.append(usuario.username)
+                else:
+                    nada.append(usuario.username)
+            except Deportista.DoesNotExist:
+                answer = 'N'
+
+
         diad.save()
         currentday = days[num]
-        return render(request, 'blog/extras.html', {'title': 'Extras', 'days': days, 'currentday': currentday})
+        return render(request, 'blog/extras.html', {'title': 'Extras', 'days': days, 'currentday': currentday, 'futbol': futbol, 'basket': basket, 'nada': nada})
     else:
         return render(request, 'blog/inicio.html', {'title': 'Inicio'})
 
@@ -1422,7 +1443,7 @@ def Imprimir(request):
                         today = date.today()
                         for i in range (7):
                             num1 = today + timedelta(days=i)
-                            num1 = num.strftime('%d/%m/%Y')
+                            num1 = num1.strftime('%d/%m/%Y')
                             numdias[i] = str(num1)
                         num_day = today.weekday()
                         dias = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"]

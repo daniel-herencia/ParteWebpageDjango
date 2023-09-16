@@ -879,8 +879,8 @@ input[type=number]::-webkit-outer-spin-button {
 /* Si la pantalla es menor de 767 px, se muestra una foto en lugar de un video */
 @media (max-width: 767px) {
   .video_section {
-    margin-top: 0px;
-    padding-top: 0px;
+    margin-top: -10px;
+    padding-top: -10px;
     background-image: url("/media/Videos/no_video.jpg");
     height: 500px;
     background-position: center;
