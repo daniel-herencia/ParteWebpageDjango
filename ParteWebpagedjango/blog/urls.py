@@ -37,6 +37,7 @@ urlpatterns = [
     path('impresora/', views.Impresora, name='blog-impresora'),
     path('impresora/encuadernadora', views.Encuadernadora, name='blog-encuadernadora'),
     path('animation/', views.Animation, name='blog-animation'),
+    path('conferencias/', views.Conferencias, name='blog-conferencias'),
 
 
 #    path("contact/", views.contact, name="blog-contact"),

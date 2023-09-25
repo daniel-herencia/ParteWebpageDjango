@@ -1,0 +1,44 @@
+
+{% extends "blog/base.html" %}
+
+{% block content %}
+<h1>Conferencias</h1>
+    <p>¿Te gustaría hacer una conferencia?</p>
+        {% if user.username == 'invitado' %}
+            <button class="btn btn-success" onclick="noAutorizado()">Apúntate</button>
+        {% else %}
+            <button type="button" class="btn btn-success" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSdMVVZORhMSYQh3-hX_SpP0pE_PCP3zUUZU_CXfnwq6-OrF0w/viewform', '_blank')">Apúntate</button>
+        {% endif %}
+        <br><br>
+    <h3>Próximas conferencias</h3>
+    <table>
+        <thead>
+        <tr>
+            <th style="border-radius: 15px 0px 0px 0px;">TÍTULO
+            <th>CONFERENCIANTE
+            <th style="border-radius: 0px 15px 0px 0px;">FECHA
+        </thead>
+        <tbody align="center">
+        {% for titulo, nombre, fecha in variables %}
+            {% with i=forloop.counter0 %}     
+            <tr>
+                {% if i == total %}
+                    <td style="background-color: rgb(219, 219, 219); border-radius: 0px 0px 0px 15px;">{{ titulo }}
+                {% else %}
+                    <td style="background-color: rgb(219, 219, 219);">{{ titulo }}
+                {% endif %}
+                <td>{{ nombre }}
+                <td>{{ fecha }}
+            <br>
+            {% endwith %}
+        {% endfor %}
+        </tbody>
+    </table>
+<script>
+    function noAutorizado() {
+        window.alert("No estás autorizado para apuntarte al deporte");
+    } 
+</script>
+
+{% endblock %}
+

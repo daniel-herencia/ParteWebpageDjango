@@ -30,6 +30,10 @@ from django.template.loader import render_to_string
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 
+# To open googlesheet
+import gspread
+import pandas as pd
+
 
 #Logic of html files
 
@@ -318,6 +322,29 @@ def Inicio(request):
 @login_required 
 def Enlaces(request):
     return render(request, 'blog/enlaces.html', {'title': 'Enlaces'})
+
+@login_required 
+def Conferencias(request):
+    # Open the Google Sheets document by its URL (no credentials needed)
+    #doc_url = "https://docs.google.com/spreadsheets/d/1q7OIDv_46biqHZCP1YS3wifKHvoxrWWN7Umlhaxe-vo/edit#gid=0"
+
+    sheet_id = '1q7OIDv_46biqHZCP1YS3wifKHvoxrWWN7Umlhaxe-vo'
+    df = pd.read_csv(f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv")
+        
+    # Convert the 'Fecha' column to datetime
+    df['Fecha'] = pd.to_datetime(df['Fecha'], format='%d/%m/%Y')
+    df['Fecha'] = df['Fecha'].dt.date
+
+    # You can access individual columns like this:
+    titulos = df['Título de la Conferencia']
+    nombres = df['Nombre del Conferenciante']
+    fechas = df['Fecha']
+    total = len(titulos)
+    variables = []
+    for i in range(total):
+        variables.append([titulos[i], nombres[i], fechas[i]])
+    return render(request, 'blog/conferencias.html', {'variables': variables, 'total': total, 'title': 'Conferencias'})
+
 
 #MAIL DE DEPORTE
 @login_required 
