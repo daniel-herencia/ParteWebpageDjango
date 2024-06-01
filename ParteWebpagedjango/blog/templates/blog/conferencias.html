@@ -24,11 +24,13 @@
             <tr>
                 {% if i == total %}
                     <td style="background-color: rgb(219, 219, 219); border-radius: 0px 0px 0px 15px;">{{ titulo }}
+                    <td>{{ nombre }}
+                    <td style="background-color: rgb(219, 219, 219); border-radius: 0px 0px 15px 0px;">{{ fecha }}
                 {% else %}
                     <td style="background-color: rgb(219, 219, 219);">{{ titulo }}
+                    <td>{{ nombre }}
+                    <td>{{ fecha }}
                 {% endif %}
-                <td>{{ nombre }}
-                <td>{{ fecha }}
             <br>
             {% endwith %}
         {% endfor %}

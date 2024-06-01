@@ -331,6 +331,7 @@ def Conferencias(request):
     sheet_id = '1q7OIDv_46biqHZCP1YS3wifKHvoxrWWN7Umlhaxe-vo'
     df = pd.read_csv(f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv")
         
+    df = df.dropna()  # Remove rows with NaT values
     # Convert the 'Fecha' column to datetime
     df['Fecha'] = pd.to_datetime(df['Fecha'], format='%d/%m/%Y')
     df['Fecha'] = df['Fecha'].dt.date
