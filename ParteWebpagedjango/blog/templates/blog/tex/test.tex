@@ -147,6 +147,15 @@ Usuarios Fiambrera Comida ENFERMO: {{ " ".join(usuariosBocyFE.Fiambrera) }} \\
 {% if bocayfiambrerasB.Fiambrera != ""%}
 Usuarios Fiambrera Comida BLANDO: {{ " ".join(usuariosBocyFB.Fiambrera) }} \\
 {% endif %}
+{% if desayunoD.get('Cesta')  != ""%}
+Usuarios Cesta Desayundo DIETA: {{ " ".join(usuariosBocyFD.CestaDes) }} \\
+{% endif %}
+{% if comidaD.get('Cesta')  != ""%}
+Usuarios Cesta Comida DIETA: {{ " ".join(usuariosBocyFD.CestaCom) }} \\
+{% endif %}
+{% if cenaD.get('Cesta')  != ""%}
+Usuarios Cesta Cena DIETA: {{ " ".join(usuariosBocyFD.CestaCen) }} \\
+{% endif %}
 \vspace{1cm}
 {\LARGE Observaciones:} {\large {{ observaciones }} }
 

@@ -802,7 +802,7 @@ def parte_to_pdf(request):
         'Bocadillo': 0,
         'Fiambrera': 0,
         'Bocadillo-Ans': 0,
-        'BocadilloPeq-Ans': 0
+        'BocadilloPeq-Ans': 0,
     }
     usuariosBocyFD = {
         'Bocadillo-Pequeño': [],
@@ -811,7 +811,10 @@ def parte_to_pdf(request):
         'Bocadillo-Ans': [],
         'BocadilloPeq-Ans': [],
         'BocCenaPeq': [],
-        'BocCena': []
+        'BocCena': [],
+        'CestaDes': [],
+        'CestaCom': [],
+        'CestaCen': []
     }
     #ENFERMOS
     desayunoE = {
@@ -1015,14 +1018,20 @@ def parte_to_pdf(request):
                         usuariosBocyFD[parte.M.d].append(comensal)
                     if (parte.L.l == 'Normal'):
                         usuariosDietaL.append(comensal)
+                    elif (parte.L.d == 'Cesta'):
+                        usuariosBocyFD['CestaCom'].append(comensal)
                     if (parte.L.d == 'Normal'):
                         usuariosDietaD.append(comensal)
                     elif (parte.L.d == 'Bocadillo-Pequeño'):
                         usuariosBocyFD['BocCenaPeq'].append(comensal)
                     elif (parte.L.d == 'Bocadillo'):
                         usuariosBocyFD['BocCena'].append(comensal)
+                    elif (parte.L.d == 'Cesta'):
+                        usuariosBocyFD['CestaCen'].append(comensal)
                     if (parte.M.b == 'Normal'):
                         usuariosDietaB.append(comensal)
+                    elif(parte.M.b == 'Cesta'):
+                        usuariosBocyFD['CestaDes'].append(comensal)
                 elif num_day == 1:
                     comidaD[parte.M.l]+=1
                     cenaD[parte.M.d]+=1
@@ -1036,14 +1045,20 @@ def parte_to_pdf(request):
                         usuariosBocyFD[parte.X.d].append(comensal)
                     if (parte.M.l == 'Normal'):
                         usuariosDietaL.append(comensal)
+                    elif (parte.M.d == 'Cesta'):
+                        usuariosBocyFD['CestaCom'].append(comensal)
                     if (parte.M.d == 'Normal'):
                         usuariosDietaD.append(comensal)
                     elif (parte.M.d == 'Bocadillo-Pequeño'):
                         usuariosBocyFD['BocCenaPeq'].append(comensal)
                     elif (parte.M.d == 'Bocadillo'):
                         usuariosBocyFD['BocCena'].append(comensal)
+                    elif (parte.M.d == 'Cesta'):
+                        usuariosBocyFD['CestaCen'].append(comensal)
                     if (parte.X.b == 'Normal'):
                         usuariosDietaB.append(comensal)
+                    elif(parte.X.b == 'Cesta'):
+                        usuariosBocyFD['CestaDes'].append(comensal)
                 elif num_day == 2:
                     comidaD[parte.X.l]+=1
                     cenaD[parte.X.d]+=1
@@ -1057,14 +1072,20 @@ def parte_to_pdf(request):
                         usuariosBocyFD[parte.J.d].append(comensal)
                     if (parte.X.l == 'Normal'):
                         usuariosDietaL.append(comensal)
+                    elif (parte.X.d == 'Cesta'):
+                        usuariosBocyFD['CestaCom'].append(comensal)
                     if (parte.X.d == 'Normal'):
                         usuariosDietaD.append(comensal)
                     elif (parte.X.d == 'Bocadillo-Pequeño'):
                         usuariosBocyFD['BocCenaPeq'].append(comensal)
                     elif (parte.X.d == 'Bocadillo'):
                         usuariosBocyFD['BocCena'].append(comensal)
+                    elif (parte.X.d == 'Cesta'):
+                        usuariosBocyFD['CestaCen'].append(comensal)
                     if (parte.J.b == 'Normal'):
                         usuariosDietaB.append(comensal)
+                    elif(parte.J.b == 'Cesta'):
+                        usuariosBocyFD['CestaDes'].append(comensal)
                 elif num_day == 3:
                     comidaD[parte.J.l]+=1
                     cenaD[parte.J.d]+=1
@@ -1078,14 +1099,20 @@ def parte_to_pdf(request):
                         usuariosBocyFD[parte.V.d].append(comensal)
                     if (parte.J.l == 'Normal'):
                         usuariosDietaL.append(comensal)
+                    elif (parte.J.d == 'Cesta'):
+                        usuariosBocyFD['CestaCom'].append(comensal)
                     if (parte.J.d == 'Normal'):
                         usuariosDietaD.append(comensal)
                     elif (parte.J.d == 'Bocadillo-Pequeño'):
                         usuariosBocyFD['BocCenaPeq'].append(comensal)
                     elif (parte.J.d == 'Bocadillo'):
                         usuariosBocyFD['BocCena'].append(comensal)
+                    elif (parte.J.d == 'Cesta'):
+                        usuariosBocyFD['CestaCen'].append(comensal)
                     if (parte.V.b == 'Normal'):
                         usuariosDietaB.append(comensal)
+                    elif(parte.V.b == 'Cesta'):
+                        usuariosBocyFD['CestaDes'].append(comensal)
                 elif num_day == 4:
                     comidaD[parte.V.l]+=1
                     cenaD[parte.V.d]+=1
@@ -1099,14 +1126,20 @@ def parte_to_pdf(request):
                         usuariosBocyFD[parte.S.d].append(comensal)
                     if (parte.V.l == 'Normal'):
                         usuariosDietaL.append(comensal)
+                    elif (parte.V.d == 'Cesta'):
+                        usuariosBocyFD['CestaCom'].append(comensal)
                     if (parte.V.d == 'Normal'):
                         usuariosDietaD.append(comensal)
                     elif (parte.V.d == 'Bocadillo-Pequeño'):
                         usuariosBocyFD['BocCenaPeq'].append(comensal)
                     elif (parte.V.d == 'Bocadillo'):
                         usuariosBocyFD['BocCena'].append(comensal)
+                    elif (parte.V.d == 'Cesta'):
+                        usuariosBocyFD['CestaCen'].append(comensal)
                     if (parte.S.b == 'Normal'):
                         usuariosDietaB.append(comensal)
+                    elif(parte.S.b == 'Cesta'):
+                        usuariosBocyFD['CestaDes'].append(comensal)
                 elif num_day == 5:
                     comidaD[parte.S.l]+=1
                     cenaD[parte.S.d]+=1
@@ -1120,14 +1153,20 @@ def parte_to_pdf(request):
                         usuariosBocyFD[parte.D.d].append(comensal)
                     if (parte.S.l == 'Normal'):
                         usuariosDietaL.append(comensal)
+                    elif (parte.S.d == 'Cesta'):
+                        usuariosBocyFD['CestaCom'].append(comensal)
                     if (parte.S.d == 'Normal'):
                         usuariosDietaD.append(comensal)
                     elif (parte.S.d == 'Bocadillo-Pequeño'):
                         usuariosBocyFD['BocCenaPeq'].append(comensal)
                     elif (parte.S.d == 'Bocadillo'):
                         usuariosBocyFD['BocCena'].append(comensal)
+                    elif (parte.S.d == 'Cesta'):
+                        usuariosBocyFD['CestaCen'].append(comensal)
                     if (parte.D.b == 'Normal'):
                         usuariosDietaB.append(comensal)
+                    elif(parte.D.b == 'Cesta'):
+                        usuariosBocyFD['CestaDes'].append(comensal)
                 elif num_day == 6:
                     comidaD[parte.D.l]+=1
                     cenaD[parte.D.d]+=1
@@ -1141,14 +1180,20 @@ def parte_to_pdf(request):
                         usuariosBocyFD[parte.L.d].append(comensal)
                     if (parte.D.l == 'Normal'):
                         usuariosDietaL.append(comensal)
+                    elif (parte.D.d == 'Cesta'):
+                        usuariosBocyFD['CestaCom'].append(comensal)
                     if (parte.D.d == 'Normal'):
                         usuariosDietaD.append(comensal)
                     elif (parte.D.d == 'Bocadillo-Pequeño'):
                         usuariosBocyFD['BocCenaPeq'].append(comensal)
                     elif (parte.D.d == 'Bocadillo'):
                         usuariosBocyFD['BocCena'].append(comensal)
+                    elif (parte.D.d == 'Cesta'):
+                        usuariosBocyFD['CestaCen'].append(comensal)
                     if (parte.L.b == 'Normal'):
                         usuariosDietaB.append(comensal)
+                    elif(parte.L.b == 'Cesta'):
+                        usuariosBocyFD['CestaDes'].append(comensal)
             elif parte.opciones == 'Enfermo':
                 tipo['enfermo']+=1
                 if num_day == 0:
