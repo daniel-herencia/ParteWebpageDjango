@@ -117,6 +117,15 @@
                         <a href="{% url 'blog-imprimir' %}">Parte Admin</a>
                         <a href="{% url 'blog-modificar' %}">Modificar Partes</a>
                       {% endif %}
+                      {% if user.username == 'daniherencia'%}
+                        <a href="{% url 'blog-extras' %}">DxT Admin</a>
+                        <a href="{% url 'blog-imprimir' %}">Parte Admin</a>
+                        <a href="{% url 'blog-modificar' %}">Modificar Partes</a>
+                      {% endif %}
+                      {% if user.username == 'PauDolz'%}
+                        <a href="{% url 'blog-imprimir' %}">Parte Admin</a>
+                        <a href="{% url 'blog-modificar' %}">Modificar Partes</a>
+                      {% endif %}
                       {% if user.username == 'DxT'%}
                         <a href="{% url 'blog-extras' %}">DxT Admin</a>
                       {% endif %}
