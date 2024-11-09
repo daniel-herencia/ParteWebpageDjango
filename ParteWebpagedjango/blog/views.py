@@ -201,7 +201,7 @@ def Parte(request):
 #FUNCIÓN PARA MODIFICAR EL PARTE DE CUALQUIER USUARIO (SOLO DISPONIBLE PARA EL ADMINISTRADOR)
 @login_required 
 def Modificar(request):
-    if request.user.username == 'parteadmin':
+    if request.user.username == 'parteadmin' or request.user.username == 'daniherencia' or request.user.username == 'PauDolz':
         mostrar = False
         usernames = User.objects.all()
         names = []
@@ -352,7 +352,7 @@ def Conferencias(request):
 def Extras(request):
     #current_user = request.user.username
     #if  request.user.username == 'parteadmin':
-    if  request.user.username == 'parteadmin' or request.user.username == 'DxT':
+    if  request.user.username == 'parteadmin' or request.user.username == 'DxT' or request.user.username == 'daniherencia' or request.user.username == 'GabrielM' or request.user.username == 'JoanPau':
         #Para la fecha en el correo
         numdias = ["","","","","","",""]
         today = date.today()
@@ -1490,7 +1490,7 @@ def parte_to_pdf2(request):
 #ADMINISTRADOR DEL PARTE (CONTIENE EL ENVÍO DE CORREOS RECORDATORIO PARTE)
 @login_required
 def Imprimir(request):
-    if request.user.username == 'parteadmin':
+    if request.user.username == 'parteadmin' or request.user.username == 'daniherencia' or request.user.username == 'PauDolz':
         #Fecha variable del parte a imprimir
         try:
             diap = VariablesGlobales.objects.get()
